@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity
         mFragManager = getFragmentManager();
 
         mDrawerFragment = (DrawerFragment) mFragManager.findFragmentById(R.id.navigation_drawer);
-        mDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.main_drawer_layout));
+        mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout));
 
         mTrackingFragment = TrackingFragment.newInstance();
         mHistoryFragment = HistoryFragment.newInstance();
@@ -70,4 +70,10 @@ public class MainActivity extends ActionBarActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
 }
