@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
@@ -9,13 +8,13 @@
     android:paddingTop="20dp">
 
     <RelativeLayout
-        android:id="@+id/SpeedLayout"
+        android:id="@+id/rl_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/Speed"
+            android:id="@+id/tv_speed_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Speed"
@@ -23,10 +22,10 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/TV_Speed"
+            android:id="@+id/tv_speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Speed"
+            android:layout_below="@id/tv_speed_label"
             android:text="134 km/h"
             android:textColor="#000000"
             android:textSize="50dp" />
@@ -34,7 +33,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/TV_Speed"
+            android:layout_below="@+id/tv_speed"
             android:background="#d3d3d3" />
     </RelativeLayout>
 

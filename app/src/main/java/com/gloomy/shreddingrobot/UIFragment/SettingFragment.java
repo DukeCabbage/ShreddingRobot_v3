@@ -1,4 +1,4 @@
-package com.gloomy.shreddingrobot.Fragment;
+package com.gloomy.shreddingrobot.UIFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,10 +9,6 @@ import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 
 public class SettingFragment extends BaseFragment {
-
-    public static SettingFragment newInstance() {
-        return new SettingFragment();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

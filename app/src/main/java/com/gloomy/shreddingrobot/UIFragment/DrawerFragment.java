@@ -1,4 +1,4 @@
-package com.gloomy.shreddingrobot.Fragment;
+package com.gloomy.shreddingrobot.UIFragment;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
