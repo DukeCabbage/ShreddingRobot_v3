@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Navigation Drawer -->
-    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="navigation_drawer_width">200dp</dimen>
     <dimen name="navigation_drawer_height">80dp</dimen>
     <dimen name="navigation_drawer_textSize">24sp</dimen>
 
