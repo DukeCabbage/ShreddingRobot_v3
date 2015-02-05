@@ -6,27 +6,26 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.gloomy.shreddingrobot.Fragment.DrawerFragment;
+import com.gloomy.shreddingrobot.Fragment.HistoryFragment;
+import com.gloomy.shreddingrobot.Fragment.SettingFragment;
+import com.gloomy.shreddingrobot.Fragment.TrackingFragment;
 
 
 public class MainActivity extends ActionBarActivity
         implements DrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private DrawerFragment mDrawerFragment;
+    private TrackingFragment mTrackingFragment;
+    private HistoryFragment mHistoryFragment;
+    private SettingFragment settingFragment;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
@@ -34,23 +33,18 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDrawerFragment = (DrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mDrawerFragment = (DrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
-        mDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.main_drawer_layout));
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
     }
 
     public void onSectionAttached(int number) {
@@ -106,7 +100,20 @@ public class MainActivity extends ActionBarActivity
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
+            Log.e("Placeholder Frag", getArguments().getInt(ARG_SECTION_NUMBER)+" onAttach");
             ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            Log.e("Placeholder Frag", getArguments().getInt(ARG_SECTION_NUMBER)+" onResume");
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            Log.e("Placeholder Frag", getArguments().getInt(ARG_SECTION_NUMBER)+" onPause");
         }
     }
 
