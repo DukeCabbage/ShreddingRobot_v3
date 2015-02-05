@@ -1,143 +1,141 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ffffff"
-    android:paddingTop="20dp"
+    android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    >
+    android:paddingTop="20dp">
+
     <RelativeLayout
         android:id="@+id/SpeedLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-        android:layout_weight="1"
-        >
         <TextView
             android:id="@+id/Speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Speed"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
         <TextView
             android:id="@+id/TV_Speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Speed"
             android:text="134 km/h"
-            android:textSize="50dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="50dp" />
+
         <View
-            android:layout_below="@+id/TV_Speed"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="#d3d3d3"/>
+            android:layout_below="@+id/TV_Speed"
+            android:background="#d3d3d3" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/AirLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-        android:layout_weight="1"
-        >
         <TextView
             android:id="@+id/AirTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Air Time"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
         <TextView
             android:id="@+id/TV_AirTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/AirTime"
             android:text="0.12 s"
-            android:textSize="50dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="50dp" />
 
         <View
-            android:layout_below="@+id/TV_AirTime"
             android:layout_width="150dp"
             android:layout_height="1dp"
-            android:background="#d3d3d3"/>
+            android:layout_below="@+id/TV_AirTime"
+            android:background="#d3d3d3" />
+
         <TextView
             android:id="@+id/MaxAirTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="Max AirTime"
-            android:textSize="20dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
         <TextView
             android:id="@+id/TV_MaxAirTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/MaxAirTime"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/MaxAirTime"
             android:text="12.12 s"
-            android:textSize="50dp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:textSize="50dp" />
+
         <View
-            android:layout_below="@+id/TV_AirTime"
             android:layout_width="150dp"
             android:layout_height="1dp"
             android:layout_alignParentRight="true"
-            android:background="#d3d3d3"/>
+            android:layout_below="@+id/TV_AirTime"
+            android:background="#d3d3d3" />
 
     </RelativeLayout>
 
 
     <RelativeLayout
-    android:id="@+id/DurationLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_weight="1">
+        android:id="@+id/DurationLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/Duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Duration"
-        android:textSize="20dp"
-        android:textColor="#000000"
-        />
-    <TextView
-        android:id="@+id/TV_Duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Duration"
-        android:text="0:11:36"
-        android:textSize="50dp"
-        android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/Duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Duration"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/TV_Duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Duration"
+            android:text="0:11:36"
+            android:textColor="#000000"
+            android:textSize="50dp" />
 
         <View
-        android:layout_below="@+id/TV_Duration"
-        android:layout_width="180dp"
-        android:layout_height="1dp"
-        android:background="#d3d3d3"
-        />
+            android:layout_width="180dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/TV_Duration"
+            android:background="#d3d3d3" />
 
         <Button
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/roundbutton"
 
-            android:id="@+id/button"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:background="@drawable/roundbutton" />
 
 
     </RelativeLayout>
-
-
-
-
-
 
 
 </LinearLayout>

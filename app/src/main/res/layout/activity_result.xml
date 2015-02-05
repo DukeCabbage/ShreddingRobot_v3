@@ -12,7 +12,7 @@
         android:layout_height="150dp">
 
 
-        <ImageView
+        <com.gloomy.shreddingrobot.Widget.RoundedImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/iv_profile"
