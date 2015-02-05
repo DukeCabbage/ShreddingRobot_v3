@@ -1,16 +1,12 @@
 package com.gloomy.shreddingrobot;
 
-import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 
 import com.gloomy.shreddingrobot.Fragment.DrawerFragment;
 import com.gloomy.shreddingrobot.Fragment.HistoryFragment;
@@ -21,10 +17,14 @@ import com.gloomy.shreddingrobot.Fragment.TrackingFragment;
 public class MainActivity extends ActionBarActivity
         implements DrawerFragment.NavigationDrawerCallbacks {
 
+    private static final String TAG = "MainActivity";
+
+    private FragmentManager mFragManager;
+
     private DrawerFragment mDrawerFragment;
     private TrackingFragment mTrackingFragment;
     private HistoryFragment mHistoryFragment;
-    private SettingFragment settingFragment;
+    private SettingFragment mSettingFragment;
 
     private CharSequence mTitle;
 
@@ -33,32 +33,35 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDrawerFragment = (DrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mFragManager = getFragmentManager();
 
-        // Set up the drawer.
+        mDrawerFragment = (DrawerFragment) mFragManager.findFragmentById(R.id.navigation_drawer);
         mDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.main_drawer_layout));
+
+        mTrackingFragment = TrackingFragment.newInstance();
+        mHistoryFragment = HistoryFragment.newInstance();
+        mSettingFragment = SettingFragment.newInstance();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1)).commit();
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
+        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+        switch(position) {
+            case 0:
+                mFragTransaction.replace(R.id.container, mTrackingFragment).commit();
                 mTitle = getString(R.string.title_section1);
                 break;
-            case 2:
+            case 1:
+                mFragTransaction.replace(R.id.container, mHistoryFragment).commit();
                 mTitle = getString(R.string.title_section2);
                 break;
-            case 3:
+            case 2:
+                mFragTransaction.replace(R.id.container, mSettingFragment).commit();
                 mTitle = getString(R.string.title_section3);
                 break;
         }
+        restoreActionBar();
     }
 
     public void restoreActionBar() {
@@ -67,54 +70,4 @@ public class MainActivity extends ActionBarActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            Log.e("Placeholder Frag", getArguments().getInt(ARG_SECTION_NUMBER)+" onAttach");
-            ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            Log.e("Placeholder Frag", getArguments().getInt(ARG_SECTION_NUMBER)+" onResume");
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-            Log.e("Placeholder Frag", getArguments().getInt(ARG_SECTION_NUMBER)+" onPause");
-        }
-    }
-
 }

@@ -54,14 +54,13 @@ public class DrawerFragment extends BaseFragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-
-        selectItem(mCurrentSelectedPosition);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
+        selectItem(mCurrentSelectedPosition);
     }
 
     @Override
