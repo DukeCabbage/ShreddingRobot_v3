@@ -51,6 +51,12 @@
         android:layout_above="@+id/ll_btns"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_morph"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/avd_path_morph_only"/>
+
     </LinearLayout>
 
     <LinearLayout

@@ -1,39 +1,46 @@
 package com.gloomy.shreddingrobot;
 
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 public class ResultActivity extends ActionBarActivity {
+    private static final String TAG = ResultActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+
+        final TextView morph = (TextView) findViewById(R.id.tv_morph);
+        morph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "onclick");
+                animateDrawables(morph);
+            }
+        });
+
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_result, menu);
-        return true;
-    }
+    private void animateDrawables(View view) {
+        if (!(view instanceof TextView)) {
+            return;
+        }
+        TextView textView = (TextView) view;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (textView.getBackground() instanceof Animatable) {
+            ((Animatable) textView.getBackground()).start();
         }
 
-        return super.onOptionsItemSelected(item);
     }
 }
