@@ -8,5 +8,7 @@
     <dimen name="navigation_drawer_height">80dp</dimen>
     <dimen name="navigation_drawer_textSize">24sp</dimen>
 
+    <dimen name="normal_padding">10dp</dimen>
+
 
 </resources>
