@@ -20,6 +20,4 @@ public class BaseFragment extends Fragment {
         parentActivity = (ActionBarActivity) getActivity();
         sp = getActivity().getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
     }
-
-
 }
