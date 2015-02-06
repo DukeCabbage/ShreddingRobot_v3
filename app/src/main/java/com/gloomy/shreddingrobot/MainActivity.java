@@ -3,10 +3,13 @@ package com.gloomy.shreddingrobot;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
@@ -33,10 +36,20 @@ public class MainActivity extends ActionBarActivity
 
     private CharSequence mTitle;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        if (toolbar != null) {
+            Log.i(TAG, "setting toolbar");
+            setSupportActionBar(toolbar);
+        }
+
         _context = this;
         mFragManager = getFragmentManager();
         initUI();
@@ -45,11 +58,13 @@ public class MainActivity extends ActionBarActivity
 
     private void initUI() {
         mDrawerFragment = (DrawerFragment) mFragManager.findFragmentById(R.id.navigation_drawer);
-        mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout));
+        mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout), toolbar);
 
         mTrackingFragment = new TrackingFragment();
         mHistoryFragment = new HistoryFragment();
         mSettingFragment = new SettingFragment();
+
+
     }
 
     private void initSensor() {

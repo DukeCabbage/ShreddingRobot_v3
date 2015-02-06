@@ -7,6 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -66,18 +67,9 @@ public class DrawerFragment extends BaseFragment {
             }
         });
 
-        String[] Titles = new String[]{
-                getString(R.string.title_section1),
-                getString(R.string.title_section2),
-                getString(R.string.title_section3),
-        };
 
-        mDrawerListView.setAdapter(new ArrayAdapter<>(
-                getActionBar().getThemedContext(),
-                R.layout.list_item_drawer,
-                R.id.tv_drawer_item,
-                Titles));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
+
         return mDrawerListView;
     }
 
@@ -92,8 +84,19 @@ public class DrawerFragment extends BaseFragment {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mDrawerListView);
     }
 
-    public void setUp(DrawerLayout drawerLayout) {
+    public void setUp(DrawerLayout drawerLayout, Toolbar toolbar) {
         mDrawerLayout = drawerLayout;
+        String[] Titles = new String[]{
+                getString(R.string.title_section1),
+                getString(R.string.title_section2),
+                getString(R.string.title_section3),
+        };
+        mDrawerListView.setAdapter(new ArrayAdapter<>(
+                getActionBar().getThemedContext(),
+                R.layout.list_item_drawer,
+                R.id.tv_drawer_item,
+                Titles));
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -108,6 +111,7 @@ public class DrawerFragment extends BaseFragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 parentActivity,                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
+                toolbar,
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {

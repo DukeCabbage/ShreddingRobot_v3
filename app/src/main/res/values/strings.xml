@@ -2,8 +2,8 @@
 <resources>
 
     <!-- Titles -->
-    <string name="app_name">ShreddingRobot</string>
-    <string name="title_section1">Shredding</string>
+    <string name="app_name">shredaholic</string>
+    <string name="title_section1">Shred</string>
     <string name="title_section2">History</string>
     <string name="title_section3">Setting</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

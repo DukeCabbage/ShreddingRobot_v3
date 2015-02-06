@@ -1,5 +1,6 @@
 package com.gloomy.shreddingrobot.UIFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gloomy.shreddingrobot.R;
+import com.gloomy.shreddingrobot.ResultActivity;
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 
@@ -33,6 +35,21 @@ public class TrackingFragment extends BaseFragment
 
     private void initView(View rootView) {
         tvCurSpeed = (TextView) rootView.findViewById(R.id.tv_speed);
+    }
+
+    @Override
+    public void onResume(){
+        Button button = (Button) getView().findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(getActivity(), ResultActivity.class);
+               startActivity(intent);
+
+            }
+        });
+        super.onResume();
+
     }
 
     @Override

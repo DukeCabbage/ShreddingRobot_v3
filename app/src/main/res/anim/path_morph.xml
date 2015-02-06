@@ -1,7 +1,7 @@
 <objectAnimator
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="3000"
+    android:duration="1000"
     android:propertyName="pathData"
-    android:valueFrom="M300,70 l 0,-70 70,70 0,0   -70,70z"
-    android:valueTo="M300,70 l 0,-70 70,0  0,140 -70,0 z"
+    android:valueFrom="M0,400 L400,200 400,201 0,0 z"
+    android:valueTo="M0,400 L400,400 400,0 0,0 z"
     android:valueType="pathType"/>

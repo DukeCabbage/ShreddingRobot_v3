@@ -2,6 +2,7 @@ package com.gloomy.shreddingrobot;
 
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,8 @@ public class ResultActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
 
         final TextView morph = (TextView) findViewById(R.id.tv_morph);
         morph.setOnClickListener(new View.OnClickListener() {
