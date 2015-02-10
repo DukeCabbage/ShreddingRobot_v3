@@ -3,8 +3,6 @@ package com.gloomy.shreddingrobot;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -41,13 +39,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (toolbar != null) {
             Log.i(TAG, "setting toolbar");
             setSupportActionBar(toolbar);
+            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         }
 
         _context = this;
@@ -63,8 +61,6 @@ public class MainActivity extends ActionBarActivity
         mTrackingFragment = new TrackingFragment();
         mHistoryFragment = new HistoryFragment();
         mSettingFragment = new SettingFragment();
-
-
     }
 
     private void initSensor() {
