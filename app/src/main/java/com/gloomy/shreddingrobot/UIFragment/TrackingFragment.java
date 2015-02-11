@@ -28,6 +28,7 @@ public class TrackingFragment extends BaseFragment
 
     private TextView tvCurSpeed, tvAirTime, tvMaxAirTime, tvTrackLength;
     private FrameLayout switchButton;
+    private TextView switchButtonIcon;
 
     private int switchBtnAnimLength;
 
@@ -37,13 +38,8 @@ public class TrackingFragment extends BaseFragment
         View rootView = inflater.inflate(R.layout.fragment_tracking, container, false);
         initView(rootView);
         setUp();
-        bindEvent(rootView);
+        bindEvent();
         return rootView;
-    }
-
-    private void setUp() {
-        resources = getResources();
-        switchBtnAnimLength = resources.getInteger(R.integer.switch_anim_length);
     }
 
     private void initView(View rootView) {
@@ -51,10 +47,19 @@ public class TrackingFragment extends BaseFragment
         tvAirTime = (TextView) rootView.findViewById(R.id.tv_air_time);
         tvMaxAirTime = (TextView) rootView.findViewById(R.id.tv_max_air_time);
         tvTrackLength = (TextView) rootView.findViewById(R.id.tv_duration);
+
         switchButton = (FrameLayout) rootView.findViewById(R.id.btn_start);
+        switchButtonIcon = (TextView) rootView.findViewById(R.id.tv_morph);
     }
 
-    private void bindEvent(final View rootView) {
+    private void setUp() {
+        resources = getResources();
+        switchBtnAnimLength = resources.getInteger(R.integer.switch_anim_length);
+        switchButton.setBackground(resources.getDrawable(R.drawable.switch_btn_bg_transition));
+        switchButtonIcon.setBackground(resources.getDrawable(R.drawable.switch_btn_play));
+    }
+
+    private void bindEvent() {
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,13 +67,14 @@ public class TrackingFragment extends BaseFragment
                     TransitionDrawable transition = (TransitionDrawable) v.getBackground();
                     transition.startTransition(switchBtnAnimLength);
 
-                    TextView morph = (TextView) rootView.findViewById(R.id.tv_morph);
-                    animateDrawables(morph);
+                    switchButtonIcon.setBackground(resources.getDrawable(R.drawable.switch_btn_vector));
+                    animateDrawables(switchButtonIcon);
 
                     v.setEnabled(false);
                     parentActivity.startTracking();
                 } else {
                     Log.e(TAG, "stopTracking");
+                    setUp();
                     parentActivity.stopTraking();
                 }
             }

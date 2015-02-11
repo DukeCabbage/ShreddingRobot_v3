@@ -162,7 +162,6 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:clickable="true"
-            android:background="@drawable/switch_btn_bg_transition"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/normal_padding">
@@ -171,8 +170,7 @@
                 android:id="@+id/tv_morph"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/switch_btn_vector" />
+                android:layout_gravity="center" />
         </FrameLayout>
     </RelativeLayout>
 
