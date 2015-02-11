@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
+import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.UIFragment.DrawerFragment;
 import com.gloomy.shreddingrobot.UIFragment.HistoryFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
@@ -19,7 +20,9 @@ import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
 
 
 public class MainActivity extends ActionBarActivity
-        implements DrawerFragment.NavigationDrawerCallbacks, LocationFragment.LocationCallbacks {
+        implements DrawerFragment.NavigationDrawerCallbacks,
+                LocationFragment.LocationCallbacks,
+                MotionFragment.MotionCallbacks {
 
     private static final String TAG = "MainActivity";
 
@@ -34,6 +37,7 @@ public class MainActivity extends ActionBarActivity
     private SettingFragment mSettingFragment;
 
     private LocationFragment mLocationFragment;
+    private MotionFragment mMotionFragment;
 
     private CharSequence mTitle;
 
@@ -71,6 +75,10 @@ public class MainActivity extends ActionBarActivity
         mLocationFragment = new LocationFragment();
         mLocationFragment.setUpDataCallback(this);
         mFragManager.beginTransaction().add(mLocationFragment, "locationFrag").commit();
+
+        mMotionFragment = new MotionFragment();
+        mMotionFragment.setUpDataCallback(this);
+        mFragManager.beginTransaction().add(mMotionFragment, "motionFrag").commit();
     }
 
     // Drawer Fragment Callbacks
@@ -82,6 +90,7 @@ public class MainActivity extends ActionBarActivity
             case 0:
                 mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
                 mLocationFragment.setUpUICallback(mTrackingFragment);
+                mMotionFragment.setUpUICallback(mTrackingFragment);
                 mTitle = getString(R.string.title_section1);
                 break;
             case 1:
@@ -116,21 +125,29 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void updateAltitude(double altitude) {
-
+        // TODO: May not be necessary anymore
     }
 
-    // Timer Fragment callbacks
+    @Override
+    public void updateAirTime(double airTime) {
+        // TODO: Implement updating displaced air time
+    }
 
-
+    @Override
+    public void updateDuration(int duration) {
+        // TODO: Implement updating total track time
+    }
 
     public void startTracking() {
         tracking = true;
         mLocationFragment.startTracking();
+        mMotionFragment.startTracking();
     }
 
     public void stopTraking() {
         tracking = false;
         mLocationFragment.stopTracking();
+        mMotionFragment.stopTracking();
 //                Intent intent = new Intent(_context, ResultActivity.class);
 //                startActivity(intent);
     }

@@ -96,7 +96,7 @@ public class LocationFragment extends Fragment implements
 
     public void stopTracking() {
         mGoogleApiClient.disconnect();
-        mUICallback.updateSpeed(0.0, 0.0);
+//        mUICallback.updateSpeed(0.0, 0.0);
         Log.e(TAG, "mLocationClient disconnect");
     }
 

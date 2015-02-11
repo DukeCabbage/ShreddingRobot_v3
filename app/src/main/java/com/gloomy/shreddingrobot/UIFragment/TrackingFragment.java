@@ -14,23 +14,26 @@ import android.widget.TextView;
 
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
+import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 
 import java.text.DecimalFormat;
 
-
 public class TrackingFragment extends BaseFragment
-        implements LocationFragment.LocationCallbacks {
+        implements LocationFragment.LocationCallbacks,
+                MotionFragment.MotionCallbacks {
 
     private static final String TAG = "TrackingFrag";
 
     private Resources resources;
 
-    private TextView tvCurSpeed, tvAirTime, tvMaxAirTime, tvTrackLength;
+    public TextView tvCurSpeed, tvAirTime, tvMaxAirTime, tvDuration;
     private FrameLayout switchButton;
     private TextView switchButtonIcon;
 
     private int switchBtnAnimLength;
+
+    private double maxAirTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +49,7 @@ public class TrackingFragment extends BaseFragment
         tvCurSpeed = (TextView) rootView.findViewById(R.id.tv_speed);
         tvAirTime = (TextView) rootView.findViewById(R.id.tv_air_time);
         tvMaxAirTime = (TextView) rootView.findViewById(R.id.tv_max_air_time);
-        tvTrackLength = (TextView) rootView.findViewById(R.id.tv_duration);
+        tvDuration = (TextView) rootView.findViewById(R.id.tv_duration);
 
         switchButton = (FrameLayout) rootView.findViewById(R.id.btn_start);
         switchButtonIcon = (TextView) rootView.findViewById(R.id.tv_morph);
@@ -72,6 +75,7 @@ public class TrackingFragment extends BaseFragment
 
                     v.setEnabled(false);
                     parentActivity.startTracking();
+                    maxAirTime = 0.0;
                 } else {
                     Log.e(TAG, "stopTracking");
                     setUp();
@@ -83,9 +87,7 @@ public class TrackingFragment extends BaseFragment
 
     @Override
     public void onResume(){
-
         super.onResume();
-
     }
 
     @Override
@@ -99,6 +101,31 @@ public class TrackingFragment extends BaseFragment
 
     @Override
     public void updateAltitude(double altitude) {
+        // TODO: May not be necessary anymore
+    }
+
+    @Override
+    public void updateAirTime(double airTime) {
+        DecimalFormat dff = new DecimalFormat("0.00");
+        tvAirTime.setText(dff.format(airTime));
+
+        if (airTime > maxAirTime) {
+            maxAirTime = airTime;
+            tvMaxAirTime.setText(dff.format(maxAirTime));
+        }
+    }
+
+    @Override
+    public void updateDuration(int duration) {
+        if (duration<0) return;
+        int hours = duration/60;
+        int minutes = duration%60;
+        String hoursStr, minutesStr;
+
+        minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
+        hoursStr = hours<10 ? "0"+hours : ""+hours;
+
+        tvDuration.setText(hoursStr+":"+minutesStr);
 
     }
 

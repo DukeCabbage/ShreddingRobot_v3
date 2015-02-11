@@ -17,6 +17,8 @@
     <dimen name="tracking_label_font_size">20sp</dimen>
     <dimen name="tracking_value_font_size">60sp</dimen>
     <dimen name="tracking_unit_font_size">30sp</dimen>
+    <dimen name="tracking_btn_size">80dp</dimen>
+    <dimen name="tracking_btn_iconSize">30dp</dimen>
 
     <!-- Setting Fragment layout-->
     <dimen name="profile_panel_height">100dp</dimen>
