@@ -12,7 +12,7 @@
     <color name="background">#1b212c</color>
 
 
-
+<color name="cyan">#00BCD4</color>
     <!-- General Colors -->
     <color name="transparent">@android:color/transparent</color>
     <color name="black">#000000</color>
