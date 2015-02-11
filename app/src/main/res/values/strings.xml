@@ -21,4 +21,11 @@
     <string name="max_air_time">Max Air Time</string>
     <string name="duration">Duration</string>
 
+    <!-- Setting Fragment -->
+    <string name="veloUnit0">km/h</string>
+    <string name="veloUnit1">m/s</string>
+    <string name="veloUnit2">mi/h</string>
+    <string name="timeUnit0">s</string>
+    <string name="timeUnit1">ms</string>
+
 </resources>

@@ -18,5 +18,12 @@
     <dimen name="tracking_value_font_size">60sp</dimen>
     <dimen name="tracking_unit_font_size">30sp</dimen>
 
+    <!-- Setting Fragment layout-->
+    <dimen name="profile_panel_height">100dp</dimen>
+    <dimen name="profile_photo_size">100dp</dimen>
+    <dimen name="profile_textSize">40sp</dimen>
+    <dimen name="setting_textSize_large">50sp</dimen>
+    <dimen name="setting_textSize_small">20sp</dimen>
+
 
 </resources>
