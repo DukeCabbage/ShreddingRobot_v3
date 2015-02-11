@@ -6,7 +6,7 @@
 
     <path
         android:name="v"
-        android:fillColor="#000000"
+        android:fillColor="@color/white"
         android:pathData="M0,400 L400,200 400,201 0,0 z" />
 
 </vector>

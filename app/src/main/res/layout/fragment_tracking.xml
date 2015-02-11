@@ -1,137 +1,183 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="20dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="20dp">
+    android:background="@color/background"
+    android:padding="@dimen/normal_padding">
 
     <RelativeLayout
         android:id="@+id/rl_speed"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_speed_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speed"
-            android:textColor="#000000"
-            android:textSize="20dp" />
+            android:text="@string/speed"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/tracking_label_font_size"
+            geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_speed"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_speed_label"
-            android:text="134 km/h"
-            android:textColor="#000000"
-            android:textSize="50dp" />
+            android:text="135"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/tracking_value_font_size"
+            geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/tv_speed"
-            android:background="#d3d3d3" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/AirLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/AirTime"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_speed_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Air Time"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/TV_AirTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/AirTime"
-            android:text="0.12 s"
-            android:textColor="#000000"
-            android:textSize="50dp" />
-
-        <View
-            android:layout_width="150dp"
-            android:layout_height="1dp"
-            android:layout_below="@+id/TV_AirTime"
-            android:background="#d3d3d3" />
-
-        <TextView
-            android:id="@+id/MaxAirTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Max AirTime"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/TV_MaxAirTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/MaxAirTime"
-            android:text="12.12 s"
-            android:textColor="#000000"
-            android:textSize="50dp" />
-
-        <View
-            android:layout_width="150dp"
-            android:layout_height="1dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/TV_AirTime"
-            android:background="#d3d3d3" />
+            android:text="km/h"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/tracking_unit_font_size"
+            android:layout_alignBaseline="@+id/tv_speed"
+            android:layout_toRightOf="@+id/tv_speed"
+            geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/rl_air"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_airtime_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/air_time"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/tracking_label_font_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_airtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.12"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/tracking_value_font_size"
+                android:layout_below="@+id/tv_airtime_label"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                geekui:customTypeface="fonts/OpenSans-Light.ttf" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_airtime_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="s"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/tracking_unit_font_size"
+                android:layout_alignBaseline="@+id/tv_airtime"
+                android:layout_toRightOf="@+id/tv_airtime"
+                geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5">
+
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_airtime_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Max AirTime"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/tracking_label_font_size"
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/tv_max_airtime"
+                android:layout_alignStart="@+id/tv_max_airtime" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_airtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_max_airtime_label"
+                android:text="2.07"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/tracking_value_font_size"
+                geekui:customTypeface="fonts/OpenSans-Light.ttf" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_airtime_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="s"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/tracking_unit_font_size"
+                android:layout_alignBaseline="@+id/tv_max_airtime"
+                android:layout_toRightOf="@+id/tv_max_airtime"
+                geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/DurationLayout"
-        android:layout_width="wrap_content"
+        android:id="@+id/rl_duration"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/Duration"
-            android:layout_width="match_parent"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_duration_lable"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Duration"
-            android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textColor="@color/primary_text"
+            android:textSize="20dp"
+            geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
-        <TextView
-            android:id="@+id/TV_Duration"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Duration"
+            android:layout_below="@+id/tv_duration_lable"
             android:text="0:11:36"
-            android:textColor="#000000"
-            android:textSize="50dp" />
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/tracking_value_font_size"
+            geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
-        <View
-            android:layout_width="180dp"
-            android:layout_height="1dp"
-            android:layout_below="@+id/TV_Duration"
-            android:background="#d3d3d3" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_alignParentEnd="true"
+        <FrameLayout
+            android:id="@+id/btn_start"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:background="@drawable/transition_track_start_btn"
             android:layout_centerVertical="true"
-            android:background="@drawable/roundbutton" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/normal_padding"
+            android:elevation="4dp">
+
+            <TextView
+                android:id="@+id/tv_morph"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/avd_path_morph_only" />
+
+        </FrameLayout>
 
 
     </RelativeLayout>

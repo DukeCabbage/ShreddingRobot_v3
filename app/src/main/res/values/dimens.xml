@@ -11,6 +11,9 @@
     <dimen name="navigation_drawer_textSize">26sp</dimen>
 
     <dimen name="normal_padding">10dp</dimen>
+    <dimen name="tracking_label_font_size">20sp</dimen>
+    <dimen name="tracking_value_font_size">60sp</dimen>
+    <dimen name="tracking_unit_font_size">30sp</dimen>
 
 
 </resources>
