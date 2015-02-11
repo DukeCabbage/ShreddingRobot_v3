@@ -35,99 +35,98 @@
             android:id="@+id/tv_speed_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_speed"
+            android:layout_toEndOf="@+id/tv_speed"
             android:text="km/h"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/tracking_unit_font_size"
-            android:layout_alignBaseline="@+id/tv_speed"
-            android:layout_toRightOf="@+id/tv_speed"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/rl_air"
+        android:id="@+id/ll_airtime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:baselineAligned="false"
         android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".5">
+            android:layout_weight="1">
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@+id/tv_airtime_label"
+                android:id="@+id/tv_air_time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:text="@string/air_time"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/tracking_label_font_size"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@+id/tv_airtime"
+                android:id="@+id/tv_air_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tv_air_time_label"
+                android:layout_alignParentStart="true"
                 android:text="0.12"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/tracking_value_font_size"
-                android:layout_below="@+id/tv_airtime_label"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                 android:id="@+id/tv_airtime_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_air_time"
+                android:layout_toEndOf="@id/tv_air_time"
                 android:text="s"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/tracking_unit_font_size"
-                android:layout_alignBaseline="@+id/tv_airtime"
-                android:layout_toRightOf="@+id/tv_airtime"
                 geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".5">
-
+            android:layout_weight="1">
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@+id/tv_max_airtime_label"
+                android:id="@+id/tv_max_air_time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Max AirTime"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/max_air_time"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/tracking_label_font_size"
-                geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
-                android:layout_alignParentTop="true"
-                android:layout_alignLeft="@+id/tv_max_airtime"
-                android:layout_alignStart="@+id/tv_max_airtime" />
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@+id/tv_max_airtime"
+                android:id="@+id/tv_max_air_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_max_airtime_label"
+                android:layout_below="@id/tv_max_air_time_label"
+                android:layout_alignParentStart="true"
                 android:text="2.07"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/tracking_value_font_size"
                 geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@+id/tv_max_airtime_unit"
+                android:id="@+id/tv_max_air_time_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_max_air_time"
+                android:layout_toEndOf="@id/tv_max_air_time"
                 android:text="s"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/tracking_unit_font_size"
-                android:layout_alignBaseline="@+id/tv_max_airtime"
-                android:layout_toRightOf="@+id/tv_max_airtime"
                 geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
 
         </RelativeLayout>
@@ -140,19 +139,19 @@
         android:layout_weight="1">
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-            android:id="@+id/tv_duration_lable"
+            android:id="@+id/tv_duration_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Duration"
+            android:text="@string/duration"
             android:textColor="@color/primary_text"
-            android:textSize="20dp"
+            android:textSize="@dimen/tracking_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_duration_lable"
+            android:layout_below="@id/tv_duration_label"
             android:text="0:11:36"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/tracking_value_font_size"
@@ -163,23 +162,18 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:clickable="true"
-            android:background="@drawable/transition_track_start_btn"
+            android:background="@drawable/switch_btn_bg_transition"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/normal_padding"
-            android:elevation="4dp">
+            android:layout_marginEnd="@dimen/normal_padding">
 
             <TextView
                 android:id="@+id/tv_morph"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:background="@drawable/avd_path_morph_only" />
-
+                android:background="@drawable/switch_btn_vector" />
         </FrameLayout>
-
-
     </RelativeLayout>
 
 

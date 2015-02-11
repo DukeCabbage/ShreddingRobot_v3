@@ -1,19 +1,18 @@
 package com.gloomy.shreddingrobot.UIFragment;
 
-import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.gloomy.shreddingrobot.R;
-import com.gloomy.shreddingrobot.ResultActivity;
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 
@@ -25,38 +24,55 @@ public class TrackingFragment extends BaseFragment
 
     private static final String TAG = "TrackingFrag";
 
-    private TextView tvCurSpeed, tvAirTime, tvMaxAirTime, tvTrackLength;
-    private Button switchButton;
+    private Resources resources;
 
+    private TextView tvCurSpeed, tvAirTime, tvMaxAirTime, tvTrackLength;
+    private FrameLayout switchButton;
+
+    private int switchBtnAnimLength;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tracking, container, false);
         initView(rootView);
+        setUp();
         bindEvent(rootView);
         return rootView;
     }
 
-    private void bindEvent(final View rootView) {
-        FrameLayout button = (FrameLayout) rootView.findViewById(R.id.btn_start);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), ResultActivity.class);
-//                startActivity(intent);
-                TransitionDrawable transition = (TransitionDrawable) v.getBackground();
-                transition.startTransition(1000);
-
-                TextView morph = (TextView) rootView.findViewById(R.id.tv_morph);
-                animateDrawables(morph);
-
-            }
-        });
+    private void setUp() {
+        resources = getResources();
+        switchBtnAnimLength = resources.getInteger(R.integer.switch_anim_length);
     }
 
     private void initView(View rootView) {
         tvCurSpeed = (TextView) rootView.findViewById(R.id.tv_speed);
+        tvAirTime = (TextView) rootView.findViewById(R.id.tv_air_time);
+        tvMaxAirTime = (TextView) rootView.findViewById(R.id.tv_max_air_time);
+        tvTrackLength = (TextView) rootView.findViewById(R.id.tv_duration);
+        switchButton = (FrameLayout) rootView.findViewById(R.id.btn_start);
+    }
+
+    private void bindEvent(final View rootView) {
+        switchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!parentActivity.isTracking()) {
+                    TransitionDrawable transition = (TransitionDrawable) v.getBackground();
+                    transition.startTransition(switchBtnAnimLength);
+
+                    TextView morph = (TextView) rootView.findViewById(R.id.tv_morph);
+                    animateDrawables(morph);
+
+                    v.setEnabled(false);
+                    parentActivity.startTracking();
+                } else {
+                    Log.e(TAG, "stopTracking");
+                    parentActivity.stopTraking();
+                }
+            }
+        });
     }
 
     @Override
@@ -72,7 +88,7 @@ public class TrackingFragment extends BaseFragment
 
         DecimalFormat speedDF = new DecimalFormat("@@@");
 
-        tvCurSpeed.setText(speedDF.format(displaySpeed) + " km/h");
+        tvCurSpeed.setText(speedDF.format(displaySpeed));
     }
 
     @Override
@@ -84,10 +100,18 @@ public class TrackingFragment extends BaseFragment
         if (!(view instanceof TextView)) {
             return;
         }
-        TextView textView = (TextView) view;
+        final TextView textView = (TextView) view;
 
         if (textView.getBackground() instanceof Animatable) {
             ((Animatable) textView.getBackground()).start();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    textView.setBackground(resources.getDrawable(R.drawable.switch_btn_stop));
+                    switchButton.setBackground(resources.getDrawable(R.drawable.switch_btn_bg_red));
+                    switchButton.setEnabled(true);
+                }
+            }, switchBtnAnimLength);
         }
 
     }

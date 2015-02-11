@@ -11,8 +11,6 @@
     <color name="divider">#B6B6B6</color>
     <color name="background">#1b212c</color>
 
-
-<color name="cyan">#00BCD4</color>
     <!-- General Colors -->
     <color name="transparent">@android:color/transparent</color>
     <color name="black">#000000</color>
@@ -33,6 +31,8 @@
     <color name="green">#669900</color>
     <color name="orange">#FF8800</color>
     <color name="red">#CC0000</color>
+
+    <color name="cyan">#00BCD4</color>
 
 
 

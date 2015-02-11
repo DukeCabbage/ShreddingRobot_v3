@@ -1,6 +1,6 @@
 <objectAnimator
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="1000"
+    android:duration="@integer/switch_anim_length"
     android:propertyName="pathData"
     android:valueFrom="M0,400 L400,200 400,201 0,0 z"
     android:valueTo="M0,400 L400,400 400,0 0,0 z"

@@ -3,6 +3,7 @@ package com.gloomy.shreddingrobot;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class MainActivity extends ActionBarActivity
     private Context _context;
     private FragmentManager mFragManager;
 
+    private Toolbar toolbar;
+
     private DrawerFragment mDrawerFragment;
     private TrackingFragment mTrackingFragment;
     private HistoryFragment mHistoryFragment;
@@ -34,7 +37,7 @@ public class MainActivity extends ActionBarActivity
 
     private CharSequence mTitle;
 
-    private Toolbar toolbar;
+    private boolean tracking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void initSensor() {
+        tracking = false;
         mLocationFragment = new LocationFragment();
         mLocationFragment.setUpDataCallback(this);
         mFragManager.beginTransaction().add(mLocationFragment, "locationFrag").commit();
@@ -116,4 +120,20 @@ public class MainActivity extends ActionBarActivity
     }
 
     // Timer Fragment callbacks
+
+
+
+    public void startTracking() {
+        tracking = true;
+        mLocationFragment.startTracking();
+    }
+
+    public void stopTraking() {
+        tracking = false;
+        mLocationFragment.stopTracking();
+//                Intent intent = new Intent(_context, ResultActivity.class);
+//                startActivity(intent);
+    }
+
+    public boolean isTracking() { return tracking; }
 }
