@@ -34,6 +34,10 @@
     <color name="orange">#FF8800</color>
     <color name="red">#CC0000</color>
 
+    <!-- Setting Fragment -->
+    <color name="veloUnit0">#FFFFFF</color>
+    <color name="veloUnit1">#2c6fae</color>
+    <color name="veloUnit2">#1BA1E2</color>
 
 
 </resources>

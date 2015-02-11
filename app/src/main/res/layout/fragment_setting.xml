@@ -1,8 +1,208 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/setting_background">
+    <LinearLayout
+        android:id="@+id/profilePanel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_panel_height"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:id="@+id/profilePhoto"
+            android:layout_width="@dimen/profile_photo_size"
+            android:layout_height="@dimen/profile_photo_size"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/profile_placeholder" />
+
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/speedUnit">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speed Unit"
+        android:textSize="@dimen/setting_textSize_small"
+        android:textColor="@color/white"
+        android:layout_marginLeft="20dp"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time Unit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/setting_textSize_small"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        />
+</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/unitChange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profilePanel"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <RelativeLayout
+            android:id="@+id/speedUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/setToKmH"
+                android:text="@string/veloUnit0"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:background="@color/veloUnit0"
+                android:textSize="@dimen/setting_textSize_large"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/setToMPS"
+                android:text="@string/veloUnit1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:background="@color/veloUnit1"
+                android:textSize="@dimen/setting_textSize_large"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/setToMpH"
+                android:text="@string/veloUnit2"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:background="@color/veloUnit2"
+                android:textSize="@dimen/setting_textSize_large"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/timeUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+             >
+
+            <TextView
+                android:id="@+id/setToS"
+                android:text="@string/timeUnit0"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:background="@color/veloUnit0"
+                android:textSize="@dimen/setting_textSize_large"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/setToMS"
+                android:text="@string/timeUnit1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:background="@color/veloUnit1"
+                android:textSize="@dimen/setting_textSize_large"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/autoOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Turn off tracking after 10 min"
+            android:textColor="@color/white"
+            android:textSize="@dimen/setting_textSize_small"
+            />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:layout_below="@+id/autoOff"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Turn off tracking on lift"
+            android:layout_below="@+id/seekBar"
+            android:textColor="@color/white"
+            android:textSize="@dimen/setting_textSize_small"
+            android:id="@+id/liftOff"
+            android:layout_marginTop="20dp"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/switch1"
+            android:layout_alignTop="@+id/liftOff"
+            android:layout_above="@+id/rate"
+            android:layout_alignRight="@+id/ratingBar"
+            android:layout_alignEnd="@+id/ratingBar"
+            android:layout_toEndOf="@+id/autoOff"
+            android:layout_toRightOf="@+id/autoOff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Rate ShredBot"
+            android:textColor="@color/white"
+            android:textSize="@dimen/setting_textSize_small"
+            android:id="@+id/rate"
+            android:layout_below="@+id/liftOff"
+            android:layout_marginTop="20dp"
+                />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:layout_below="@+id/rate"
+            android:layout_toRightOf="@+id/rate"
+            android:layout_toEndOf="@+id/rate"
+            />
+
+    </RelativeLayout>
 
 
 
-</FrameLayout>
+
+
+</LinearLayout>
