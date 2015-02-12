@@ -4,19 +4,24 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
+import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.UIFragment.DrawerFragment;
 import com.gloomy.shreddingrobot.UIFragment.HistoryFragment;
+import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
+import com.nineoldandroids.animation.Animator;
 
 
 public class MainActivity extends ActionBarActivity
@@ -27,6 +32,7 @@ public class MainActivity extends ActionBarActivity
     private static final String TAG = "MainActivity";
 
     private Context _context;
+    private MaterialMenuDrawable materialMenu;
     private FragmentManager mFragManager;
 
     private Toolbar toolbar;
@@ -55,6 +61,7 @@ public class MainActivity extends ActionBarActivity
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         }
 
+
         _context = this;
         mFragManager = getFragmentManager();
         initUI();
@@ -65,9 +72,12 @@ public class MainActivity extends ActionBarActivity
         mDrawerFragment = (DrawerFragment) mFragManager.findFragmentById(R.id.navigation_drawer);
         mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout), toolbar);
 
-        mTrackingFragment = new TrackingFragment();
-        mHistoryFragment = new HistoryFragment();
-        mSettingFragment = new SettingFragment();
+        if(null==mTrackingFragment)
+            mTrackingFragment = new TrackingFragment();
+        if(null==mHistoryFragment)
+            mHistoryFragment = new HistoryFragment();
+        if(null==mSettingFragment)
+            mSettingFragment = new SettingFragment();
     }
 
     private void initSensor() {
@@ -148,8 +158,50 @@ public class MainActivity extends ActionBarActivity
         tracking = false;
         mLocationFragment.stopTracking();
         mMotionFragment.stopTracking();
-                Intent intent = new Intent(_context, ResultActivity.class);
-                startActivity(intent);
+        // Create a new Fragment to be placed in the activity layout
+        ResultFragment resultFragment = new ResultFragment();
+
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        resultFragment.setArguments(getIntent().getExtras());
+
+        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+        mFragTransaction.setCustomAnimations(R.anim.enter_from_top, 0);
+        mFragTransaction.replace(R.id.container, resultFragment, "resultFrag").commit();
+        setUpResultActionBar();
+    }
+
+    private void setUpResultActionBar(){
+        getSupportActionBar().setTitle("Cypress Mountain Run 12");
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+                mFragTransaction.setCustomAnimations(0, R.anim.leave_from_top);
+                mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
+                materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
+                materialMenu.setAnimationListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {}
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mLocationFragment.setUpUICallback(mTrackingFragment);
+                        mMotionFragment.setUpUICallback(mTrackingFragment);
+
+                        initUI();
+
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {}
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {}
+                });
+                mTitle = getString(R.string.title_section1);
+                restoreActionBar();
+            }
+        });
+        materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
+        materialMenu.animateIconState(MaterialMenuDrawable.IconState.X, false);
+        toolbar.setNavigationIcon(materialMenu);
     }
 
     public boolean isTracking() { return tracking; }

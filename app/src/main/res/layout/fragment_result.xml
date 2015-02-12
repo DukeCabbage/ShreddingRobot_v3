@@ -1,0 +1,283 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <RelativeLayout
+        android:id="@+id/ll_profile"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:padding="@dimen/normal_padding">
+
+
+        <com.gloomy.shreddingrobot.Widget.RoundedImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/iv_profile"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/mark"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark Mcmorris"
+            android:id="@+id/tv_name"
+            android:layout_marginLeft="@dimen/normal_padding"
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            android:layout_alignTop="@+id/iv_profile"
+            android:layout_toEndOf="@+id/iv_profile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="LV. 13"
+            android:id="@+id/tv_level_total"
+            android:layout_marginLeft="@dimen/normal_padding"
+            android:textColor="@color/primary_text"
+            android:layout_alignBottom="@+id/iv_profile"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_data"
+        android:layout_above="@+id/result_save_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_profile"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/result_data_height"
+            android:padding="@dimen/normal_padding">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_speed_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_speed"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/result_label_font_size"
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+                android:layout_marginTop="@dimen/small_padding"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/tv_max_speed" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="@color/red"
+                android:layout_toLeftOf="@+id/tv_max_speed"
+                android:layout_below="@+id/tv_max_speed_label"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="@dimen/normal_padding"></View>
+
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="198"
+                android:textColor="@color/red"
+                android:textSize="@dimen/result_value_font_size"
+                geekui:customTypeface="fonts/OpenSans-Light.ttf"
+                android:layout_toLeftOf="@+id/tv_max_speed_unit" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_speed_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_max_speed"
+                android:text="Km/h"
+                android:textColor="@color/red"
+                android:textSize="@dimen/result_unit_font_size"
+                geekui:customTypeface="fonts/OpenSans-Regular.ttf"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/result_data_height"
+            android:padding="@dimen/normal_padding">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_avg_speed_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avg_speed"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/result_label_font_size"
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+                android:layout_marginTop="@dimen/small_padding"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/tv_avg_speed" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="@color/green"
+                android:layout_toLeftOf="@+id/tv_avg_speed"
+                android:layout_below="@+id/tv_avg_speed_label"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="@dimen/normal_padding"></View>
+
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_avg_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="56"
+                android:textColor="@color/green"
+                android:textSize="@dimen/result_value_font_size"
+                geekui:customTypeface="fonts/OpenSans-Light.ttf"
+                android:layout_toLeftOf="@+id/tv_avg_speed_unit" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_avg_speed_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_avg_speed"
+                android:text="Km/h"
+                android:textColor="@color/green"
+                android:textSize="@dimen/result_unit_font_size"
+                geekui:customTypeface="fonts/OpenSans-Regular.ttf"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/result_data_height"
+            android:padding="@dimen/normal_padding">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_air_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_air_time"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/result_label_font_size"
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+                android:layout_marginTop="@dimen/small_padding"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/tv_max_air_time" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="@color/lime"
+                android:layout_toLeftOf="@+id/tv_max_air_time"
+                android:layout_below="@+id/tv_max_air_label"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="@dimen/normal_padding"></View>
+
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_air_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="1.0"
+                android:textColor="@color/lime"
+                android:textSize="@dimen/result_value_font_size"
+                geekui:customTypeface="fonts/OpenSans-Light.ttf"
+                android:layout_toLeftOf="@+id/tv_max_air_time_unit" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_max_air_time_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_max_air_time"
+                android:text="Sec"
+                android:textColor="@color/lime"
+                android:textSize="@dimen/result_unit_font_size"
+                geekui:customTypeface="fonts/OpenSans-Regular.ttf"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/result_data_height"
+            android:padding="@dimen/normal_padding">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_longest_jump_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/longest_jump"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/result_label_font_size"
+                geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+                android:layout_marginTop="@dimen/small_padding"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/tv_longest_jump" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="@color/red"
+                android:layout_toLeftOf="@+id/tv_longest_jump"
+                android:layout_below="@+id/tv_longest_jump_label"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="@dimen/normal_padding"></View>
+
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_longest_jump"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="14"
+                android:textColor="@color/red"
+                android:textSize="@dimen/result_value_font_size"
+                geekui:customTypeface="fonts/OpenSans-Light.ttf"
+                android:layout_toLeftOf="@+id/tv_longest_jump_unit" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/tv_longest_jump_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_longest_jump"
+                android:text="M"
+                android:textColor="@color/red"
+                android:textSize="@dimen/result_unit_font_size"
+                geekui:customTypeface="fonts/OpenSans-Regular.ttf"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/result_save_btn"
+        android:layout_width="@dimen/result_btn_size"
+        android:layout_height="@dimen/result_btn_size"
+        android:background="@drawable/switch_btn_bg_green"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:clickable="true"
+        android:elevation="@dimen/small_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_accept" />
+    </FrameLayout>
+
+</RelativeLayout>
