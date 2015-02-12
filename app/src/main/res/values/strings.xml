@@ -30,5 +30,6 @@
     <string name="max_speed">Max Speed</string>
     <string name="avg_speed">Average Speed</string>
     <string name="longest_jump">Longest Jump</string>
+    <string name="share">Share</string>
 
 </resources>

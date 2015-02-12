@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
@@ -21,6 +23,7 @@ import com.gloomy.shreddingrobot.UIFragment.HistoryFragment;
 import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
+import com.gloomy.shreddingrobot.Widget.Logger;
 import com.nineoldandroids.animation.Animator;
 
 
@@ -34,7 +37,7 @@ public class MainActivity extends ActionBarActivity
     private Context _context;
     private MaterialMenuDrawable materialMenu;
     private FragmentManager mFragManager;
-
+    private Menu menu;
     private Toolbar toolbar;
 
     private DrawerFragment mDrawerFragment;
@@ -53,6 +56,7 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Logger.d(TAG,"onCreate");
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (toolbar != null) {
@@ -60,13 +64,40 @@ public class MainActivity extends ActionBarActivity
             setSupportActionBar(toolbar);
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         }
-
-
-        _context = this;
         mFragManager = getFragmentManager();
+        _context = this;
         initUI();
         initSensor();
     }
+
+    @Override
+    public void onResume(){
+        Logger.d(TAG,"onResume");
+
+        super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        Logger.d(TAG,"onCreateOptionsMenu");
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_share, menu);
+        return true;
+    }
+
+    private void hideOption(int id)
+    {
+        MenuItem item = menu.findItem(id);
+        item.setVisible(false);
+    }
+
+    private void showOption(int id)
+    {
+        MenuItem item = menu.findItem(id);
+        item.setVisible(true);
+    }
+
 
     private void initUI() {
         mDrawerFragment = (DrawerFragment) mFragManager.findFragmentById(R.id.navigation_drawer);
@@ -172,36 +203,44 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void setUpResultActionBar(){
+
         getSupportActionBar().setTitle("Cypress Mountain Run 12");
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-                mFragTransaction.setCustomAnimations(0, R.anim.leave_from_top);
-                mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
-                materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
-                materialMenu.setAnimationListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {}
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mLocationFragment.setUpUICallback(mTrackingFragment);
-                        mMotionFragment.setUpUICallback(mTrackingFragment);
-
-                        initUI();
-
-                    }
-                    @Override
-                    public void onAnimationCancel(Animator animation) {}
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {}
-                });
-                mTitle = getString(R.string.title_section1);
-                restoreActionBar();
+                transitFromResultToTrack();
             }
         });
         materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.X, false);
         toolbar.setNavigationIcon(materialMenu);
+        showOption(R.id.action_share);
+
+        mDrawerFragment.disableDrawer();
+    }
+
+    public void transitFromResultToTrack(){
+        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+        mFragTransaction.setCustomAnimations(0, R.anim.leave_from_top);
+        mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
+        materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
+        materialMenu.setAnimationListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLocationFragment.setUpUICallback(mTrackingFragment);
+                mMotionFragment.setUpUICallback(mTrackingFragment);
+                initUI();
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+        mTitle = getString(R.string.title_section1);
+        restoreActionBar();
+        hideOption(R.id.action_share);
+        mDrawerFragment.enableDrawer();
     }
 
     public boolean isTracking() { return tracking; }

@@ -163,6 +163,14 @@ public class DrawerFragment extends BaseFragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+    public void disableDrawer(){
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void enableDrawer(){
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
