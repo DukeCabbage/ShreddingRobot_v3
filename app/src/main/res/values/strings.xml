@@ -27,5 +27,8 @@
     <string name="veloUnit2">mi/h</string>
     <string name="timeUnit0">s</string>
     <string name="timeUnit1">ms</string>
+    <string name="max_speed">Max Speed</string>
+    <string name="avg_speed">Average Speed</string>
+    <string name="longest_jump">Longest Jump</string>
 
 </resources>

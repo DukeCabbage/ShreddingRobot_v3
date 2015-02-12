@@ -17,6 +17,10 @@ public class DBTrack implements Parcelable {
     private String locationName;
     private java.util.Date date;
 
+
+
+    private Double maxJumpDistance;
+
     public DBTrack(Long id) {
         this.id = id;
         this.maxSpeed = 0.0;
@@ -24,16 +28,18 @@ public class DBTrack implements Parcelable {
         this.maxAirTime = 0.0;
         this.locationName = "";
         this.date = null;
+        this.maxJumpDistance = 0.0;
     }
 
     public DBTrack(Long id, Double maxSpeed, Double avgSpeed,
-                   Double maxAirTime, String locationName, java.util.Date date) {
+                   Double maxAirTime, String locationName, java.util.Date date, Double maxJumpDistance) {
         this.id = id;
         this.maxSpeed = maxSpeed;
         this.avgSpeed = avgSpeed;
         this.maxAirTime = maxAirTime;
         this.locationName = locationName;
         this.date = date;
+        this.maxJumpDistance = maxJumpDistance;
     }
 
     public DBTrack(Parcel parcel) {
@@ -43,6 +49,7 @@ public class DBTrack implements Parcelable {
         maxAirTime = parcel.readDouble();
         locationName = parcel.readString();
         date = new java.util.Date(parcel.readLong());
+        maxJumpDistance = parcel.readDouble();
     }
 
     @Override
@@ -58,6 +65,7 @@ public class DBTrack implements Parcelable {
         dest.writeDouble(maxAirTime);
         dest.writeString(locationName);
         dest.writeLong(date.getTime());
+        dest.writeDouble(maxJumpDistance);
     }
 
     public static final Creator CREATOR
@@ -117,5 +125,13 @@ public class DBTrack implements Parcelable {
 
     public void setDate(java.util.Date date) {
         this.date = date;
+    }
+
+    public Double getMaxJumpDistance() {
+        return maxJumpDistance;
+    }
+
+    public void setMaxJumpDistance(Double maxJumpDistance) {
+        this.maxJumpDistance = maxJumpDistance;
     }
 }

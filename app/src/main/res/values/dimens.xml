@@ -12,13 +12,14 @@
     <dimen name="navigation_drawer_textMargin">10dp</dimen>
 
     <dimen name="normal_padding">10dp</dimen>
+    <dimen name="small_padding">5dp</dimen>
 
     <!-- Tracking -->
     <dimen name="tracking_label_font_size">20sp</dimen>
     <dimen name="tracking_value_font_size">60sp</dimen>
     <dimen name="tracking_unit_font_size">30sp</dimen>
-    <dimen name="tracking_btn_size">80dp</dimen>
-    <dimen name="tracking_btn_iconSize">30dp</dimen>
+    <dimen name="tracking_btn_size">60dp</dimen>
+    <dimen name="tracking_btn_iconSize">20dp</dimen>
 
     <!-- Setting Fragment layout-->
     <dimen name="profile_panel_height">100dp</dimen>
@@ -27,5 +28,12 @@
     <dimen name="setting_textSize_large">50sp</dimen>
     <dimen name="setting_textSize_small">20sp</dimen>
 
+
+    <dimen name="result_data_height">80dp</dimen>
+    <dimen name="result_value_font_size">45sp</dimen>
+    <dimen name="result_unit_font_size">20sp</dimen>
+    <dimen name="result_label_font_size">16sp</dimen>
+    <dimen name="result_btn_size">60dp</dimen>
+    <dimen name="big_padding">15dp</dimen>
 
 </resources>

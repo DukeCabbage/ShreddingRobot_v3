@@ -148,8 +148,8 @@ public class MainActivity extends ActionBarActivity
         tracking = false;
         mLocationFragment.stopTracking();
         mMotionFragment.stopTracking();
-//                Intent intent = new Intent(_context, ResultActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(_context, ResultActivity.class);
+                startActivity(intent);
     }
 
     public boolean isTracking() { return tracking; }

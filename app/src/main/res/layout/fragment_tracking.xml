@@ -22,7 +22,7 @@
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-            android:id="@+id/tv_speed"
+            android:id="@+id/tv_max_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_speed_label"
@@ -32,11 +32,11 @@
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-            android:id="@+id/tv_speed_unit"
+            android:id="@+id/tv_max_speed_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_speed"
-            android:layout_toEndOf="@+id/tv_speed"
+            android:layout_alignBaseline="@+id/tv_max_speed"
+            android:layout_toEndOf="@+id/tv_max_speed"
             android:text="km/h"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/tracking_unit_font_size"

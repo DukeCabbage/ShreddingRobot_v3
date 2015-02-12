@@ -28,6 +28,7 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
         public final static Property MaxAirTime = new Property(3, Double.class, "maxAirTime", false, "MAX_AIR_TIME");
         public final static Property LocationName = new Property(4, String.class, "locationName", false, "LOCATION_NAME");
         public final static Property Date = new Property(5, java.util.Date.class, "date", false, "DATE");
+        public final static Property MaxJumpDistance = new Property(6, Double.class, "maxJumpDistance", false, "MAX_JUMP_DISTANCE");
     };
 
     public DBTrackDao(DaoConfig config) {
@@ -47,7 +48,8 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
                 "'AVG_SPEED' REAL," + // 2: avgSpeed
                 "'MAX_AIR_TIME' REAL," + // 3: maxAirTime
                 "'LOCATION_NAME' TEXT," + // 4: locationName
-                "'DATE' INTEGER);"); // 5: date
+                "'DATE' INTEGER," + // 5: date
+                "'MAX_JUMP_DISTANCE' REAL);");// 6: maxJumpDistance
     }
 
     /** Drops the underlying database table. */
@@ -90,6 +92,11 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
         if (date != null) {
             stmt.bindLong(6, date.getTime());
         }
+
+        Double maxJumpDistance = entity.getMaxJumpDistance();
+        if (maxJumpDistance != null) {
+            stmt.bindDouble(7, maxJumpDistance);
+        }
     }
 
     /** @inheritdoc */
@@ -107,7 +114,8 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
                 cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2), // avgSpeed
                 cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // maxAirTime
                 cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // locationName
-                cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5))
+                cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)),
+                cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6) // maxJumpDistance
         );
         return entity;
     }
@@ -121,6 +129,7 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
         entity.setMaxAirTime(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
         entity.setLocationName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setDate(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
+        entity.setMaxJumpDistance(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
     }
 
     /** @inheritdoc */

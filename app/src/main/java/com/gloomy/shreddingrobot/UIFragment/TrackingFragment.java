@@ -46,7 +46,7 @@ public class TrackingFragment extends BaseFragment
     }
 
     private void initView(View rootView) {
-        tvCurSpeed = (TextView) rootView.findViewById(R.id.tv_speed);
+        tvCurSpeed = (TextView) rootView.findViewById(R.id.tv_max_speed);
         tvAirTime = (TextView) rootView.findViewById(R.id.tv_air_time);
         tvMaxAirTime = (TextView) rootView.findViewById(R.id.tv_max_air_time);
         tvDuration = (TextView) rootView.findViewById(R.id.tv_duration);
