@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -47,7 +48,7 @@
 
     <LinearLayout
         android:id="@+id/ll_data"
-        android:layout_above="@+id/result_save_btn"
+        android:layout_above="@+id/result_done_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_profile"
@@ -261,8 +262,21 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/result_save_btn"
+    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+        android:id="@+id/tv_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/result_label_font_size"
+        geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="@dimen/normal_padding"
+        android:layout_above="@+id/result_done_btn"/>
+
+    <com.andexert.library.RippleView
+        android:id="@+id/result_done_btn"
         android:layout_width="@dimen/result_btn_size"
         android:layout_height="@dimen/result_btn_size"
         android:background="@drawable/switch_btn_bg_green"
@@ -271,13 +285,56 @@
         android:layout_marginBottom="@dimen/big_padding"
         android:layout_marginRight="@dimen/big_padding"
         android:clickable="true"
-        android:elevation="@dimen/small_padding">
+        android:elevation="@dimen/small_padding"
+        android:gravity="center"
+        ripple:rv_centered="true"
+        ripple:rv_zoom="true"
+        ripple:rv_rippleDuration="300"
+        ripple:rv_zoomDuration="300">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_action_accept" />
-    </FrameLayout>
+    </com.andexert.library.RippleView>
+
+    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+        android:id="@+id/tv_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/result_label_font_size"
+        geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginBottom="@dimen/normal_padding"
+        android:layout_above="@+id/result_continue_btn"/>
+
+    <com.andexert.library.RippleView
+        android:id="@+id/result_continue_btn"
+        android:layout_width="@dimen/result_btn_size"
+        android:layout_height="@dimen/result_btn_size"
+        android:background="@drawable/round_btn_blue"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:clickable="true"
+        android:elevation="@dimen/small_padding"
+        android:gravity="center"
+        ripple:rv_centered="true"
+        ripple:rv_zoom="true"
+        ripple:rv_rippleDuration="300"
+        ripple:rv_zoomDuration="300"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_next_item" />
+    </com.andexert.library.RippleView>
 
 </RelativeLayout>
