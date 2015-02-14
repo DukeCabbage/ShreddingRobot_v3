@@ -22,7 +22,6 @@ import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
 
-
 public class MainActivity extends ActionBarActivity
         implements DrawerFragment.NavigationDrawerCallbacks,
                 LocationFragment.LocationCallbacks,

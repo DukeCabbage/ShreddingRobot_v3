@@ -29,14 +29,11 @@ public class ResultFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_result, container, false);
     }
 
     @Override
     public void onResume() {
-        Logger.e(TAG, "onResume()");
         findViewAndBindEvent(getView());
         super.onResume();
     }
@@ -47,7 +44,6 @@ public class ResultFragment extends BaseFragment {
         tv_done.setAlpha(0);
         tv_continue.setAlpha(0);
     }
-
 
     private void findViewAndBindEvent(View rootView) {
         final RippleView result_continue_btn = (RippleView) rootView.findViewById(R.id.result_continue_btn);
