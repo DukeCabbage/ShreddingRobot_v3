@@ -9,12 +9,15 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.gloomy.shreddingrobot.Widget.Logger;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MotionFragment extends Fragment {
     private static final String TAG = "MotionFrag";
-    private static final double AIR_TIME_NOISE_THRESHOLD = 0.8;
+    private static final double AIR_TIME_NOISE_THRESHOLD = 0.2;
+    private static final double FREE_FALL_THRESHOLD = 2.0;
     private static final int SENSOR_UPDATE_TIME_IN_MILLISECONDS = 50;
     private static final int DURATION_UPDATE_INTERVAL_IN_MINUTES = 1;
     private static final int ONE_MINUTE_IN_MILLISECONDS = 60*1000;
@@ -38,6 +41,7 @@ public class MotionFragment extends Fragment {
     private double[] graReading;
     private double[] accReading;
     private double graMag, accMag;
+    private double projection;
 
     private double airTime;
     private int duration;
@@ -64,6 +68,7 @@ public class MotionFragment extends Fragment {
         mSensorManager = (SensorManager) _context.getSystemService(Context.SENSOR_SERVICE);
         mGraSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         noGraSensor = mGraSensor == null;
+        Logger.d(TAG, "noGraSensor: "+noGraSensor);
         mAccSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         graReading = new double[3];
@@ -101,12 +106,11 @@ public class MotionFragment extends Fragment {
                 graMag = Math.sqrt(Math.pow(graReading[0], 2) + Math.pow(graReading[1], 2) + Math.pow(graReading[2], 2));
             }
 
-            double projection = 0.0;
+            projection = 0.0;
             for (int axis = 0; axis < 3; axis++) {
                 projection += accReading[axis] * graReading[axis];
             }
-//            Log.e(TAG, "proj: "+proj);
-            freeFalling = projection/graMag < 3.0;
+            freeFalling = (projection/graMag < FREE_FALL_THRESHOLD);
         }
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {}
@@ -168,12 +172,17 @@ public class MotionFragment extends Fragment {
                 public void run() {
                     if (freeFalling) {
                         airTime += ((double) SENSOR_UPDATE_TIME_IN_MILLISECONDS) / 1000.0;
+//                        Logger.d(TAG, "free falling "+airTime);
+//                        Logger.d(TAG, "proj: "+projection);
+//                        Logger.d(TAG, graMag+"");
                     } else if (airTime > AIR_TIME_NOISE_THRESHOLD) {
+//                        Logger.d(TAG, "stop free fall");
                         if (mDataCallback != null)
                             mDataCallback.updateAirTime(airTime);
                         if (mUICallback != null)
                             mUICallback.updateAirTime(airTime);
-
+                        airTime = 0.0;
+                    }else{
                         airTime = 0.0;
                     }
                 }

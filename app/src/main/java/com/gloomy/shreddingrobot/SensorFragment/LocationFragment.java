@@ -130,10 +130,10 @@ public class LocationFragment extends Fragment implements
         double accuracy = location.getAccuracy();
         double altitude = location.getAltitude();
 
-        Log.e(TAG, "Location received: " + location.toString());
-        Log.e(TAG, "Speed: " + speed);
-        Log.e(TAG, "Accuracy: " + accuracy);
-        Log.e(TAG, "Altitude: " + altitude);
+//        Log.e(TAG, "Location received: " + location.toString());
+//        Log.e(TAG, "Speed: " + speed);
+//        Log.e(TAG, "Accuracy: " + accuracy);
+//        Log.e(TAG, "Altitude: " + altitude);
 
         if (mDataCallback != null) {
             mDataCallback.updateSpeed(speed, accuracy);

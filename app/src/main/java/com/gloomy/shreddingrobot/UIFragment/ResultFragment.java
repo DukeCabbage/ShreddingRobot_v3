@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 
 import com.andexert.library.RippleView;
-import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
-
 
 public class ResultFragment extends BaseFragment {
     private static final String TAG = ResultFragment.class.getSimpleName();
@@ -26,7 +22,6 @@ public class ResultFragment extends BaseFragment {
     private TypefaceTextView tv_done;
     private RippleView continue_btn;
     private TypefaceTextView tv_continue;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

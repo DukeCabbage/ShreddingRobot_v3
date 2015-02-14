@@ -17,8 +17,6 @@ public class DBTrack implements Parcelable {
     private String locationName;
     private java.util.Date date;
 
-
-
     private Double maxJumpDistance;
 
     public DBTrack(Long id) {

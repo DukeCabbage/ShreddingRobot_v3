@@ -75,7 +75,6 @@ public class TrackingFragment extends BaseFragment
 
                     v.setEnabled(false);
                     parentActivity.startTracking();
-                    maxAirTime = 0.0;
                 } else {
                     Log.e(TAG, "stopTracking");
                     setUp();
@@ -109,7 +108,7 @@ public class TrackingFragment extends BaseFragment
         DecimalFormat dff = new DecimalFormat("0.00");
         tvAirTime.setText(dff.format(airTime));
 
-        if (airTime > maxAirTime) {
+        if (airTime > maxAirTime || airTime == 0.0) {
             maxAirTime = airTime;
             tvMaxAirTime.setText(dff.format(maxAirTime));
         }

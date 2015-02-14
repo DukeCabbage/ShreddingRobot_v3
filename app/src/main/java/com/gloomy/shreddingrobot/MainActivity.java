@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.gloomy.shreddingrobot.Dao.DBTrack;
+import com.gloomy.shreddingrobot.Dao.DBTrackDao;
+import com.gloomy.shreddingrobot.Dao.DaoManager;
 import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.UIFragment.DrawerFragment;
@@ -21,6 +24,9 @@ import com.gloomy.shreddingrobot.UIFragment.HistoryFragment;
 import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
+
+import java.util.Date;
+import java.util.Random;
 
 public class MainActivity extends ActionBarActivity
         implements DrawerFragment.NavigationDrawerCallbacks,
@@ -46,7 +52,16 @@ public class MainActivity extends ActionBarActivity
 
     private CharSequence mTitle;
 
+    private DBTrackDao trackDao;
+    private DBTrack curTrack;
+
     private boolean tracking;
+    private Date trackDate;
+    private String trackLocation;
+    private double trackDuration;
+    private double curSpeed, maxSpeed, avgSpeed;
+    private double airTime,  maxAirTime;
+    private double jumpDistance, maxJumpDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +75,8 @@ public class MainActivity extends ActionBarActivity
         }
         mFragManager = getFragmentManager();
         _context = this;
+        DaoManager daoManager = DaoManager.getInstance(_context);
+        trackDao = daoManager.getDBTrackDao(DaoManager.TYPE_WRITE);
         initUI();
         initSensor();
     }
@@ -158,7 +175,12 @@ public class MainActivity extends ActionBarActivity
     // Location Fragment callbacks
     @Override
     public void updateSpeed(double curSpeed, double accuracy) {
-
+        if (accuracy <= 10){
+            this.curSpeed = curSpeed;
+            if (this.curSpeed > this.maxSpeed){
+                this.maxSpeed = this.curSpeed;
+            }
+        }
     }
 
     @Override
@@ -168,18 +190,46 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void updateAirTime(double airTime) {
-        // TODO: Implement updating displaced air time
+        this.airTime = airTime;
+        if (this.airTime > this.maxAirTime) {
+            this.maxAirTime = this.airTime;
+        }
+        if (curSpeed!=0){
+            jumpDistance = curSpeed*airTime;
+            if (jumpDistance > maxJumpDistance){
+                maxJumpDistance = jumpDistance;
+            }
+        }
     }
 
     @Override
     public void updateDuration(int duration) {
-        // TODO: Implement updating total track time
+        trackDuration = duration;
+        if (duration!=0){
+            avgSpeed = (avgSpeed*(duration-1) + curSpeed)/(double)duration;
+        }
     }
 
     public void startTracking() {
         tracking = true;
         mLocationFragment.startTracking();
         mMotionFragment.startTracking();
+
+        //Initialize DBTrack object
+        Random rg = new Random();
+        long id = (long) (rg.nextDouble() * 999999);
+        curTrack = new DBTrack(id);
+
+        trackDate = new Date();
+        trackLocation = "Over the mountain";
+        trackDuration = 0.0;
+        curSpeed = 0.0;
+        maxSpeed = 0.0;
+        avgSpeed = 0.0;
+        airTime = 0.0;
+        maxAirTime = 0.0;
+        jumpDistance = 0.0;
+        maxJumpDistance = 0.0;
     }
 
     public void stopTracking() {
@@ -187,10 +237,19 @@ public class MainActivity extends ActionBarActivity
         mLocationFragment.stopTracking();
         mMotionFragment.stopTracking();
 
-        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
-        mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
-        setUpResultActionBar();
+        curTrack.setDate(trackDate);
+        curTrack.setLocationName(trackLocation);
+        curTrack.setMaxSpeed(maxSpeed);
+        curTrack.setAvgSpeed(avgSpeed);
+        curTrack.setMaxAirTime(maxAirTime);
+        curTrack.setMaxJumpDistance(maxJumpDistance);
+
+        trackDao.insert(curTrack);
+
+//        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+//        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
+//        mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
+//        setUpResultActionBar();
     }
 
     private void setUpResultActionBar(){
