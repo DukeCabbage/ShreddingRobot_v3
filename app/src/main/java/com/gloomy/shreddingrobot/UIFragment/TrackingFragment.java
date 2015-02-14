@@ -79,7 +79,7 @@ public class TrackingFragment extends BaseFragment
                 } else {
                     Log.e(TAG, "stopTracking");
                     setUp();
-                    parentActivity.stopTraking();
+                    parentActivity.stopTracking();
                 }
             }
         });

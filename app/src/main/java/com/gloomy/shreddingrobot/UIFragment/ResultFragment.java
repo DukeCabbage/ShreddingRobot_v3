@@ -37,7 +37,7 @@ public class ResultFragment extends BaseFragment {
     @Override
     public void onResume() {
         Logger.e(TAG, "onResume()");
-        findViewAndBindEvent();
+        findViewAndBindEvent(getView());
         super.onResume();
     }
 
@@ -49,11 +49,11 @@ public class ResultFragment extends BaseFragment {
     }
 
 
-    private void findViewAndBindEvent() {
-        final RippleView result_continue_btn = (RippleView) getView().findViewById(R.id.result_continue_btn);
-        final RippleView result_done_btn = (RippleView) getView().findViewById(R.id.result_done_btn);
-        tv_done = (TypefaceTextView) getView().findViewById(R.id.tv_done);
-        tv_continue = (TypefaceTextView) getView().findViewById(R.id.tv_continue);
+    private void findViewAndBindEvent(View rootView) {
+        final RippleView result_continue_btn = (RippleView) rootView.findViewById(R.id.result_continue_btn);
+        final RippleView result_done_btn = (RippleView) rootView.findViewById(R.id.result_done_btn);
+        tv_done = (TypefaceTextView) rootView.findViewById(R.id.tv_done);
+        tv_continue = (TypefaceTextView) rootView.findViewById(R.id.tv_continue);
 
         result_done_btn.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -99,14 +99,14 @@ public class ResultFragment extends BaseFragment {
         result_continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentActivity.transitFromResultToTrack();
+                parentActivity.backFromResultPage();
             }
         });
 
         result_done_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentActivity.transitFromResultToTrack();
+                parentActivity.backFromResultPage();
             }
         });
 
@@ -114,9 +114,9 @@ public class ResultFragment extends BaseFragment {
         if (tv_done.getAlpha() != 0) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    tv_done.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));
-                    tv_continue.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));
-
+                    if(getActivity()==null){return;}
+                    if (tv_done!=null){tv_done.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));}
+                    if (tv_continue!=null){tv_continue.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));}
                 }
             }, 4000);
         } else {

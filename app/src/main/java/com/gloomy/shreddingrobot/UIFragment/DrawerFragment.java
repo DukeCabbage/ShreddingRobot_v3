@@ -24,6 +24,7 @@ import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -97,10 +98,7 @@ public class DrawerFragment extends BaseFragment {
     public void setUp(DrawerLayout drawerLayout, final Toolbar toolbar) {
         mDrawerLayout = drawerLayout;
         mDrawerAdapter = new DrawerAdapter(titles);
-
-
         mDrawerListView.setAdapter(mDrawerAdapter);
-
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         // set a custom shadow that overlays the main content when the drawer opens
@@ -184,6 +182,10 @@ public class DrawerFragment extends BaseFragment {
         }
     }
 
+    public int getSelected(){
+        return mCurrentSelectedPosition;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -216,10 +218,7 @@ public class DrawerFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private ActionBar getActionBar() {
@@ -232,13 +231,11 @@ public class DrawerFragment extends BaseFragment {
 
     private class DrawerAdapter extends BaseAdapter {
         private ViewHolder holder;
-        public ArrayList<String> titles;
+        public ArrayList<String> mTitles;
 
         public DrawerAdapter(String[] titles){
-            this.titles = new ArrayList<String>();
-            for (int i = 0; i<titles.length; i++){
-                this.titles.add(titles[i]);
-            }
+            mTitles = new ArrayList<>();
+            mTitles.addAll(Arrays.asList(titles));
         }
 
         @Override
@@ -263,7 +260,7 @@ public class DrawerFragment extends BaseFragment {
                     holder.icon.setImageDrawable(getResources().getDrawable(R.drawable.icon_setting));
                     break;
             }
-            holder.title.setText(titles.get(position));
+            holder.title.setText(mTitles.get(position));
             return convertView;
         }
 
@@ -271,14 +268,14 @@ public class DrawerFragment extends BaseFragment {
         public int getCount() {
             int count = 0;
             if(titles != null) {
-                count = titles.size();
+                count = mTitles.size();
             }
             return count;
         }
 
         @Override
         public Object getItem(int position) {
-            return titles.get(position);
+            return mTitles.get(position);
         }
 
         @Override

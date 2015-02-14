@@ -3,14 +3,12 @@ package com.gloomy.shreddingrobot;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +21,6 @@ import com.gloomy.shreddingrobot.UIFragment.HistoryFragment;
 import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
-import com.gloomy.shreddingrobot.Widget.Logger;
-import com.nineoldandroids.animation.Animator;
 
 
 public class MainActivity extends ActionBarActivity
@@ -44,6 +40,7 @@ public class MainActivity extends ActionBarActivity
     private TrackingFragment mTrackingFragment;
     private HistoryFragment mHistoryFragment;
     private SettingFragment mSettingFragment;
+    private ResultFragment mResultFragment;
 
     private LocationFragment mLocationFragment;
     private MotionFragment mMotionFragment;
@@ -56,11 +53,9 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Logger.d(TAG,"onCreate");
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         if (toolbar != null) {
-            Log.i(TAG, "setting toolbar");
             setSupportActionBar(toolbar);
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         }
@@ -72,15 +67,12 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onResume(){
-        Logger.d(TAG,"onResume");
-
         super.onResume();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        Logger.d(TAG,"onCreateOptionsMenu");
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_share, menu);
         return true;
@@ -98,10 +90,10 @@ public class MainActivity extends ActionBarActivity
         item.setVisible(true);
     }
 
-
     private void initUI() {
         mDrawerFragment = (DrawerFragment) mFragManager.findFragmentById(R.id.navigation_drawer);
         mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout), toolbar);
+        materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
 
         if(null==mTrackingFragment)
             mTrackingFragment = new TrackingFragment();
@@ -109,6 +101,11 @@ public class MainActivity extends ActionBarActivity
             mHistoryFragment = new HistoryFragment();
         if(null==mSettingFragment)
             mSettingFragment = new SettingFragment();
+        if(null==mResultFragment)
+            mResultFragment = new ResultFragment();
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        mResultFragment.setArguments(getIntent().getExtras());
     }
 
     private void initSensor() {
@@ -120,6 +117,8 @@ public class MainActivity extends ActionBarActivity
         mMotionFragment = new MotionFragment();
         mMotionFragment.setUpDataCallback(this);
         mFragManager.beginTransaction().add(mMotionFragment, "motionFrag").commit();
+        mLocationFragment.setUpUICallback(mTrackingFragment);
+        mMotionFragment.setUpUICallback(mTrackingFragment);
     }
 
     // Drawer Fragment Callbacks
@@ -127,11 +126,10 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+        mFragTransaction.setCustomAnimations(0, R.anim.leave_from_right);
         switch(position) {
             case 0:
                 mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
-                mLocationFragment.setUpUICallback(mTrackingFragment);
-                mMotionFragment.setUpUICallback(mTrackingFragment);
                 mTitle = getString(R.string.title_section1);
                 break;
             case 1:
@@ -185,32 +183,24 @@ public class MainActivity extends ActionBarActivity
         mMotionFragment.startTracking();
     }
 
-    public void stopTraking() {
+    public void stopTracking() {
         tracking = false;
         mLocationFragment.stopTracking();
         mMotionFragment.stopTracking();
-        // Create a new Fragment to be placed in the activity layout
-        ResultFragment resultFragment = new ResultFragment();
-
-        // In case this activity was started with special instructions from an
-        // Intent, pass the Intent's extras to the fragment as arguments
-        resultFragment.setArguments(getIntent().getExtras());
 
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-        mFragTransaction.setCustomAnimations(R.anim.enter_from_top, 0);
-        mFragTransaction.replace(R.id.container, resultFragment, "resultFrag").commit();
+        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
+        mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
         setUpResultActionBar();
     }
 
     private void setUpResultActionBar(){
-
         getSupportActionBar().setTitle("Cypress Mountain Run 12");
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                transitFromResultToTrack();
+                backFromResultPage();
             }
         });
-        materialMenu = new MaterialMenuDrawable(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN);
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.X, false);
         toolbar.setNavigationIcon(materialMenu);
         showOption(R.id.action_share);
@@ -218,28 +208,12 @@ public class MainActivity extends ActionBarActivity
         mDrawerFragment.disableDrawer();
     }
 
-    public void transitFromResultToTrack(){
-        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-        mFragTransaction.setCustomAnimations(0, R.anim.leave_from_top);
-        mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
+    public void backFromResultPage(){
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
-        materialMenu.setAnimationListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {}
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLocationFragment.setUpUICallback(mTrackingFragment);
-                mMotionFragment.setUpUICallback(mTrackingFragment);
-                initUI();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {}
-            @Override
-            public void onAnimationRepeat(Animator animation) {}
-        });
-        mTitle = getString(R.string.title_section1);
-        restoreActionBar();
+        onNavigationDrawerItemSelected(mDrawerFragment.getSelected());
+
         hideOption(R.id.action_share);
+        mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout), toolbar);
         mDrawerFragment.enableDrawer();
     }
 
