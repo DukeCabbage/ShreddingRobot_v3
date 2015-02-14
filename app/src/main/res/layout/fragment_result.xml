@@ -251,7 +251,6 @@
 
         </RelativeLayout>
 
-
     </LinearLayout>
 
     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
@@ -299,7 +298,7 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/result_label_font_size"
         geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="13dp"
         android:layout_marginBottom="@dimen/normal_padding"
         android:layout_above="@+id/result_continue_btn"/>

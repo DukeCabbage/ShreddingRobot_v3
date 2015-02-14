@@ -22,7 +22,9 @@ import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 public class ResultFragment extends BaseFragment {
     private static final String TAG = ResultFragment.class.getSimpleName();
 
+    private RippleView done_btn;
     private TypefaceTextView tv_done;
+    private RippleView continue_btn;
     private TypefaceTextView tv_continue;
 
 
@@ -46,60 +48,22 @@ public class ResultFragment extends BaseFragment {
     }
 
     private void findViewAndBindEvent(View rootView) {
-        final RippleView result_continue_btn = (RippleView) rootView.findViewById(R.id.result_continue_btn);
-        final RippleView result_done_btn = (RippleView) rootView.findViewById(R.id.result_done_btn);
+        continue_btn = (RippleView) rootView.findViewById(R.id.result_continue_btn);
+        done_btn = (RippleView) rootView.findViewById(R.id.result_done_btn);
         tv_done = (TypefaceTextView) rootView.findViewById(R.id.tv_done);
         tv_continue = (TypefaceTextView) rootView.findViewById(R.id.tv_continue);
 
-        result_done_btn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = MotionEventCompat.getActionMasked(event);
+        done_btn.setOnTouchListener(buttonTouchListener);
+        continue_btn.setOnTouchListener(buttonTouchListener);
 
-                switch (action) {
-                    case (MotionEvent.ACTION_DOWN):
-                        result_done_btn.animateRipple(event);
-                        tv_done.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show_hint));
-                        return false;
-
-                    case (MotionEvent.ACTION_UP):
-                        result_done_btn.animateRipple(event);
-                        tv_done.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));
-                        return false;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        result_continue_btn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = MotionEventCompat.getActionMasked(event);
-
-                switch (action) {
-                    case (MotionEvent.ACTION_DOWN):
-                        result_continue_btn.animateRipple(event);
-                        tv_continue.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show_hint));
-                        return false;
-                    case (MotionEvent.ACTION_UP):
-                        result_continue_btn.animateRipple(event);
-                        tv_continue.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));
-                        return false;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        result_continue_btn.setOnClickListener(new View.OnClickListener() {
+        continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 parentActivity.backFromResultPage();
             }
         });
 
-        result_done_btn.setOnClickListener(new View.OnClickListener() {
+        done_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 parentActivity.backFromResultPage();
@@ -122,5 +86,31 @@ public class ResultFragment extends BaseFragment {
 
     }
 
+    private View.OnTouchListener buttonTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            int action = MotionEventCompat.getActionMasked(event);
+
+            switch (action) {
+                case (MotionEvent.ACTION_DOWN):
+                    ((RippleView) v).animateRipple(event);
+                    if (v==done_btn)
+                        tv_done.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show_hint));
+                    if (v==continue_btn)
+                        tv_continue.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.show_hint));
+                    return false;
+
+                case (MotionEvent.ACTION_UP):
+                    ((RippleView) v).animateRipple(event);
+                    if (v==done_btn)
+                        tv_done.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));
+                    if (v==continue_btn)
+                        tv_continue.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.hide_hint));
+                    return false;
+                default:
+                    return false;
+            }
+        }
+    };
 
 }
