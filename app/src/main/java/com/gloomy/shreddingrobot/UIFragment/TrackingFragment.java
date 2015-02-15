@@ -23,7 +23,7 @@ public class TrackingFragment extends BaseFragment
         implements LocationFragment.LocationCallbacks,
                 MotionFragment.MotionCallbacks {
 
-    private static final String TAG = "TrackingFrag";
+    private static final String TAG = "TrackingFragment";
 
     private Resources resources;
 

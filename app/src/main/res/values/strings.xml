@@ -21,6 +21,10 @@
     <string name="max_air_time">Max Air Time</string>
     <string name="duration">Duration</string>
 
+    <!-- History Fragment -->
+    <string name="delete_track_title">Delete Track</string>
+    <string name="delete_track_message">Are you sure to delelte this track record</string>
+
     <!-- Setting Fragment -->
     <string name="veloUnit0">km/h</string>
     <string name="veloUnit1">m/s</string>

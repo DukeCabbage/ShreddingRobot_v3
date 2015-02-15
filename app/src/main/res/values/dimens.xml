@@ -22,6 +22,23 @@
     <dimen name="tracking_btn_size">60dp</dimen>
     <dimen name="tracking_btn_iconSize">20dp</dimen>
 
+    <!-- History Fragment -->
+    <dimen name="histo_main_height">150dp</dimen>
+    <dimen name="histo_main_height1">110dp</dimen>
+    <dimen name="histo_main_height2">40dp</dimen>
+
+    <dimen name="histo_main_label_textSize">12sp</dimen>
+    <dimen name="histo_main_number_textSize">72sp</dimen>
+    <dimen name="history_textSize">30sp</dimen>
+    <dimen name="history_date_textSize">12sp</dimen>
+    <dimen name="history_loco_textSize">12sp</dimen>
+
+    <dimen name="angle_down_size">25sp</dimen>
+    <dimen name="share_btn_height">60dp</dimen>
+    <dimen name="share_btn_width">160dp</dimen>
+    <dimen name="delete_btn_width">80dp</dimen>
+    <dimen name="share_icon_font_size">30sp</dimen>
+
     <!-- Setting Fragment layout-->
     <dimen name="profile_panel_height">100dp</dimen>
     <dimen name="profile_photo_size">100dp</dimen>

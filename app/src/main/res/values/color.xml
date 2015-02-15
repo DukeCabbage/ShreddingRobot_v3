@@ -36,6 +36,12 @@
     <color name="deep_purple">#673AB4</color>
     <color name="lime">#CDDC39</color>
     <color name="indigo">#1976D2</color>
+
+    <!-- History Fragment -->
+    <color name="history_BG">@color/primary_dark</color>
+    <color name="history_open_BG">@color/primary</color>
+    <color name="history_text">@color/white_smoke</color>
+
     <!-- Setting Fragment -->
     <color name="veloUnit0">#FFFFFF</color>
     <color name="veloUnit1">#2c6fae</color>
