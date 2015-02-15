@@ -29,54 +29,46 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/speedUnit">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Speed Unit"
-            android:textColor="@color/white"
-            android:textSize="@dimen/setting_textSize_small" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="Time Unit"
-            android:textColor="@color/white"
-            android:textSize="@dimen/setting_textSize_small" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/unitChange"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profilePanel"
         android:layout_weight="1"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        >
+    <LinearLayout
+        android:id="@+id/speedUnitChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Speed Unit"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/setting_textSize_small"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
         <RelativeLayout
             android:id="@+id/speedUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            >
 
             <TextView
                 android:id="@+id/setToKmH"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@color/veloUnit0"
+                android:alpha="0.2"
                 android:gravity="center"
                 android:text="@string/veloUnit0"
                 android:textSize="@dimen/setting_textSize_large"
@@ -104,6 +96,27 @@
 
         </RelativeLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timeUnitChange"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+       android:orientation="vertical"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/timeUnit"
+
+            android:text="Time Unit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/setting_textSize_small" />
         <RelativeLayout
             android:id="@+id/timeUnit"
             android:layout_width="wrap_content"
@@ -120,6 +133,7 @@
                 android:layout_height="100dp"
                 android:background="@color/veloUnit0"
                 android:gravity="center"
+                android:alpha="0.2"
                 android:text="@string/timeUnit0"
                 android:textSize="@dimen/setting_textSize_large"
                 android:visibility="visible" />
@@ -134,6 +148,7 @@
                 android:textSize="@dimen/setting_textSize_large"
                 android:visibility="gone" />
         </RelativeLayout>
+    </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -152,8 +167,11 @@
 
         <SeekBar
             android:id="@+id/timeBar"
-            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:minHeight="20dp"
+            android:maxHeight="20dp"
             android:layout_below="@+id/autoOff" />
 
         <TextView
@@ -171,12 +189,11 @@
             android:id="@+id/offSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:switchMinWidth="56dp"
             android:layout_above="@+id/rate"
-            android:layout_alignEnd="@+id/ratingBar"
-            android:layout_alignRight="@+id/ratingBar"
+
             android:layout_alignTop="@+id/liftOff"
-            android:layout_toEndOf="@+id/autoOff"
-            android:layout_toRightOf="@+id/autoOff" />
+            android:layout_toEndOf="@+id/autoOff" />
 
         <TextView
             android:id="@+id/rate"
@@ -189,13 +206,22 @@
             android:textColor="@color/white"
             android:textSize="@dimen/setting_textSize_small" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
+        <CheckBox
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rateHeart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rate"
-            android:layout_toEndOf="@+id/rate"
-            android:layout_toRightOf="@+id/rate" />
+
+
+            android:text="@string/love_it"
+            android:textSize="30dp"
+            android:textColor="@color/heart_text"
+            android:paddingRight="50dp"
+            android:button="@drawable/fill_in_heart"
+            android:background="@null"
+
+            android:layout_alignTop="@+id/rate"
+            android:layout_alignEnd="@+id/offSwitch" />
 
     </RelativeLayout>
 
