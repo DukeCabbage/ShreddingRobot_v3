@@ -38,4 +38,6 @@
     <string name="love_it">Love It!</string>
     <string name="heart">heart</string>
 
+    <string name="none"></string>
+
 </resources>

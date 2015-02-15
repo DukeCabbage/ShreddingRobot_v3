@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/history_BG"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/histo_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/histo_main_height1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/histo_main_height1"
+            android:layout_height="@dimen/histo_main_height1"
+            android:contentDescription="@string/none" />
+
+        <TextView
+            android:id="@+id/tv_track_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="in"/>
+
+        <TextView
+            android:id="@+id/tv_track_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expanding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_track_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/mid_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+
+            <LinearLayout
+                android:id="@+id/ll_data_left_col"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/mid_anchor"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_data_right_col"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/mid_anchor"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/share_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/share_btn_height"
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:background="@color/transparent"
+                android:textColor="@color/history_text"
+                android:textSize="@dimen/share_icon_font_size"
+                geekui:customTypeface="fonts/fontawesome.ttf" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/delete_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/share_btn_height"
+                android:layout_weight="1"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:background="@color/transparent"
+                android:textColor="@color/history_text"
+                android:textSize="@dimen/share_icon_font_size"
+                geekui:customTypeface="fonts/fontawesome.ttf" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
