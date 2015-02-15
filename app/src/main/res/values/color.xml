@@ -47,5 +47,10 @@
     <color name="veloUnit1">#2c6fae</color>
     <color name="veloUnit2">#1BA1E2</color>
 
+    <color name="dark_green">#85a71d</color>
+    <color name="yellow">#ff0</color>
+
+    <color name="pink">#e91e63</color>
+
 
 </resources>

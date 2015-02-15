@@ -45,6 +45,7 @@
     <dimen name="profile_textSize">40sp</dimen>
     <dimen name="setting_textSize_large">50sp</dimen>
     <dimen name="setting_textSize_small">20sp</dimen>
+    <dimen name="heart_size">48sp</dimen>
 
     <!-- Result Fragment Layout -->
     <dimen name="result_profile_height">100dp</dimen>

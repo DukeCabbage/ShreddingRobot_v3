@@ -35,5 +35,7 @@
     <string name="avg_speed">Average Speed</string>
     <string name="longest_jump">Longest Jump</string>
     <string name="share">Share</string>
+    <string name="love_it">Love It!</string>
+    <string name="heart">heart</string>
 
 </resources>
