@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.util.LongSparseArray;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,11 @@ import com.gloomy.shreddingrobot.Dao.DBTrackDao;
 import com.gloomy.shreddingrobot.Dao.DaoManager;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Widget.ExpandingListView;
-import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,11 +40,10 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     private List<DBTrack> objects;
     private ExpandingListView listView;
 
-    HashMap<Long, Boolean> mStaMap = new HashMap<Long, Boolean>();
-    HashMap<Integer, Boolean> mIniMap = new HashMap<Integer, Boolean>();
+    LongSparseArray<Boolean> mStaMap = new LongSparseArray<>();
+    SparseBooleanArray mIniMap = new SparseBooleanArray();
 
     private int entryAnimQueue = 0;
-    private int visibleChildCount;
 
     SimpleDateFormat dateF = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
     DecimalFormat sig3 = new DecimalFormat("@@@");
@@ -72,7 +71,6 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     public View getView(final int position, View convertView, ViewGroup parent){
 
         final ViewHolderItem viewHolder;
-        visibleChildCount = (listView.getLastVisiblePosition() - listView.getFirstVisiblePosition()) + 1;
 
         DBTrack mTrack = objects.get(position);
         long trackId = mTrack.getId();
@@ -199,7 +197,7 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                delelteTrack(position);
+                                deleteTrack(position);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -234,12 +232,13 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     }
 
     public void printAllStat() {
-        for (long id: mStaMap.keySet()){
+        for (int i = 0; i < mStaMap.size(); i++) {
+            long id = mStaMap.keyAt(i);
             Log.e(TAG, id+": "+mStaMap.get(id));
         }
     }
 
-    public void delelteTrack(int position) {
+    public void deleteTrack(int position) {
         if (position<0||position>objects.size()) {
             return;
         }
