@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/history_BG"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/histo_index_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/histo_index_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/histo_index_icon_size"
+            android:layout_height="@dimen/histo_index_icon_size"
+            android:padding="@dimen/histo_icon_padding"
+            android:src="@drawable/snowboarding_man"
+            android:contentDescription="@string/none" />
+
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_track_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"/>
+
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/history_text"
+            android:textSize="@dimen/histo_index_font_size"
+            android:text="in"/>
+
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_track_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"/>
+
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/arrow_up_down"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/history_text"
+            android:textSize="@dimen/angle_down_size"
+            geekui:customTypeface="fonts/fontawesome.ttf" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/expanding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_track_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/mid_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+
+            <LinearLayout
+                android:id="@+id/ll_data_left_col"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/mid_anchor"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+                
+                <RelativeLayout
+                    android:id="@+id/rl_max_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/histo_data_layout_height">
+
+                    <ImageView
+                        android:id="@+id/max_speed_icon"
+                        android:layout_width="@dimen/histo_data_icon_size"
+                        android:layout_height="@dimen/histo_data_icon_size"
+                        android:padding="@dimen/histo_icon_padding"
+                        android:src="@drawable/max_speed_icon"
+                        android:contentDescription="@string/none" />
+
+                    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                        android:id="@+id/max_speed_label"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/histo_data_label_height"
+                        android:layout_toEndOf="@id/max_speed_icon"
+                        android:text="@string/histo_max_speed_label"
+                        android:textColor="@color/history_text"
+                        android:textSize="@dimen/histo_data_font_size"/>
+
+                    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                        android:id="@+id/max_speed"
+                        android:layout_width="60dp"
+                        android:layout_height="@dimen/histo_data_height"
+                        android:layout_below="@id/max_speed_label"
+                        android:layout_toEndOf="@id/max_speed_icon"
+                        android:textColor="@color/history_text"
+                        android:textSize="@dimen/histo_data_number_size"/>
+
+                    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                        android:id="@+id/max_speed_unit"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/histo_data_height"
+                        android:layout_below="@id/max_speed_label"
+                        android:layout_toEndOf="@id/max_speed"
+                        android:textColor="@color/history_text"
+                        android:textSize="@dimen/histo_data_font_size"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_air_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/histo_data_height">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_data_right_col"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/mid_anchor"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_avg_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/histo_data_layout_height">
+
+                    <ImageView
+                        android:id="@+id/avg_speed_icon"
+                        android:layout_width="@dimen/histo_data_icon_size"
+                        android:layout_height="@dimen/histo_data_icon_size"
+                        android:padding="@dimen/histo_icon_padding"
+                        android:src="@drawable/avg_speed_icon"
+                        android:contentDescription="@string/none" />
+
+                    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                        android:id="@+id/avg_speed_label"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/histo_data_label_height"
+                        android:layout_toEndOf="@id/avg_speed_icon"
+                        android:text="@string/histo_avg_speed_label"
+                        android:textColor="@color/history_text"
+                        android:textSize="@dimen/histo_data_font_size"/>
+
+                    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                        android:id="@+id/avg_speed"
+                        android:layout_width="60dp"
+                        android:layout_height="@dimen/histo_data_height"
+                        android:layout_below="@id/avg_speed_label"
+                        android:layout_toEndOf="@id/avg_speed_icon"
+                        android:textColor="@color/history_text"
+                        android:textSize="@dimen/histo_data_number_size"/>
+
+                    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                        android:id="@+id/avg_speed_unit"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/histo_data_height"
+                        android:layout_below="@id/avg_speed_label"
+                        android:layout_toEndOf="@id/avg_speed"
+                        android:textColor="@color/history_text"
+                        android:textSize="@dimen/histo_data_font_size"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_jump_dist"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/histo_data_height">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/histo_btn_layout_height"
+            android:orientation="horizontal">
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/share_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:background="@color/transparent"
+                android:textColor="@color/history_text"
+                android:textSize="@dimen/share_icon_font_size"
+                geekui:customTypeface="fonts/fontawesome.ttf" />
+
+            <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+                android:id="@+id/delete_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:background="@color/transparent"
+                android:textColor="@color/history_text"
+                android:textSize="@dimen/share_icon_font_size"
+                geekui:customTypeface="fonts/fontawesome.ttf" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

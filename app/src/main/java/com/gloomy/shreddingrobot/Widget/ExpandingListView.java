@@ -409,7 +409,7 @@ public class ExpandingListView extends ListView {
         }
 
         /* Update the layout so the extra content becomes invisible.*/
-        int collapsedHeight = (int) getResources().getDimension(R.dimen.histo_main_height);
+        int collapsedHeight = (int) getResources().getDimension(R.dimen.histo_index_height);
         view.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, collapsedHeight));
 
         /* Add an onPreDraw listener. */

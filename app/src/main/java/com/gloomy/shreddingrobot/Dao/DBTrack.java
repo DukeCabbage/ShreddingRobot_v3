@@ -11,6 +11,8 @@ import android.os.Parcelable;
 public class DBTrack implements Parcelable {
 
     private Long id;
+    private Integer duration;
+    private Integer distance;
     private Double maxSpeed;
     private Double avgSpeed;
     private Double maxAirTime;
@@ -21,6 +23,8 @@ public class DBTrack implements Parcelable {
 
     public DBTrack(Long id) {
         this.id = id;
+        this.duration = 0;
+        this.distance = 0;
         this.maxSpeed = 0.0;
         this.avgSpeed = 0.0;
         this.maxAirTime = 0.0;
@@ -29,9 +33,11 @@ public class DBTrack implements Parcelable {
         this.maxJumpDistance = 0.0;
     }
 
-    public DBTrack(Long id, Double maxSpeed, Double avgSpeed,
+    public DBTrack(Long id, Integer duration, Integer distance, Double maxSpeed, Double avgSpeed,
                    Double maxAirTime, String locationName, java.util.Date date, Double maxJumpDistance) {
         this.id = id;
+        this.duration = duration;
+        this.distance = distance;
         this.maxSpeed = maxSpeed;
         this.avgSpeed = avgSpeed;
         this.maxAirTime = maxAirTime;
@@ -42,6 +48,8 @@ public class DBTrack implements Parcelable {
 
     public DBTrack(Parcel parcel) {
         id = parcel.readLong();
+        duration = parcel.readInt();
+        distance = parcel.readInt();
         maxSpeed = parcel.readDouble();
         avgSpeed = parcel.readDouble();
         maxAirTime = parcel.readDouble();
@@ -58,6 +66,8 @@ public class DBTrack implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flag) {
         dest.writeLong(id);
+        dest.writeInt(duration);
+        dest.writeInt(distance);
         dest.writeDouble(maxSpeed);
         dest.writeDouble(avgSpeed);
         dest.writeDouble(maxAirTime);
@@ -83,6 +93,22 @@ public class DBTrack implements Parcelable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 
     public Double getMaxSpeed() {

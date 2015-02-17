@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     private DecimalFormat dff = new DecimalFormat("0.00");
 
     public HistoryArrayAdapter(Context context, List<DBTrack> objects, SharedPreferences pref) {
-        super(context, R.layout.history_item_layout, objects);
+        super(context, R.layout.list_item_history, objects);
         this.objects = objects;
         this._context = context;
         this._pref = pref;
@@ -70,29 +71,35 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
 
-        final ViewHolderItem viewHolder;
+        final HistoryViewHolder viewHolder;
 
         DBTrack mTrack = objects.get(position);
         long trackId = mTrack.getId();
+        int duration = mTrack.getDuration();
+        int distance = mTrack.getDistance();
         double maxSpeed = mTrack.getMaxSpeed();
+        double avgSpeed = mTrack.getAvgSpeed();
         double maxAirTime = mTrack.getMaxAirTime();
+        double jumpDist = mTrack.getMaxJumpDistance();
         String mLocation = mTrack.getLocationName();
         Date mDate = mTrack.getDate();
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.history_item_layout, parent, false);
-            viewHolder = new ViewHolderItem();
-
-            viewHolder.maxAirTime = (TypefaceTextView) convertView.findViewById(R.id.trackMaxAirTime);
-            viewHolder.maxSpeed = (TypefaceTextView) convertView.findViewById(R.id.trackMaxSpeed);
-            viewHolder.maxSpeedUnit = (TypefaceTextView) convertView.findViewById(R.id.trackMaxSpeedUnit);
-
-            viewHolder.trackLocation = (TypefaceTextView) convertView.findViewById(R.id.trackLocation);
+            convertView = inflater.inflate(R.layout.list_item_history, parent, false);
+            viewHolder = new HistoryViewHolder();
+            viewHolder.histoIndexLayout = (LinearLayout) convertView.findViewById(R.id.histo_index_layout);
+            viewHolder.trackDuration = (TypefaceTextView) convertView.findViewById(R.id.tv_track_duration);
+            viewHolder.trackDistance = (TypefaceTextView) convertView.findViewById(R.id.tv_track_distance);
             viewHolder.arrowUpDown = (TypefaceTextView) convertView.findViewById(R.id.arrow_up_down);
-            viewHolder.trackDate = (TypefaceTextView) convertView.findViewById(R.id.trackDate);
             viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_DOWN);
 
-            viewHolder.expanding_layout = (RelativeLayout)convertView.findViewById(R.id.expanding_layout);
+            viewHolder.expanding_layout = (LinearLayout)convertView.findViewById(R.id.expanding_layout);
+            viewHolder.maxSpeed = (TypefaceTextView) convertView.findViewById(R.id.max_speed);
+            viewHolder.maxSpeedUnit = (TypefaceTextView) convertView.findViewById(R.id.max_speed_unit);
+            viewHolder.avgSpeed = (TypefaceTextView) convertView.findViewById(R.id.avg_speed);
+            viewHolder.avgSpeedUnit = (TypefaceTextView) convertView.findViewById(R.id.avg_speed_unit);
+
+
             viewHolder.shareBtn = (TextView) convertView.findViewById(R.id.share_btn);
             viewHolder.deleteBtn = (TextView) convertView.findViewById(R.id.delete_btn);
             viewHolder.shareBtn.setText(Constants.ICON_SHARE);
@@ -126,7 +133,7 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
             convertView.startAnimation(entryAnim);
 
         } else {
-            viewHolder = (ViewHolderItem) convertView.getTag();
+            viewHolder = (HistoryViewHolder) convertView.getTag();
             if (!mStaMap.get(trackId)) {
                 viewHolder.expanding_layout.setVisibility(View.GONE);
                 convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_BG));
@@ -161,10 +168,11 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
             }
         }
 
-        viewHolder.maxAirTime.setText(dff.format(maxAirTime));
+//        viewHolder.maxAirTime.setText(dff.format(maxAirTime));
         int veloUnit = _pref.getInt("VELOCITY_UNIT", 0);
-        double displayMaxSpeed = maxSpeed;
 
+        // Displaying max speed
+        double displayMaxSpeed = maxSpeed;
         switch (veloUnit) {
             case 0:
                 displayMaxSpeed *= 3.6;
@@ -185,8 +193,27 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
             viewHolder.maxSpeed.setText(sig2.format(displayMaxSpeed));
         }
 
-        viewHolder.trackDate.setText(dateF.format(mDate));
-        viewHolder.trackLocation.setText(mLocation);
+        // Displaying max speed
+        double displayAvgSpeed = avgSpeed;
+        switch (veloUnit) {
+            case 0:
+                displayAvgSpeed *= 3.6;
+                viewHolder.avgSpeedUnit.setText("km/h");
+                break;
+            case 2:
+                displayAvgSpeed *= 2.2366;
+                viewHolder.avgSpeedUnit.setText("mi/h");
+                break;
+            default:
+                viewHolder.avgSpeedUnit.setText("m/s");
+                break;
+        }
+
+        if (displayAvgSpeed > 10.0) {
+            viewHolder.avgSpeed.setText(sig3.format(displayAvgSpeed));
+        } else {
+            viewHolder.avgSpeed.setText(sig2.format(displayAvgSpeed));
+        }
 
         viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +234,6 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-
             }
         });
 
@@ -247,20 +273,6 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
         trackDao.delete(objects.get(position));
         objects.remove(position);
         notifyDataSetChanged();
-    }
-
-    public static class ViewHolderItem {
-        private TypefaceTextView maxAirTime;
-        private TypefaceTextView maxSpeed;
-        private TypefaceTextView maxSpeedUnit;
-
-        private TypefaceTextView arrowUpDown;
-        private TypefaceTextView trackDate;
-        private TypefaceTextView trackLocation;
-
-        private RelativeLayout expanding_layout;
-        private TextView shareBtn;
-        private TextView deleteBtn;
     }
 
     public void resetEntryAnim(){

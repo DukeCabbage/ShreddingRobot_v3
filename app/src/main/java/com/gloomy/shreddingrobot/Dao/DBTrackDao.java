@@ -23,12 +23,14 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property MaxSpeed = new Property(1, Double.class, "maxSpeed", false, "MAX_SPEED");
-        public final static Property AvgSpeed = new Property(2, Double.class, "avgSpeed", false, "AVG_SPEED");
-        public final static Property MaxAirTime = new Property(3, Double.class, "maxAirTime", false, "MAX_AIR_TIME");
-        public final static Property LocationName = new Property(4, String.class, "locationName", false, "LOCATION_NAME");
-        public final static Property Date = new Property(5, java.util.Date.class, "date", false, "DATE");
-        public final static Property MaxJumpDistance = new Property(6, Double.class, "maxJumpDistance", false, "MAX_JUMP_DISTANCE");
+        public final static Property Duration = new Property(1, Integer.class, "duration", false, "DURATION");
+        public final static Property Distance = new Property(2, Integer.class, "distance", false, "DISTANCE");
+        public final static Property MaxSpeed = new Property(3, Double.class, "maxSpeed", false, "MAX_SPEED");
+        public final static Property AvgSpeed = new Property(4, Double.class, "avgSpeed", false, "AVG_SPEED");
+        public final static Property MaxAirTime = new Property(5, Double.class, "maxAirTime", false, "MAX_AIR_TIME");
+        public final static Property LocationName = new Property(6, String.class, "locationName", false, "LOCATION_NAME");
+        public final static Property Date = new Property(7, java.util.Date.class, "date", false, "DATE");
+        public final static Property MaxJumpDistance = new Property(8, Double.class, "maxJumpDistance", false, "MAX_JUMP_DISTANCE");
     };
 
     public DBTrackDao(DaoConfig config) {
@@ -44,12 +46,14 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'DBTRACK' (" + //
                 "'_id' INTEGER PRIMARY KEY ," + // 0: id
-                "'MAX_SPEED' REAL," + // 1: maxSpeed
-                "'AVG_SPEED' REAL," + // 2: avgSpeed
-                "'MAX_AIR_TIME' REAL," + // 3: maxAirTime
-                "'LOCATION_NAME' TEXT," + // 4: locationName
-                "'DATE' INTEGER," + // 5: date
-                "'MAX_JUMP_DISTANCE' REAL);");// 6: maxJumpDistance
+                "'DURATION' REAL," + // 1: duration
+                "'DISTANCE' REAL," + // 2: distance
+                "'MAX_SPEED' REAL," + // 3: maxSpeed
+                "'AVG_SPEED' REAL," + // 4: avgSpeed
+                "'MAX_AIR_TIME' REAL," + // 5: maxAirTime
+                "'LOCATION_NAME' TEXT," + // 6: locationName
+                "'DATE' INTEGER," + // 7: date
+                "'MAX_JUMP_DISTANCE' REAL);");// 8: maxJumpDistance
     }
 
     /** Drops the underlying database table. */
@@ -68,34 +72,44 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
             stmt.bindLong(1, id);
         }
 
+        Integer duration = entity.getDuration();
+        if (duration != null) {
+            stmt.bindLong(2, duration);
+        }
+
+        Integer distance = entity.getDistance();
+        if (distance != null) {
+            stmt.bindLong(3, distance);
+        }
+
         Double maxSpeed = entity.getMaxSpeed();
         if (maxSpeed != null) {
-            stmt.bindDouble(2, maxSpeed);
+            stmt.bindDouble(4, maxSpeed);
         }
 
         Double avgSpeed = entity.getAvgSpeed();
         if (avgSpeed != null) {
-            stmt.bindDouble(3, avgSpeed);
+            stmt.bindDouble(5, avgSpeed);
         }
 
         Double maxAirTime = entity.getMaxAirTime();
         if (maxAirTime != null) {
-            stmt.bindDouble(4, maxAirTime);
+            stmt.bindDouble(6, maxAirTime);
         }
 
         String locationName = entity.getLocationName();
         if (locationName != null) {
-            stmt.bindString(5, locationName);
+            stmt.bindString(7, locationName);
         }
 
         java.util.Date date = entity.getDate();
         if (date != null) {
-            stmt.bindLong(6, date.getTime());
+            stmt.bindLong(8, date.getTime());
         }
 
         Double maxJumpDistance = entity.getMaxJumpDistance();
         if (maxJumpDistance != null) {
-            stmt.bindDouble(7, maxJumpDistance);
+            stmt.bindDouble(9, maxJumpDistance);
         }
     }
 
@@ -110,12 +124,14 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
     public DBTrack readEntity(Cursor cursor, int offset) {
         DBTrack entity = new DBTrack( //
                 cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-                cursor.isNull(offset + 1) ? null : cursor.getDouble(offset + 1), // maxSpeed
-                cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2), // avgSpeed
-                cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // maxAirTime
-                cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // locationName
-                cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)),
-                cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6) // maxJumpDistance
+                cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // duration
+                cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // distance
+                cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // maxSpeed
+                cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4), // avgSpeed
+                cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // maxAirTime
+                cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // locationName
+                cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)),
+                cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8) // maxJumpDistance
         );
         return entity;
     }
@@ -124,12 +140,14 @@ public class DBTrackDao extends AbstractDao<DBTrack, Long> {
     @Override
     public void readEntity(Cursor cursor, DBTrack entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setMaxSpeed(cursor.isNull(offset + 1) ? null : cursor.getDouble(offset + 1));
-        entity.setAvgSpeed(cursor.isNull(offset + 2) ? null : cursor.getDouble(offset + 2));
-        entity.setMaxAirTime(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
-        entity.setLocationName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setDate(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
-        entity.setMaxJumpDistance(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
+        entity.setDuration(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
+        entity.setDistance(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
+        entity.setMaxSpeed(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
+        entity.setAvgSpeed(cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4));
+        entity.setMaxAirTime(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
+        entity.setLocationName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setDate(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
+        entity.setMaxJumpDistance(cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8));
     }
 
     /** @inheritdoc */
