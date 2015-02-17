@@ -234,8 +234,7 @@ public class DrawerFragment extends BaseFragment {
         public ArrayList<String> mTitles;
 
         public DrawerAdapter(String[] titles){
-            mTitles = new ArrayList<>();
-            mTitles.addAll(Arrays.asList(titles));
+            mTitles = new ArrayList<>(Arrays.asList(titles));
         }
 
         @Override

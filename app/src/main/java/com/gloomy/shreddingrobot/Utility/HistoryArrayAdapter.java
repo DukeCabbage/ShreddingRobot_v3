@@ -13,15 +13,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.gloomy.shreddingrobot.Dao.DBTrack;
 import com.gloomy.shreddingrobot.Dao.DBTrackDao;
 import com.gloomy.shreddingrobot.Dao.DaoManager;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Widget.ExpandingListView;
-import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
+import com.gloomy.shreddingrobot.Widget.Logger;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -48,7 +46,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
     SimpleDateFormat dateF = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
     DecimalFormat sig3 = new DecimalFormat("@@@");
     DecimalFormat sig2 = new DecimalFormat("@@");
-    private DecimalFormat dff = new DecimalFormat("0.00");
+    DecimalFormat dff = new DecimalFormat("0.00");
 
     public HistoryArrayAdapter(Context context, SharedPreferences pref) {
         objects = new ArrayList<>();
@@ -62,6 +60,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
     }
 
     public void updateData(ArrayList<DBTrack> tracks) {
+//        Logger.e(objects.size() + " " +tracks.size());
         if (getCount()!=tracks.size()){
             objects = tracks;
             for (int i = 0; i < objects.size(); ++i) {
@@ -93,7 +92,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
-
+//        Logger.e(TAG, "getView()" + position + " " + (convertView == null) + " " + mIniMap.get(position));
         final HistoryViewHolder viewHolder;
 
         DBTrack mTrack = objects.get(position);
@@ -110,51 +109,35 @@ public class HistoryArrayAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item_history, parent, false);
             viewHolder = new HistoryViewHolder();
-            viewHolder.histoIndexLayout = (LinearLayout) convertView.findViewById(R.id.histo_index_layout);
-            viewHolder.trackDuration = (TypefaceTextView) convertView.findViewById(R.id.tv_track_duration);
-            viewHolder.trackDistance = (TypefaceTextView) convertView.findViewById(R.id.tv_track_distance);
-            viewHolder.arrowUpDown = (TypefaceTextView) convertView.findViewById(R.id.arrow_up_down);
-            viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_DOWN);
-
-            viewHolder.expanding_layout = (LinearLayout)convertView.findViewById(R.id.expanding_layout);
-            viewHolder.maxSpeed = (TypefaceTextView) convertView.findViewById(R.id.max_speed);
-            viewHolder.maxSpeedUnit = (TypefaceTextView) convertView.findViewById(R.id.max_speed_unit);
-            viewHolder.avgSpeed = (TypefaceTextView) convertView.findViewById(R.id.avg_speed);
-            viewHolder.avgSpeedUnit = (TypefaceTextView) convertView.findViewById(R.id.avg_speed_unit);
-
-
-            viewHolder.shareBtn = (TextView) convertView.findViewById(R.id.share_btn);
-            viewHolder.deleteBtn = (TextView) convertView.findViewById(R.id.delete_btn);
-            viewHolder.shareBtn.setText(Constants.ICON_SHARE);
-            viewHolder.deleteBtn.setText(Constants.ICON_DELETE);
-
+            viewHolder.findView(convertView);
             convertView.setTag(viewHolder);
 
 //            // Entry Animations with delay between each view
-            Animation entryAnim = AnimationUtils.loadAnimation(_context, R.anim.histo_item_enter_left);
-            if (entryAnimQueue==1){
-                entryAnim.setStartOffset(ENTRY_ANIM_DELAY);
-            } else {
-                entryAnim.setStartOffset(ENTRY_ANIM_DELAY * position);
-            }
-
-            entryAnim.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    entryAnimQueue++;
+            if (!mIniMap.get(position)) {
+                Animation entryAnim = AnimationUtils.loadAnimation(_context, R.anim.histo_item_enter_left);
+                if (entryAnimQueue == 1) {
+                    entryAnim.setStartOffset(ENTRY_ANIM_DELAY);
+                } else {
+                    entryAnim.setStartOffset(ENTRY_ANIM_DELAY * position);
                 }
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    if (entryAnimQueue > 1){
-                        entryAnimQueue--;
+
+                entryAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        entryAnimQueue++;
                     }
-                }
-                @Override
-                public void onAnimationRepeat(Animation animation) {}
-            });
-            mIniMap.put(position, true);
-            convertView.startAnimation(entryAnim);
-
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        if (entryAnimQueue > 1) {
+                            entryAnimQueue--;
+                        }
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {}
+                });
+                mIniMap.put(position, true);
+                convertView.startAnimation(entryAnim);
+            }
         } else {
             viewHolder = (HistoryViewHolder) convertView.getTag();
             if (!mStaMap.get(trackId)) {
@@ -206,9 +189,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
         viewHolder.trackDuration.setText(hoursStr+":"+minutesStr);
 
-//        viewHolder.maxAirTime.setText(dff.format(maxAirTime));
         int veloUnit = _pref.getInt("VELOCITY_UNIT", 0);
-
         // Displaying max speed
         double displayMaxSpeed = maxSpeed;
         switch (veloUnit) {
@@ -252,6 +233,32 @@ public class HistoryArrayAdapter extends BaseAdapter {
         } else {
             viewHolder.avgSpeed.setText(sig2.format(displayAvgSpeed));
         }
+
+        // Displaying air time
+        int timeUnit = _pref.getInt("TIME_UNIT", 0);
+        switch (timeUnit){
+            default:
+                viewHolder.airTime.setText(dff.format(maxAirTime));
+                viewHolder.airTimeUnit.setText("s");
+                break;
+            case 1:
+                viewHolder.airTime.setText(Math.round((float)(maxAirTime*1000.0)));
+                viewHolder.airTimeUnit.setText("ms");
+        }
+
+        // Displaying max jump distance
+        double displayJumpDist = jumpDist;
+        switch (veloUnit) {
+            case 2:
+                displayJumpDist *= 3.28084;
+                viewHolder.jumpDistUnit.setText("ft");
+                break;
+            default:
+                viewHolder.jumpDistUnit.setText("m");
+                break;
+        }
+
+        viewHolder.jumpDist.setText(sig2.format(displayJumpDist));
 
         viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,7 +305,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
     public void printAllStat() {
         for (int i = 0; i < mStaMap.size(); i++) {
             long id = mStaMap.keyAt(i);
-            Log.e(TAG, id+": "+mStaMap.get(id));
+            Log.e(TAG, id+": "+mIniMap.get(i));
         }
     }
 

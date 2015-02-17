@@ -22,11 +22,12 @@
     <string name="duration">Duration</string>
 
     <!-- History Fragment -->
+    <string name="histo_index_divider">in</string>
+
     <string name="histo_max_speed_label">Max Speed</string>
     <string name="histo_avg_speed_label">Avg Speed</string>
     <string name="histo_air_time_label">Max Air Time</string>
     <string name="histo_jump_distance_label">Max Jump Distance</string>
-
 
     <string name="delete_track_title">Delete Track</string>
     <string name="delete_track_message">Are you sure to delelte this track record</string>

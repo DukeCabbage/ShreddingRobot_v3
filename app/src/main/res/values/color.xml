@@ -40,6 +40,7 @@
     <!-- History Fragment -->
     <color name="history_BG">@color/primary_dark</color>
     <color name="history_open_BG">@color/primary</color>
+    <color name="history_horizontal_line">@color/primary_light</color>
     <color name="history_text">@color/white_smoke</color>
 
     <!-- Setting Fragment -->
