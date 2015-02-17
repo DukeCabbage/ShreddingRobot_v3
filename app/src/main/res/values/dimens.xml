@@ -26,7 +26,8 @@
     <dimen name="histo_index_height">90dp</dimen>
     <dimen name="histo_index_icon_size">100dp</dimen>
     <dimen name="histo_index_font_size">30sp</dimen>
-    <dimen name="angle_down_size">25sp</dimen>
+    <dimen name="arrow_tv_width">40dp</dimen>
+    <dimen name="arrow_font_size">25sp</dimen>
     <dimen name="histo_icon_padding">10dp</dimen>
 
     <dimen name="histo_data_layout_height">60dp</dimen>
@@ -59,6 +60,5 @@
     <dimen name="result_unit_font_size">20sp</dimen>
     <dimen name="result_label_font_size">16sp</dimen>
     <dimen name="result_btn_size">60dp</dimen>
-
 
 </resources>

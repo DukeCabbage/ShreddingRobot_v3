@@ -125,7 +125,6 @@ public class TrackingFragment extends BaseFragment
         hoursStr = hours<10 ? "0"+hours : ""+hours;
 
         tvDuration.setText(hoursStr+":"+minutesStr);
-
     }
 
     private void animateDrawables(View view) {

@@ -168,6 +168,21 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
             }
         }
 
+        if (distance<1000){
+            viewHolder.trackDistance.setText(distance + " m");
+        } else {
+            viewHolder.trackDistance.setText(sig3.format(distance/1000.0) + " km");
+        }
+
+        int hours = duration/60;
+        int minutes = duration%60;
+        String hoursStr, minutesStr;
+
+        minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
+        hoursStr = hours<10 ? "0"+hours : ""+hours;
+
+        viewHolder.trackDuration.setText(hoursStr+":"+minutesStr);
+
 //        viewHolder.maxAirTime.setText(dff.format(maxAirTime));
         int veloUnit = _pref.getInt("VELOCITY_UNIT", 0);
 
