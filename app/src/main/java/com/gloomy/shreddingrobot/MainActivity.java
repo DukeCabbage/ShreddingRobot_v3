@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity
     private boolean tracking;
     private Date trackDate;
     private String trackLocation;
-    private double trackDuration;
+    private int trackDuration;
     private double curSpeed, maxSpeed, avgSpeed;
     private double airTime,  maxAirTime;
     private double jumpDistance, maxJumpDistance;
@@ -222,7 +222,7 @@ public class MainActivity extends ActionBarActivity
 
         trackDate = new Date();
         trackLocation = "Over the mountain";
-        trackDuration = 0.0;
+        trackDuration = 0;
         curSpeed = 0.0;
         maxSpeed = 0.0;
         avgSpeed = 0.0;
@@ -239,6 +239,7 @@ public class MainActivity extends ActionBarActivity
 
         curTrack.setDate(trackDate);
         curTrack.setLocationName(trackLocation);
+        curTrack.setDuration(trackDuration);
         curTrack.setMaxSpeed(maxSpeed);
         curTrack.setAvgSpeed(avgSpeed);
         curTrack.setMaxAirTime(maxAirTime);

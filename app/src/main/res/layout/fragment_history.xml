@@ -10,6 +10,6 @@
         android:divider="@color/history_open_BG"
         android:dividerHeight="1dp"
         android:background="@color/history_open_BG"
-        android:listSelector="@android:color/transparent" />
+        android:listSelector="@null" />
 
 </RelativeLayout>

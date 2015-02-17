@@ -107,7 +107,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
         Date mDate = mTrack.getDate();
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_item_history, null);
+            convertView = inflater.inflate(R.layout.list_item_history, parent, false);
             viewHolder = new HistoryViewHolder();
             viewHolder.findView(convertView);
             convertView.setTag(viewHolder);
@@ -141,11 +141,11 @@ public class HistoryArrayAdapter extends BaseAdapter {
         } else {
             viewHolder = (HistoryViewHolder) convertView.getTag();
             if (!mStaMap.get(trackId)) {
-                viewHolder.expanding_layout.setVisibility(View.GONE);
+                viewHolder.expandingLayout.setVisibility(View.GONE);
                 convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_BG));
                 viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_DOWN);
             } else {
-                viewHolder.expanding_layout.setVisibility(View.VISIBLE);
+                viewHolder.expandingLayout.setVisibility(View.VISIBLE);
                 convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_open_BG));
                 viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_UP);
             }
