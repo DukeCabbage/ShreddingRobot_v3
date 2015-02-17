@@ -12,9 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gloomy.shreddingrobot.Dao.DBTrack;
@@ -26,11 +25,11 @@ import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
+public class HistoryArrayAdapter extends BaseAdapter {
     private static final String TAG = "HistoryArrayAdapter";
     private static final Long ENTRY_ANIM_DELAY = 130l;
 
@@ -38,7 +37,7 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     private SharedPreferences _pref;
 
     private LayoutInflater inflater;
-    private List<DBTrack> objects;
+    private ArrayList<DBTrack> objects;
     private ExpandingListView listView;
 
     LongSparseArray<Boolean> mStaMap = new LongSparseArray<>();
@@ -51,21 +50,45 @@ public class HistoryArrayAdapter extends ArrayAdapter<DBTrack> {
     DecimalFormat sig2 = new DecimalFormat("@@");
     private DecimalFormat dff = new DecimalFormat("0.00");
 
-    public HistoryArrayAdapter(Context context, List<DBTrack> objects, SharedPreferences pref) {
-        super(context, R.layout.list_item_history, objects);
-        this.objects = objects;
-        this._context = context;
-        this._pref = pref;
-
-        for (int i = 0; i < objects.size(); ++i) {
-            mStaMap.put(objects.get(i).getId(), false);
-            mIniMap.put(i, false);
-        }
+    public HistoryArrayAdapter(Context context, SharedPreferences pref) {
+        objects = new ArrayList<>();
+        _context = context;
+        _pref = pref;
         inflater = LayoutInflater.from (context);
     }
 
     public void setListView(ExpandingListView listView) {
         this.listView = listView;
+    }
+
+    public void updateData(ArrayList<DBTrack> tracks) {
+        if (getCount()!=tracks.size()){
+            objects = tracks;
+            for (int i = 0; i < objects.size(); ++i) {
+                mStaMap.put(objects.get(i).getId(), false);
+                mIniMap.put(i, false);
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public int getCount() {
+        int count = 0;
+        if (objects != null) {
+            count = objects.size();
+        }
+        return count;
+    }
+
+    @Override
+    public DBTrack getItem(int i) {
+        return objects.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return objects.get(i).getId();
     }
 
     @Override
