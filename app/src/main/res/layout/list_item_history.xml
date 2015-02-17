@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:background="@color/history_BG"
     android:orientation="vertical" >
@@ -9,7 +9,9 @@
     <RelativeLayout
         android:id="@+id/histo_index_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/histo_index_height">
+        android:layout_height="@dimen/histo_index_height"
+        android:layout_marginStart="@dimen/histo_item_horizontal_margin"
+        android:layout_marginEnd="@dimen/histo_item_horizontal_margin" >
 
         <ImageView
             android:id="@+id/iv_index_icon"
@@ -68,6 +70,8 @@
         android:id="@+id/expanding_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/histo_item_horizontal_margin"
+        android:layout_marginEnd="@dimen/histo_item_horizontal_margin"
         android:visibility="gone"
         android:orientation="vertical">
 

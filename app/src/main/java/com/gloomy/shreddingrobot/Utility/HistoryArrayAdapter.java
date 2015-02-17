@@ -107,7 +107,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
         Date mDate = mTrack.getDate();
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.list_item_history, parent, false);
+            convertView = inflater.inflate(R.layout.list_item_history, null);
             viewHolder = new HistoryViewHolder();
             viewHolder.findView(convertView);
             convertView.setTag(viewHolder);
