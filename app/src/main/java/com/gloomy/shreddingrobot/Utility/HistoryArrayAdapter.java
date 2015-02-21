@@ -219,10 +219,10 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
         viewHolder.trackDuration.setText(hoursStr+":"+minutesStr);
 
-        int veloUnit = _pref.getInt("VELOCITY_UNIT", 0);
+        int speedUnit = _pref.getInt(Constants.SP_SPEED_UNIT, 0);
         // Displaying max speed
         double displayMaxSpeed = maxSpeed;
-        switch (veloUnit) {
+        switch (speedUnit) {
             case 0:
                 displayMaxSpeed *= 3.6;
                 viewHolder.maxSpeedUnit.setText("km/h");
@@ -244,7 +244,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
         // Displaying max speed
         double displayAvgSpeed = avgSpeed;
-        switch (veloUnit) {
+        switch (speedUnit) {
             case 0:
                 displayAvgSpeed *= 3.6;
                 viewHolder.avgSpeedUnit.setText("km/h");
@@ -265,20 +265,21 @@ public class HistoryArrayAdapter extends BaseAdapter {
         }
 
         // Displaying air time
-        int timeUnit = _pref.getInt("TIME_UNIT", 0);
+        int timeUnit = _pref.getInt(Constants.SP_TIME_UNIT, 0);
         switch (timeUnit){
             default:
                 viewHolder.airTime.setText(dff.format(maxAirTime));
                 viewHolder.airTimeUnit.setText("s");
                 break;
             case 1:
-                viewHolder.airTime.setText(Math.round((float)(maxAirTime*1000.0)));
+                int time = Math.round((float)(maxAirTime*1000.0));
+                viewHolder.airTime.setText(time+"");
                 viewHolder.airTimeUnit.setText("ms");
         }
 
         // Displaying max jump distance
         double displayJumpDist = jumpDist;
-        switch (veloUnit) {
+        switch (speedUnit) {
             case 2:
                 displayJumpDist *= 3.28084;
                 viewHolder.jumpDistUnit.setText("ft");

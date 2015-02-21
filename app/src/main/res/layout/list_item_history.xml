@@ -133,6 +133,7 @@
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
                         android:padding="@dimen/histo_icon_padding"
+                        android:layout_marginEnd="@dimen/small_padding"
                         android:alpha="0.9"
                         android:src="@drawable/max_speed_icon"
                         android:contentDescription="@string/none" />
@@ -177,6 +178,7 @@
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
                         android:padding="@dimen/histo_icon_pading2"
+                        android:layout_marginEnd="@dimen/small_padding"
                         android:alpha="0.7"
                         android:src="@drawable/air_time_icon"
                         android:contentDescription="@string/none" />
@@ -231,6 +233,7 @@
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
                         android:padding="@dimen/histo_icon_padding"
+                        android:layout_marginEnd="@dimen/small_padding"
                         android:alpha="0.9"
                         android:src="@drawable/avg_speed_icon"
                         android:contentDescription="@string/none" />
@@ -275,6 +278,7 @@
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
                         android:padding="@dimen/histo_icon_pading2"
+                        android:layout_marginEnd="@dimen/small_padding"
                         android:alpha="0.7"
                         android:src="@drawable/jump_dist_icon"
                         android:contentDescription="@string/none" />

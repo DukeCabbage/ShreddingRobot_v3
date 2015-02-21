@@ -18,7 +18,7 @@
             android:contentDescription="@string/none"
             android:src="@drawable/profile_placeholder" />
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_profile_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -26,18 +26,24 @@
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/profile_font_size"
             android:textColor="@color/white_smoke"
-            android:text="@string/username_placeholder" />
+            android:text="@string/username_placeholder"
+            android:visibility="visible"/>
 
         <EditText
             android:id="@+id/et_profile_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/big_padding"
+            android:layout_marginTop="3dp"
             android:layout_gravity="center_vertical"
+            android:maxEms="6"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:singleLine="true"
             android:textSize="@dimen/profile_font_size"
             android:textColor="@color/white_smoke"
-            android:textColorHint="@color/white_smoke"
-            android:hint="@string/username_placeholder"
+            android:textColorHint="@color/white_smoke_transparent"
+            android:hint="@string/none"
             android:visibility="gone"/>
 
     </LinearLayout>
@@ -59,7 +65,7 @@
         android:layout_alignBottom="@id/mid_anchor"
         android:layout_alignParentStart="true">
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_speed_unit_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,39 +74,42 @@
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_small" />
 
-        <TextView
-            android:id="@+id/setToKmH"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_set_to_km_per_hour"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_units_card_height"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/normal_padding"
-            android:background="@color/veloUnit0"
+            android:background="@color/setting_units_toggle_background"
             android:gravity="center"
             android:text="@string/veloUnit0"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
             android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/setToMPS"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_set_to_m_per_sec"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_units_card_height"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/normal_padding"
-            android:background="@color/veloUnit1"
+            android:background="@color/setting_units_toggle_background"
             android:gravity="center"
             android:text="@string/veloUnit1"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/setToMpH"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_set_to_mi_per_hour"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_units_card_height"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/normal_padding"
-            android:background="@color/veloUnit2"
+            android:background="@color/setting_units_toggle_background"
             android:gravity="center"
             android:text="@string/veloUnit2"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
             android:visibility="gone" />
 
@@ -115,7 +124,7 @@
         android:layout_alignBottom="@id/mid_anchor"
         android:layout_alignParentEnd="true">
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_time_unit_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,27 +133,29 @@
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_small" />
 
-        <TextView
-            android:id="@+id/setToSec"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_set_to_sec"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_units_card_height"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/normal_padding"
-            android:background="@color/veloUnit0"
+            android:background="@color/setting_units_toggle_background"
             android:gravity="center"
             android:text="@string/timeUnit0"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
             android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/setToMiSec"
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
+            android:id="@+id/tv_set_to_mill_sec"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_units_card_height"
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/normal_padding"
-            android:background="@color/veloUnit1"
+            android:background="@color/setting_units_toggle_background"
             android:gravity="center"
             android:text="@string/timeUnit1"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
             android:visibility="gone" />
 
@@ -156,7 +167,7 @@
         android:layout_below="@id/mid_anchor"
         android:layout_margin="@dimen/big_padding">
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_auto_off_timer_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -173,7 +184,7 @@
             android:layout_marginStart="@dimen/big_padding"
             android:layout_marginEnd="@dimen/big_padding" />
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_auto_off_lift_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -192,7 +203,7 @@
             android:layout_alignParentEnd="true"
             android:switchMinWidth="56dp" />
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/rate_us_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

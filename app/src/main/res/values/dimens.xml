@@ -40,7 +40,7 @@
     <dimen name="histo_data_icon_size">50dp</dimen>
     <dimen name="histo_data_label_height">20dp</dimen>
     <dimen name="histo_data_height">30dp</dimen>
-    <dimen name="histo_data_width">60dp</dimen>
+    <dimen name="histo_data_width">50dp</dimen>
     <dimen name="histo_data_unit_width">50dp</dimen>
     <dimen name="histo_data_font_size">16sp</dimen>
     <dimen name="histo_data_number_size">22sp</dimen>
@@ -58,8 +58,8 @@
 
     <dimen name="setting_timer_bar_height">30dp</dimen>
 
-    <dimen name="setting_textSize_large">50sp</dimen>
-    <dimen name="setting_textSize_small">20sp</dimen>
+    <dimen name="setting_textSize_large">30sp</dimen>
+    <dimen name="setting_textSize_small">18sp</dimen>
 
     <dimen name="heart_size">48sp</dimen>
 

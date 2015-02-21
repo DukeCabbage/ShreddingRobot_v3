@@ -43,10 +43,10 @@
     <string name="rate_us_label">Rate Shredaholic</string>
 
     <string name="veloUnit0">km/h</string>
-    <string name="veloUnit1">m/s</string>
-    <string name="veloUnit2">mi/h</string>
+    <string name="veloUnit1">m/sec</string>
+    <string name="veloUnit2">mile/h</string>
     <string name="timeUnit0">sec</string>
-    <string name="timeUnit1">mill sec</string>
+    <string name="timeUnit1">milli sec</string>
     <string name="max_speed">Max Speed</string>
     <string name="avg_speed">Average Speed</string>
     <string name="longest_jump">Longest Jump</string>
