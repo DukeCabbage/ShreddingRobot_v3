@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseBooleanArray;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,17 +59,23 @@ public class HistoryArrayAdapter extends BaseAdapter {
         this.listView = listView;
     }
 
-    public void updateData(ArrayList<DBTrack> tracks) {
+    public void updateData(final ArrayList<DBTrack> tracks) {
 //        Logger.e(objects.size() + " " +tracks.size());
-        if (getCount()!=tracks.size()){
-            objects = tracks;
-            for (int i = 0; i < objects.size(); ++i) {
-                mStaMap.put(objects.get(i).getId(), false);
-                mIniMap.put(i, false);
-                mFirstTrackMap.put(i, false);
+        listView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (getCount()!=tracks.size()){
+                    objects = tracks;
+                    for (int i = 0; i < objects.size(); ++i) {
+                        mStaMap.put(objects.get(i).getId(), false);
+                        mIniMap.put(i, false);
+                        mFirstTrackMap.put(i, false);
+                    }
+                    notifyDataSetChanged();
+                }
             }
-            notifyDataSetChanged();
-        }
+        });
+
     }
 
     @Override

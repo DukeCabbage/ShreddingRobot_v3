@@ -33,11 +33,20 @@
     <string name="delete_track_message">Are you sure to delelte this track record</string>
 
     <!-- Setting Fragment -->
+    <string name="username_placeholder">Duke Cabbage</string>
+
+    <string name="speed_unit_label">Speed unit</string>
+    <string name="time_unit_label">Time unit</string>
+
+    <string name="auto_off_timer_label">Turn off tracking after 10 min</string>
+    <string name="auto_off_lift_label">Turn off tracking on lift</string>
+    <string name="rate_us_label">Rate Shredaholic</string>
+
     <string name="veloUnit0">km/h</string>
     <string name="veloUnit1">m/s</string>
     <string name="veloUnit2">mi/h</string>
-    <string name="timeUnit0">s</string>
-    <string name="timeUnit1">ms</string>
+    <string name="timeUnit0">sec</string>
+    <string name="timeUnit1">mill sec</string>
     <string name="max_speed">Max Speed</string>
     <string name="avg_speed">Average Speed</string>
     <string name="longest_jump">Longest Jump</string>

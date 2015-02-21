@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import com.gloomy.shreddingrobot.Dao.DBTrack;
 import com.gloomy.shreddingrobot.Dao.DBTrackDao;
 import com.gloomy.shreddingrobot.Dao.DaoManager;
-import com.gloomy.shreddingrobot.MainActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
