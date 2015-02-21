@@ -9,6 +9,10 @@ import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 public class HistoryViewHolder {
+    public RelativeLayout categoryLayout;
+    public TypefaceTextView trackDate;
+    public TypefaceTextView trackLocation;
+
     public RelativeLayout indexLayout;
     public TypefaceTextView trackDistance;
     public TypefaceTextView trackDuration;
@@ -28,6 +32,10 @@ public class HistoryViewHolder {
     public TextView deleteBtn;
 
     public void findView(View rootView){
+        categoryLayout = (RelativeLayout) rootView.findViewById(R.id.histo_category_layout);
+        trackDate = (TypefaceTextView) categoryLayout.findViewById(R.id.tv_track_date);
+        trackLocation = (TypefaceTextView) categoryLayout.findViewById(R.id.tv_track_location);
+
         indexLayout = (RelativeLayout) rootView.findViewById(R.id.histo_index_layout);
         trackDuration = (TypefaceTextView) indexLayout.findViewById(R.id.tv_track_duration);
         trackDistance = (TypefaceTextView) indexLayout.findViewById(R.id.tv_track_distance);

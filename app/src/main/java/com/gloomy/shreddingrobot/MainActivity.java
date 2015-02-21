@@ -221,7 +221,7 @@ public class MainActivity extends ActionBarActivity
         curTrack = new DBTrack(id);
 
         trackDate = new Date();
-        trackLocation = "Over the mountain";
+        trackLocation = "Cypress";
         trackDuration = 0;
         curSpeed = 0.0;
         maxSpeed = 0.0;

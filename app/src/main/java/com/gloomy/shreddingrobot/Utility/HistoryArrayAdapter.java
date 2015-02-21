@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import com.gloomy.shreddingrobot.Dao.DBTrackDao;
 import com.gloomy.shreddingrobot.Dao.DaoManager;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Widget.ExpandingListView;
-import com.gloomy.shreddingrobot.Widget.Logger;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -40,10 +40,11 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
     LongSparseArray<Boolean> mStaMap = new LongSparseArray<>();
     SparseBooleanArray mIniMap = new SparseBooleanArray();
+    SparseBooleanArray mFirstTrackMap = new SparseBooleanArray();
 
     private int entryAnimQueue = 0;
 
-    SimpleDateFormat dateF = new SimpleDateFormat("EEE, MMM d, yyyy", Locale.US);
+    SimpleDateFormat dateF = new SimpleDateFormat("MMM d", Locale.US);
     DecimalFormat sig3 = new DecimalFormat("@@@");
     DecimalFormat sig2 = new DecimalFormat("@@");
     DecimalFormat dff = new DecimalFormat("0.00");
@@ -66,6 +67,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
             for (int i = 0; i < objects.size(); ++i) {
                 mStaMap.put(objects.get(i).getId(), false);
                 mIniMap.put(i, false);
+                mFirstTrackMap.put(i, false);
             }
             notifyDataSetChanged();
         }
@@ -172,6 +174,29 @@ public class HistoryArrayAdapter extends BaseAdapter {
                 convertView.startAnimation(entryAnim);
                 mIniMap.put(position, true);
             }
+        }
+
+        if (position==0){
+            mFirstTrackMap.put(position, true);
+        }else{
+            Date previousDate = getItem(position-1).getDate();
+            if (previousDate.getMonth()!=mDate.getMonth() ||
+                    previousDate.getDate()!=mDate.getDate()){
+                mFirstTrackMap.put(position, true);
+            }else{
+                mFirstTrackMap.put(position, false);
+            }
+        }
+
+        if (mFirstTrackMap.get(position)){
+            viewHolder.categoryLayout.setVisibility(View.VISIBLE);
+            viewHolder.trackDate.setText(dateF.format(mDate));
+            viewHolder.trackLocation.setText(mLocation);
+            if (mLocation.length()>8){
+                viewHolder.trackLocation.setTextSize(16);
+            }
+        }else{
+            viewHolder.categoryLayout.setVisibility(View.GONE);
         }
 
         if (distance<1000){
@@ -300,6 +325,10 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
     public void setStat(int pos, boolean newStat) {
         mStaMap.put(objects.get(pos).getId(), newStat);
+    }
+
+    public boolean isFirstTrackOfTheDay(int position){
+        return mFirstTrackMap.get(position);
     }
 
     public void printAllStat() {
