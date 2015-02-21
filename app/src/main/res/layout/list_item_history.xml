@@ -46,11 +46,12 @@
             android:id="@+id/iv_index_icon"
             android:layout_width="@dimen/histo_index_icon_size"
             android:layout_height="@dimen/histo_index_icon_size"
-            android:layout_gravity="center_vertical"
             android:padding="@dimen/histo_icon_padding"
             android:alpha="0.7"
             android:src="@drawable/snowboarding_man"
-            android:contentDescription="@string/none" />
+            android:contentDescription="@string/none"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_track_distance"
