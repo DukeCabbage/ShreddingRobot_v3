@@ -23,27 +23,29 @@
     <dimen name="tracking_btn_iconSize">20dp</dimen>
 
     <!-- History Fragment -->
-    <dimen name="histo_category_height">70dp</dimen>
-    <dimen name="histo_category_font_size">26sp</dimen>
+    <dimen name="histo_category_height">60dp</dimen>
+    <dimen name="histo_category_font_size">24sp</dimen>
     <dimen name="histo_location_maxWidth">120dp</dimen>
 
-    <dimen name="histo_index_height">70dp</dimen>
-    <dimen name="histo_index_icon_size">60dp</dimen>
-    <dimen name="histo_index_font_size">26sp</dimen>
-    <dimen name="histo_index_text_margin">14dp</dimen>
+    <dimen name="histo_index_height">60dp</dimen>
+    <dimen name="histo_index_icon_size">45dp</dimen>
+    <dimen name="histo_index_font_size">20sp</dimen>
+    <dimen name="histo_index_text_margin">6dp</dimen>
     <dimen name="arrow_tv_width">50dp</dimen>
     <dimen name="arrow_font_size">25sp</dimen>
     <dimen name="histo_icon_padding">5dp</dimen>
-    <dimen name="histo_icon_pading2">10dp</dimen>
+    <dimen name="histo_icon_padding2">10dp</dimen>
 
     <dimen name="histo_data_layout_height">60dp</dimen>
-    <dimen name="histo_data_icon_size">50dp</dimen>
+    <dimen name="histo_data_layout_width">150dp</dimen>
+
+    <dimen name="histo_data_icon_size">45dp</dimen>
     <dimen name="histo_data_label_height">20dp</dimen>
     <dimen name="histo_data_height">30dp</dimen>
-    <dimen name="histo_data_width">50dp</dimen>
-    <dimen name="histo_data_unit_width">50dp</dimen>
-    <dimen name="histo_data_font_size">16sp</dimen>
-    <dimen name="histo_data_number_size">22sp</dimen>
+    <dimen name="histo_data_gap">2dp</dimen>
+
+    <dimen name="histo_data_font_size">14sp</dimen>
+    <dimen name="histo_data_number_size">20sp</dimen>
 
     <dimen name="histo_btn_layout_height">50dp</dimen>
     <dimen name="share_icon_font_size">30sp</dimen>

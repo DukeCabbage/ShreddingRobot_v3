@@ -47,6 +47,7 @@
             android:layout_width="@dimen/histo_index_icon_size"
             android:layout_height="@dimen/histo_index_icon_size"
             android:padding="@dimen/histo_icon_padding"
+            android:layout_marginEnd="@dimen/histo_index_text_margin"
             android:alpha="0.7"
             android:src="@drawable/snowboarding_man"
             android:contentDescription="@string/none"
@@ -100,6 +101,7 @@
         android:id="@+id/expanding_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_padding"
         android:visibility="gone"
         android:orientation="vertical">
 
@@ -125,15 +127,16 @@
                 
                 <RelativeLayout
                     android:id="@+id/rl_max_speed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/histo_data_layout_height"
+                    android:layout_width="@dimen/histo_data_layout_width"
+                    android:layout_gravity="center_horizontal">
 
                     <ImageView
                         android:id="@+id/max_speed_icon"
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
                         android:padding="@dimen/histo_icon_padding"
-                        android:layout_marginEnd="@dimen/small_padding"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:alpha="0.9"
                         android:src="@drawable/max_speed_icon"
                         android:contentDescription="@string/none" />
@@ -149,18 +152,19 @@
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/max_speed"
-                        android:layout_width="@dimen/histo_data_width"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/histo_data_height"
                         android:layout_below="@id/max_speed_label"
                         android:layout_toEndOf="@id/max_speed_icon"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:textColor="@color/history_text"
-                        android:textSize="@dimen/histo_data_number_size"/>
+                        android:textSize="@dimen/histo_data_number_size"
+                        geekui:customTypeface="fonts/OpenSans-Light.ttf"/>
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/max_speed_unit"
                         android:layout_width="fill_parent"
-                        android:layout_height="@dimen/histo_data_height"
-                        android:layout_below="@id/max_speed_label"
+                        android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/max_speed"
                         android:layout_alignBaseline="@id/max_speed"
                         android:textColor="@color/history_text"
@@ -170,15 +174,16 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_air_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/histo_data_layout_height"
+                    android:layout_width="@dimen/histo_data_layout_width"
+                    android:layout_gravity="center_horizontal">
 
                     <ImageView
                         android:id="@+id/air_time_icon"
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
-                        android:padding="@dimen/histo_icon_pading2"
-                        android:layout_marginEnd="@dimen/small_padding"
+                        android:padding="@dimen/histo_icon_padding2"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:alpha="0.7"
                         android:src="@drawable/air_time_icon"
                         android:contentDescription="@string/none" />
@@ -194,18 +199,19 @@
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/air_time"
-                        android:layout_width="@dimen/histo_data_width"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/histo_data_height"
                         android:layout_below="@id/air_time_label"
                         android:layout_toEndOf="@id/air_time_icon"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:textColor="@color/history_text"
-                        android:textSize="@dimen/histo_data_number_size"/>
+                        android:textSize="@dimen/histo_data_number_size"
+                        geekui:customTypeface="fonts/OpenSans-Light.ttf"/>
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/air_time_unit"
                         android:layout_width="fill_parent"
-                        android:layout_height="@dimen/histo_data_height"
-                        android:layout_below="@id/air_time_label"
+                        android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/air_time"
                         android:layout_alignBaseline="@id/air_time"
                         android:textColor="@color/history_text"
@@ -225,15 +231,16 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_avg_speed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/histo_data_layout_height"
+                    android:layout_width="@dimen/histo_data_layout_width"
+                    android:layout_gravity="center_horizontal">
 
                     <ImageView
                         android:id="@+id/avg_speed_icon"
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
                         android:padding="@dimen/histo_icon_padding"
-                        android:layout_marginEnd="@dimen/small_padding"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:alpha="0.9"
                         android:src="@drawable/avg_speed_icon"
                         android:contentDescription="@string/none" />
@@ -249,18 +256,19 @@
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/avg_speed"
-                        android:layout_width="@dimen/histo_data_width"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/histo_data_height"
                         android:layout_below="@id/avg_speed_label"
                         android:layout_toEndOf="@id/avg_speed_icon"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:textColor="@color/history_text"
-                        android:textSize="@dimen/histo_data_number_size"/>
+                        android:textSize="@dimen/histo_data_number_size"
+                        geekui:customTypeface="fonts/OpenSans-Light.ttf"/>
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/avg_speed_unit"
                         android:layout_width="fill_parent"
-                        android:layout_height="@dimen/histo_data_height"
-                        android:layout_below="@id/avg_speed_label"
+                        android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/avg_speed"
                         android:layout_alignBaseline="@id/avg_speed"
                         android:textColor="@color/history_text"
@@ -270,15 +278,16 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_jump_dist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/histo_data_layout_height"
+                    android:layout_width="@dimen/histo_data_layout_width"
+                    android:layout_gravity="center_horizontal">
 
                     <ImageView
                         android:id="@+id/jump_dist_icon"
                         android:layout_width="@dimen/histo_data_icon_size"
                         android:layout_height="@dimen/histo_data_icon_size"
-                        android:padding="@dimen/histo_icon_pading2"
-                        android:layout_marginEnd="@dimen/small_padding"
+                        android:padding="@dimen/histo_icon_padding2"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:alpha="0.7"
                         android:src="@drawable/jump_dist_icon"
                         android:contentDescription="@string/none" />
@@ -294,18 +303,19 @@
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/jump_dist"
-                        android:layout_width="@dimen/histo_data_width"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/histo_data_height"
                         android:layout_below="@id/jump_dist_label"
                         android:layout_toEndOf="@id/jump_dist_icon"
+                        android:layout_marginEnd="@dimen/histo_data_gap"
                         android:textColor="@color/history_text"
-                        android:textSize="@dimen/histo_data_number_size"/>
+                        android:textSize="@dimen/histo_data_number_size"
+                        geekui:customTypeface="fonts/OpenSans-Light.ttf"/>
 
                     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                         android:id="@+id/jump_dist_unit"
                         android:layout_width="fill_parent"
-                        android:layout_height="@dimen/histo_data_height"
-                        android:layout_below="@id/jump_dist_label"
+                        android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/jump_dist"
                         android:layout_alignBaseline="@id/jump_dist"
                         android:textColor="@color/history_text"
@@ -330,14 +340,13 @@
             android:id="@+id/ll_btn_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/histo_btn_layout_height"
-            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
                 android:id="@+id/share_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
                 android:alpha="0.7"
@@ -355,7 +364,7 @@
                 android:id="@+id/delete_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:alpha="0.7"

@@ -198,7 +198,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
             viewHolder.trackDate.setText(dateF.format(mDate));
             viewHolder.trackLocation.setText(mLocation);
             if (mLocation.length()>8){
-                viewHolder.trackLocation.setTextSize(16);
+                viewHolder.trackLocation.setTextSize(14);
             }
         }else{
             viewHolder.categoryLayout.setVisibility(View.GONE);

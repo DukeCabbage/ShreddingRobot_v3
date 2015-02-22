@@ -47,9 +47,6 @@
     <!-- Setting Fragment -->
     <color name="setting_units_toggle_background">@color/white_smoke_transparent</color>
 
-    <color name="dark_green">#85a71d</color>
-    <color name="yellow">#ff0</color>
-
     <color name="pink">#e91e63</color>
 
 
