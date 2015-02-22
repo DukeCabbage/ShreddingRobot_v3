@@ -277,4 +277,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     public boolean isTracking() { return tracking; }
+
+    public double getCurSpeed() { return curSpeed; }
+    public double getAirTime() { return airTime; }
+    public double getMaxAirTime() { return maxAirTime; }
+    public int getDuration() { return trackDuration; }
 }
