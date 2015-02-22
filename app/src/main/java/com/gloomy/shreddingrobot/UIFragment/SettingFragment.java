@@ -15,8 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.gloomy.shreddingrobot.R;
@@ -31,13 +34,15 @@ import java.io.File;
 public class SettingFragment extends BaseFragment {
 
     private static final String TAG = "SettingFragment";
-    static final int REQUEST_TAKE_PHOTO  = 1;
+    private static final int REQUEST_TAKE_PHOTO  = 1;
+    public static final int MAX_SLEEP_SPAN = 60;
+    public static final String SLEEP_TIME_UNIT = " min";
 
     private int speedUnitToggle;
-    public TypefaceTextView[] speedUnits = new TypefaceTextView[3];
+    private TypefaceTextView[] speedUnits = new TypefaceTextView[3];
 
     private int timeUnitToggle;
-    public TypefaceTextView[] timeUnits = new TypefaceTextView[2];
+    private TypefaceTextView[] timeUnits = new TypefaceTextView[2];
 
     private ImageView profilePhoto;
     private Uri photoUri;
@@ -48,12 +53,23 @@ public class SettingFragment extends BaseFragment {
     private EditText etUserName;
     private String userName;
 
+    private SeekBar sleepTimerBar;
+    private TypefaceTextView tv_sleepTimerLabel;
+    private String sleepLabel, sleepLabel_alt;
+    private int sleepTime;
+
+    private Switch liftSwitch;
+    private boolean liftOff;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
         findView(rootView);
         bindEvent();
+
+        sleepLabel = getResources().getString(R.string.auto_off_lift_label) + " ";
+        sleepLabel_alt = getResources().getString(R.string.auto_off_timer_label_zero);
         return rootView;
     }
 
@@ -68,13 +84,26 @@ public class SettingFragment extends BaseFragment {
         profilePhoto = (ImageView) rootView.findViewById(R.id.iv_profile_photo);
         tvUserName = (TypefaceTextView) rootView.findViewById(R.id.tv_profile_name);
         etUserName = (EditText) rootView.findViewById(R.id.et_profile_name);
+
+        tv_sleepTimerLabel = (TypefaceTextView) rootView.findViewById(R.id.tv_auto_off_timer_label);
+        sleepTimerBar = (SeekBar) rootView.findViewById(R.id.sleep_timer_bar);
+        sleepTimerBar.setMax(MAX_SLEEP_SPAN);
+        liftSwitch = (Switch) rootView.findViewById(R.id.lift_auto_off_switch);
     }
 
     private void bindEvent() {
         profilePhoto.setOnLongClickListener(profilePhotoOnLongClickListener);
         profilePhoto.setOnClickListener(profilePhotoOnClickListener);
 
-        etUserName.setOnEditorActionListener(userNameEditorActionListener);
+        etUserName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    updateUserName();
+                }
+                return false;
+            }
+        });
+
         tvUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +121,31 @@ public class SettingFragment extends BaseFragment {
         for (TypefaceTextView timeUnit : timeUnits) {
             timeUnit.setOnClickListener(timeUnitOnClickListener);
         }
+
+        sleepTimerBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (progress==0){
+                    tv_sleepTimerLabel.setText(sleepLabel_alt);
+                }else{
+                    tv_sleepTimerLabel.setText(sleepLabel + progress + SLEEP_TIME_UNIT);
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                sleepTime = seekBar.getProgress();
+                sp.edit().putInt(Constants.SP_SLEEP_TIME, sleepTime).apply();
+            }
+        });
+
+        liftSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sp.edit().putBoolean(Constants.SP_LIFT_OFF, isChecked).apply();
+            }
+        });
     }
 
     @Override
@@ -123,6 +177,18 @@ public class SettingFragment extends BaseFragment {
                 timeUnits[i].setVisibility(View.GONE);
             }
         }
+
+        sleepTime = sp.getInt(Constants.SP_SLEEP_TIME, 0);
+        sleepTimerBar.setProgress(sleepTime);
+
+        if (sleepTime==0){
+            tv_sleepTimerLabel.setText(sleepLabel_alt);
+        }else{
+            tv_sleepTimerLabel.setText(sleepLabel + sleepTime + SLEEP_TIME_UNIT);
+        }
+
+        liftOff = sp.getBoolean(Constants.SP_LIFT_OFF, false);
+        liftSwitch.setChecked(liftOff);
     }
 
     @Override
@@ -235,15 +301,6 @@ public class SettingFragment extends BaseFragment {
                 sp.edit().remove(Constants.SP_PROFILE_PHOTO_PATH).apply();
                 return true;
             }
-        }
-    };
-
-    private TextView.OnEditorActionListener userNameEditorActionListener =  new TextView.OnEditorActionListener() {
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                updateUserName();
-            }
-            return false;
         }
     };
 

@@ -171,13 +171,14 @@
             android:id="@+id/tv_auto_off_timer_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
             android:text="@string/auto_off_timer_label"
             android:textColor="@color/white"
             android:textSize="@dimen/setting_textSize_small" />
 
         <SeekBar
-            android:id="@+id/timer_bar"
+            android:id="@+id/sleep_timer_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_timer_bar_height"
             android:layout_below="@id/tv_auto_off_timer_label"
@@ -188,7 +189,7 @@
             android:id="@+id/tv_auto_off_lift_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/timer_bar"
+            android:layout_below="@id/sleep_timer_bar"
             android:layout_marginTop="@dimen/big_padding"
             android:text="@string/auto_off_lift_label"
             android:textColor="@color/white"
@@ -198,7 +199,7 @@
             android:id="@+id/lift_auto_off_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/timer_bar"
+            android:layout_below="@id/sleep_timer_bar"
             android:layout_marginTop="@dimen/big_padding"
             android:layout_alignParentEnd="true"
             android:switchMinWidth="56dp" />

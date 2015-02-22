@@ -19,8 +19,11 @@ public class Constants {
 
 
     // For shared preference
-    public static final String SP_TIME_UNIT = "TIME_UNIT";
-    public static final String SP_SPEED_UNIT = "SPEED_UNIT";
-    public static final String SP_USER_NAME = "USER_NAME";
     public static final String SP_PROFILE_PHOTO_PATH = "PROFILE_PHOTO_PATH";
+    public static final String SP_USER_NAME = "USER_NAME";
+    public static final String SP_SPEED_UNIT = "SPEED_UNIT";
+    public static final String SP_TIME_UNIT = "TIME_UNIT";
+    public static final String SP_SLEEP_TIME = "SLEEP_TIME";
+    public static final String SP_LIFT_OFF = "LIFT_OFF";
+
 }

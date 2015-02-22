@@ -38,7 +38,8 @@
     <string name="speed_unit_label">Speed unit</string>
     <string name="time_unit_label">Time unit</string>
 
-    <string name="auto_off_timer_label">Turn off tracking after 10 min</string>
+    <string name="auto_off_timer_label">Turn off tracking after </string>
+    <string name="auto_off_timer_label_zero">Automatically turn off tracking</string>
     <string name="auto_off_lift_label">Turn off tracking on lift</string>
     <string name="rate_us_label">Rate Shredaholic</string>
 
