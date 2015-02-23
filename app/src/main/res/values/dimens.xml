@@ -75,5 +75,6 @@
     <dimen name="result_unit_font_size">20sp</dimen>
     <dimen name="result_label_font_size">16sp</dimen>
     <dimen name="result_btn_size">60dp</dimen>
+    <dimen name="result_number_width">130dp</dimen>
 
 </resources>

@@ -247,10 +247,10 @@ public class MainActivity extends ActionBarActivity
 
         trackDao.insert(curTrack);
 
-//        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-//        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
-//        mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
-//        setUpResultActionBar();
+        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
+        mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
+        setUpResultActionBar();
     }
 
     private void setUpResultActionBar(){
