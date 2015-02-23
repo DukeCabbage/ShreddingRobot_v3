@@ -61,6 +61,8 @@ public class SettingFragment extends BaseFragment {
     private Switch liftSwitch;
     private boolean liftOff;
 
+    private static final int SELECT_PICTURE = 1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,6 +154,14 @@ public class SettingFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         loadProfileImage();
+
+        if(parentActivity.isTracking()) {
+            sleepTimerBar.setEnabled(false);
+            liftSwitch.setEnabled(false);
+        }else{
+            sleepTimerBar.setEnabled(true);
+            liftSwitch.setEnabled(true);
+        }
 
         userName = sp.getString(Constants.SP_USER_NAME, "");
         if (!userName.isEmpty()) {
@@ -352,7 +362,6 @@ public class SettingFragment extends BaseFragment {
             }
         }
     }
-
     private Uri createImageFileUri() {
         // Create an image file name[
         String imageFileName = "profile";
