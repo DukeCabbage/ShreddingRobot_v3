@@ -3,6 +3,7 @@ package com.gloomy.shreddingrobot;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -24,6 +25,7 @@ import com.gloomy.shreddingrobot.UIFragment.HistoryFragment;
 import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
+import com.gloomy.shreddingrobot.Utility.Constants;
 
 import java.util.Date;
 import java.util.Random;
@@ -63,6 +65,9 @@ public class MainActivity extends ActionBarActivity
     private double airTime,  maxAirTime;
     private double jumpDistance, maxJumpDistance;
 
+
+    protected SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,8 @@ public class MainActivity extends ActionBarActivity
         _context = this;
         DaoManager daoManager = DaoManager.getInstance(_context);
         trackDao = daoManager.getDBTrackDao(DaoManager.TYPE_WRITE);
+
+        sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
         initUI();
         initSensor();
     }
@@ -208,6 +215,12 @@ public class MainActivity extends ActionBarActivity
         if (duration!=0){
             avgSpeed = (avgSpeed*(duration-1) + curSpeed)/(double)duration;
         }
+       if(duration == sp.getInt(Constants.SP_SLEEP_TIME, 0) && sp.getInt(Constants.SP_SLEEP_TIME, 0) != 0)
+       {
+           stopTracking();
+           sp.edit().putBoolean("RESET",true);
+       }
+
     }
 
     public void startTracking() {

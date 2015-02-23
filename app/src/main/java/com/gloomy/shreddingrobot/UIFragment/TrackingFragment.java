@@ -17,7 +17,6 @@ import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.Constants;
-import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 import java.text.DecimalFormat;
@@ -48,6 +47,7 @@ public class TrackingFragment extends BaseFragment
         View rootView = inflater.inflate(R.layout.fragment_tracking, container, false);
         initView(rootView);
         bindEvent();
+
         return rootView;
     }
 
@@ -180,6 +180,10 @@ public class TrackingFragment extends BaseFragment
         int minutes = duration%60;
         String hoursStr, minutesStr;
 
+        if(sp.getBoolean("RESET", true))
+        {
+            resetBtn();
+        }
         minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
         hoursStr = hours<10 ? "0"+hours : ""+hours;
 
