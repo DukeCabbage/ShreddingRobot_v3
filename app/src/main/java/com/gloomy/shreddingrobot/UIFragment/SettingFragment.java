@@ -27,6 +27,7 @@ import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.BitmapWorkerTask;
 import com.gloomy.shreddingrobot.Utility.Constants;
+import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 import java.io.File;
@@ -160,10 +161,10 @@ public class SettingFragment extends BaseFragment {
 
         if (parentActivity.isTracking()) {
             sleepTimerBar.setEnabled(false);
-            liftSwitch.setEnabled(false);
-        } else {
+//            liftSwitch.setEnabled(false);
+        }else{
             sleepTimerBar.setEnabled(true);
-            liftSwitch.setEnabled(true);
+//            liftSwitch.setEnabled(true);
         }
 
         userName = sp.getString(Constants.SP_USER_NAME, "");
@@ -210,6 +211,7 @@ public class SettingFragment extends BaseFragment {
         if (tvUserName.getVisibility() == View.GONE) {
             updateUserName();
         }
+        parentActivity.settingUpdated();
     }
 
     private View.OnClickListener speedUnitOnClickListener = new View.OnClickListener() {

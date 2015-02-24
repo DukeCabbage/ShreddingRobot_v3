@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +26,7 @@ import com.gloomy.shreddingrobot.UIFragment.ResultFragment;
 import com.gloomy.shreddingrobot.UIFragment.SettingFragment;
 import com.gloomy.shreddingrobot.UIFragment.TrackingFragment;
 import com.gloomy.shreddingrobot.Utility.Constants;
+import com.gloomy.shreddingrobot.Widget.Logger;
 
 import java.util.Date;
 import java.util.Random;
@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity
     private static final String TAG = "MainActivity";
 
     private static final int ALTITUDE_AVERAGING_QUEUE_SIZE = 20;
-    private static final int AUTOOFF_ALTI_THRESHOLD = 200;
+    private static final int AUTO_OFF_ALTITUDE_THRESHOLD = 150;
 
     private Context _context;
     private MaterialMenuDrawable materialMenu;
@@ -73,6 +73,8 @@ public class MainActivity extends ActionBarActivity
     private double airTime,  maxAirTime;
     private double jumpDistance, maxJumpDistance;
 
+    private boolean liftOff;
+    private int sleepTime;
 
     protected SharedPreferences sp;
 
@@ -92,6 +94,7 @@ public class MainActivity extends ActionBarActivity
         trackDao = daoManager.getDBTrackDao(DaoManager.TYPE_WRITE);
 
         sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
+        settingUpdated();
         initUI();
         initSensor();
     }
@@ -201,7 +204,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void updateAltitude(double newAltitude) {
         if (newAltitude == 0.0) {
-            Log.e(TAG, "no altitude reading");
+            Logger.d(TAG, "no altitude reading");
         } else {
             curAltitude *= ALTITUDE_AVERAGING_QUEUE_SIZE;
             boolean stabilizedAlt = rawAltData.size() == ALTITUDE_AVERAGING_QUEUE_SIZE;
@@ -220,11 +223,11 @@ public class MainActivity extends ActionBarActivity
                 if (curAltitude < altitude_min) {
                     altitude_min = curAltitude;
                 }
-                else if (curAltitude > (altitude_min+AUTOOFF_ALTI_THRESHOLD)) {
-
+                else if (curAltitude > (altitude_min+ AUTO_OFF_ALTITUDE_THRESHOLD)) {
+                    if(liftOff){
                         stopTracking();
-                    mTrackingFragment.resetBtn();
-
+                        mTrackingFragment.autoOff();
+                    }
                 }
             }
         }
@@ -250,15 +253,20 @@ public class MainActivity extends ActionBarActivity
         if (duration!=0){
             avgSpeed = (avgSpeed*(duration-1) + curSpeed)/(double)duration;
         }
-       if(duration == sp.getInt(Constants.SP_SLEEP_TIME, 0) && sp.getInt(Constants.SP_SLEEP_TIME, 0) != 0)
-       {
-           stopTracking();
-           sp.edit().putBoolean("RESET",true);
-       }
 
+        if (sleepTime!=0&&duration>=sleepTime){
+            stopTracking();
+            mTrackingFragment.autoOff();
+        }
+    }
+
+    public void settingUpdated(){
+        sleepTime = sp.getInt(Constants.SP_SLEEP_TIME, 0);
+        liftOff = sp.getBoolean(Constants.SP_LIFT_OFF, false);
     }
 
     public void startTracking() {
+        Logger.d(TAG, "startTracking");
         tracking = true;
         mLocationFragment.startTracking();
         mMotionFragment.startTracking();
@@ -283,6 +291,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void stopTracking() {
+        Logger.d(TAG, "stopTracking");
         tracking = false;
         mLocationFragment.stopTracking();
         mMotionFragment.stopTracking();

@@ -17,7 +17,6 @@ public class Constants {
     public static final String ICON_EMAIL = "\uf003";
     public static final String ICON_Weibo = "\uf18a";
 
-
     // For shared preference
     public static final String SP_PROFILE_PHOTO_PATH = "PROFILE_PHOTO_PATH";
     public static final String SP_USER_NAME = "USER_NAME";
