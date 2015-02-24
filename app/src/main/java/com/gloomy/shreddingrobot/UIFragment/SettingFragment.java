@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,7 +35,7 @@ import java.io.File;
 public class SettingFragment extends BaseFragment {
 
     private static final String TAG = "SettingFragment";
-    private static final int REQUEST_TAKE_PHOTO  = 1;
+    private static final int REQUEST_TAKE_PHOTO = 1;
     public static final int MAX_SLEEP_SPAN = 60;
     public static final String SLEEP_TIME_UNIT = " min";
 
@@ -75,7 +76,7 @@ public class SettingFragment extends BaseFragment {
         return rootView;
     }
 
-    private void findView(View rootView){
+    private void findView(View rootView) {
         speedUnits[0] = (TypefaceTextView) rootView.findViewById(R.id.tv_set_to_km_per_hour);
         speedUnits[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_set_to_m_per_sec);
         speedUnits[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_set_to_mi_per_hour);
@@ -127,14 +128,17 @@ public class SettingFragment extends BaseFragment {
         sleepTimerBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress==0){
+                if (progress == 0) {
                     tv_sleepTimerLabel.setText(sleepLabel_alt);
-                }else{
+                } else {
                     tv_sleepTimerLabel.setText(sleepLabel + progress + SLEEP_TIME_UNIT);
                 }
             }
+
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 sleepTime = seekBar.getProgress();
@@ -155,13 +159,11 @@ public class SettingFragment extends BaseFragment {
         super.onStart();
         loadProfileImage();
 
-        if(parentActivity.isTracking()) {
+        if (parentActivity.isTracking()) {
             sleepTimerBar.setEnabled(false);
-            Logger.e(TAG, ""+sleepTimerBar.getVisibility());
 //            liftSwitch.setEnabled(false);
         }else{
             sleepTimerBar.setEnabled(true);
-            Logger.e(TAG, ""+sleepTimerBar.getVisibility());
 //            liftSwitch.setEnabled(true);
         }
 
@@ -174,16 +176,16 @@ public class SettingFragment extends BaseFragment {
         speedUnitToggle = sp.getInt(Constants.SP_SPEED_UNIT, 0);
         timeUnitToggle = sp.getInt(Constants.SP_TIME_UNIT, 0);
 
-        for (int i = 0; i < speedUnits.length; i++){
-            if (speedUnitToggle == i){
+        for (int i = 0; i < speedUnits.length; i++) {
+            if (speedUnitToggle == i) {
                 speedUnits[i].setVisibility(View.VISIBLE);
             } else {
                 speedUnits[i].setVisibility(View.GONE);
             }
         }
 
-        for (int i = 0; i < timeUnits.length; i++){
-            if (timeUnitToggle == i){
+        for (int i = 0; i < timeUnits.length; i++) {
+            if (timeUnitToggle == i) {
                 timeUnits[i].setVisibility(View.VISIBLE);
             } else {
                 timeUnits[i].setVisibility(View.GONE);
@@ -193,9 +195,9 @@ public class SettingFragment extends BaseFragment {
         sleepTime = sp.getInt(Constants.SP_SLEEP_TIME, 0);
         sleepTimerBar.setProgress(sleepTime);
 
-        if (sleepTime==0){
+        if (sleepTime == 0) {
             tv_sleepTimerLabel.setText(sleepLabel_alt);
-        }else{
+        } else {
             tv_sleepTimerLabel.setText(sleepLabel + sleepTime + SLEEP_TIME_UNIT);
         }
 
@@ -206,7 +208,7 @@ public class SettingFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (tvUserName.getVisibility()==View.GONE) {
+        if (tvUserName.getVisibility() == View.GONE) {
             updateUserName();
         }
         parentActivity.settingUpdated();
@@ -217,7 +219,7 @@ public class SettingFragment extends BaseFragment {
         public void onClick(View v) {
             final int oldOp, newOp;
             oldOp = speedUnitToggle;
-            switch (oldOp){
+            switch (oldOp) {
                 default:
                     newOp = 1;
                     break;
@@ -238,6 +240,7 @@ public class SettingFragment extends BaseFragment {
                         speedUnit.setEnabled(false);
                     }
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     for (TypefaceTextView speedUnit : speedUnits) {
@@ -264,7 +267,7 @@ public class SettingFragment extends BaseFragment {
         public void onClick(View v) {
             final int oldOp, newOp;
             oldOp = timeUnitToggle;
-            switch (oldOp){
+            switch (oldOp) {
                 default:
                     newOp = 1;
                     break;
@@ -282,6 +285,7 @@ public class SettingFragment extends BaseFragment {
                         timeUnit.setEnabled(false);
                     }
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     for (TypefaceTextView timeUnit : timeUnits) {
@@ -319,7 +323,7 @@ public class SettingFragment extends BaseFragment {
 
     private void updateUserName() {
         String tempUserName = etUserName.getText().toString().trim();
-        if (!tempUserName.isEmpty()){
+        if (!tempUserName.isEmpty()) {
             userName = tempUserName;
             sp.edit().putString(Constants.SP_USER_NAME, userName).apply();
             tvUserName.setText(userName);
@@ -335,42 +339,84 @@ public class SettingFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             // create Intent to take a picture and return control to the calling application
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Intent pickPicIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-            if (intent.resolveActivity(parentActivity.getPackageManager()) != null) {
-                // Create a file, to which the photo saves
-                photoUri = createImageFileUri();
+            String pickTitle = "Select or take a new Picture";
+            Intent chooserIntent = Intent.createChooser(pickPicIntent, pickTitle);
+            chooserIntent.putExtra
+                    (
+                            Intent.EXTRA_INITIAL_INTENTS,
+                            new Intent[]{takePhotoIntent}
+                    );
 
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, REQUEST_TAKE_PHOTO);
-            } else {
-                Logger.e(TAG, "Failed to create camera intent");
-            }
+            // Create a file, to which the photo saves
+            photoUri = createImageFileUri();
+
+
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(chooserIntent, REQUEST_TAKE_PHOTO);
+
+
         }
     };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == Activity.RESULT_OK) {
+
+                final boolean isCamera;
+                if (data == null) {
+                    isCamera = true;
+                } else {
+                    final String action = data.getAction();
+                    if (action == null) {
+                        isCamera = false;
+                    } else {
+                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
+
                 // Image captured and saved to fileUri specified in the Intent
                 profilePhoto.setImageResource(R.drawable.profile_loading);
+                if (isCamera) {
 
-                photoPath = photoUri.getPath();
-                BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
-                task.execute();
 
-                sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
+                    photoPath = photoUri.getPath();
+                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
+                    task.execute();
+
+                    sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
+                } else {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = parentActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    photoPath = picturePath;
+                    cursor.close();
+                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
+                    task.execute();
+
+                    sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
+                }
+
+
             }
         }
     }
+
     private Uri createImageFileUri() {
         // Create an image file name[
         String imageFileName = "profile";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
-        return Uri.fromFile(new File (storageDir, imageFileName));
+        return Uri.fromFile(new File(storageDir, imageFileName));
     }
 
     private void loadProfileImage() {
@@ -378,7 +424,7 @@ public class SettingFragment extends BaseFragment {
         profileHeight = (int) getResources().getDimension(R.dimen.profile_photo_size);
         profileWidth = (int) getResources().getDimension(R.dimen.profile_photo_size);
 
-        if (photoPath!=null) {
+        if (photoPath != null) {
             BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
             task.execute();
         }// else: Default placeholder will be shown
