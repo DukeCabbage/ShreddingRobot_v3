@@ -70,7 +70,7 @@ public class SettingFragment extends BaseFragment {
         findView(rootView);
         bindEvent();
 
-        sleepLabel = getResources().getString(R.string.auto_off_lift_label) + " ";
+        sleepLabel = getResources().getString(R.string.auto_off_timer_label) + " ";
         sleepLabel_alt = getResources().getString(R.string.auto_off_timer_label_zero);
         return rootView;
     }
