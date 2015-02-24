@@ -17,6 +17,7 @@ import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.Constants;
+import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 import java.text.DecimalFormat;
@@ -38,8 +39,6 @@ public class TrackingFragment extends BaseFragment
     private double maxAirTime;
 
     private int speedUnitToggle, timeUnitToggle;
-    private boolean liftOff;
-    private int sleepTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,8 +100,6 @@ public class TrackingFragment extends BaseFragment
         super.onStart();
         speedUnitToggle = sp.getInt(Constants.SP_SPEED_UNIT, 0);
         timeUnitToggle = sp.getInt(Constants.SP_TIME_UNIT, 0);
-        sleepTime = sp.getInt(Constants.SP_SLEEP_TIME, 0);
-        liftOff = sp.getBoolean(Constants.SP_LIFT_OFF, false);
 
         if (parentActivity.isTracking()){
             updateSpeed(parentActivity.getCurSpeed(), 0.0);
@@ -179,15 +176,23 @@ public class TrackingFragment extends BaseFragment
         int hours = duration/60;
         int minutes = duration%60;
         String hoursStr, minutesStr;
-
-        if(sp.getBoolean("RESET", true))
-        {
-            resetBtn();
-        }
         minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
         hoursStr = hours<10 ? "0"+hours : ""+hours;
 
         tvDuration.setText(hoursStr+":"+minutesStr);
+    }
+
+    public void autoOff() {
+        if (switchButton==null){
+            Logger.e(TAG, "autoOff: view is null");
+        }else{
+            switchButton.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    resetBtn();
+                }
+            }, 500);
+        }
     }
 
     private void animateDrawables(View view) {

@@ -157,10 +157,12 @@ public class SettingFragment extends BaseFragment {
 
         if(parentActivity.isTracking()) {
             sleepTimerBar.setEnabled(false);
-            liftSwitch.setEnabled(false);
+            Logger.e(TAG, ""+sleepTimerBar.getVisibility());
+//            liftSwitch.setEnabled(false);
         }else{
             sleepTimerBar.setEnabled(true);
-            liftSwitch.setEnabled(true);
+            Logger.e(TAG, ""+sleepTimerBar.getVisibility());
+//            liftSwitch.setEnabled(true);
         }
 
         userName = sp.getString(Constants.SP_USER_NAME, "");
@@ -207,6 +209,7 @@ public class SettingFragment extends BaseFragment {
         if (tvUserName.getVisibility()==View.GONE) {
             updateUserName();
         }
+        parentActivity.settingUpdated();
     }
 
     private View.OnClickListener speedUnitOnClickListener = new View.OnClickListener() {
