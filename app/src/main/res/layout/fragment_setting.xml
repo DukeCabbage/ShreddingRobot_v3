@@ -10,7 +10,7 @@
         android:layout_margin="@dimen/normal_padding"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.gloomy.shreddingrobot.Widget.RoundedImageView
             android:id="@+id/iv_profile_photo"
             android:layout_width="@dimen/profile_photo_size"
             android:layout_height="@dimen/profile_photo_size"
