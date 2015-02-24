@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.gloomy.shreddingrobot.Utility.Constants;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class MainActivity extends ActionBarActivity
         implements DrawerFragment.NavigationDrawerCallbacks,
@@ -36,6 +38,9 @@ public class MainActivity extends ActionBarActivity
                 MotionFragment.MotionCallbacks {
 
     private static final String TAG = "MainActivity";
+
+    private static final int ALTITUDE_AVERAGING_QUEUE_SIZE = 20;
+    private static final int AUTOOFF_ALTI_THRESHOLD = 200;
 
     private Context _context;
     private MaterialMenuDrawable materialMenu;
@@ -51,6 +56,9 @@ public class MainActivity extends ActionBarActivity
 
     private LocationFragment mLocationFragment;
     private MotionFragment mMotionFragment;
+
+    private double curAltitude, altitude_min;
+    private ArrayBlockingQueue<Double> rawAltData;
 
     private CharSequence mTitle;
 
@@ -191,8 +199,35 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void updateAltitude(double altitude) {
-        // TODO: May not be necessary anymore
+    public void updateAltitude(double newAltitude) {
+        if (newAltitude == 0.0) {
+            Log.e(TAG, "no altitude reading");
+        } else {
+            curAltitude *= ALTITUDE_AVERAGING_QUEUE_SIZE;
+            boolean stabilizedAlt = rawAltData.size() == ALTITUDE_AVERAGING_QUEUE_SIZE;
+            if (stabilizedAlt) {
+                curAltitude -= rawAltData.poll();
+                curAltitude += newAltitude;
+                rawAltData.add(newAltitude);
+
+            } else {
+                curAltitude += newAltitude;
+                rawAltData.add(newAltitude);
+            }
+            curAltitude /= ALTITUDE_AVERAGING_QUEUE_SIZE;
+
+            if (stabilizedAlt){
+                if (curAltitude < altitude_min) {
+                    altitude_min = curAltitude;
+                }
+                else if (curAltitude > (altitude_min+AUTOOFF_ALTI_THRESHOLD)) {
+
+                        stopTracking();
+                    mTrackingFragment.resetBtn();
+
+                }
+            }
+        }
     }
 
     @Override
@@ -227,6 +262,8 @@ public class MainActivity extends ActionBarActivity
         tracking = true;
         mLocationFragment.startTracking();
         mMotionFragment.startTracking();
+
+        rawAltData = new ArrayBlockingQueue<>(ALTITUDE_AVERAGING_QUEUE_SIZE);
 
         //Initialize DBTrack object
         Random rg = new Random();
