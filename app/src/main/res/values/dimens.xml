@@ -52,18 +52,22 @@
 
     <!-- Setting Fragment layout-->
     <dimen name="profile_panel_height">100dp</dimen>
-    <dimen name="profile_photo_size">100dp</dimen>
+    <dimen name="profile_photo_size">90dp</dimen>
     <dimen name="profile_font_size">30sp</dimen>
 
     <dimen name="setting_units_panel_height">140dp</dimen>
     <dimen name="setting_units_card_height">100dp</dimen>
 
-    <dimen name="setting_timer_bar_height">30dp</dimen>
+    <dimen name="setting_timer_bar_height">40dp</dimen>
+    <dimen name="setting_timer_progress_thickness">6dp</dimen>
+    <dimen name="setting_timer_thumb_size">24dp</dimen>
 
-    <dimen name="setting_textSize_large">30sp</dimen>
-    <dimen name="setting_textSize_small">18sp</dimen>
+    <dimen name="setting_switch_width">48dp</dimen>
 
     <dimen name="heart_size">48sp</dimen>
+
+    <dimen name="setting_textSize_large">28sp</dimen>
+    <dimen name="setting_textSize_small">18sp</dimen>
 
     <!-- Result Fragment Layout -->
     <dimen name="result_profile_height">100dp</dimen>
@@ -71,10 +75,14 @@
     <dimen name="result_profile_font_size">24sp</dimen>
 
     <dimen name="result_data_height">75dp</dimen>
-    <dimen name="result_value_font_size">45sp</dimen>
-    <dimen name="result_unit_font_size">20sp</dimen>
+    <dimen name="result_data_number_column_width">130dp</dimen>
+
     <dimen name="result_label_font_size">16sp</dimen>
+    <dimen name="result_bar_thickness">5dp</dimen>
+
+    <dimen name="result_value_font_size">40sp</dimen>
+    <dimen name="result_unit_font_size">20sp</dimen>
+
     <dimen name="result_btn_size">60dp</dimen>
-    <dimen name="result_number_width">130dp</dimen>
 
 </resources>

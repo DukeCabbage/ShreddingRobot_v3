@@ -38,7 +38,7 @@
 
         <LinearLayout
             android:id="@+id/ll_max_air_number"
-            android:layout_width="@dimen/result_number_width"
+            android:layout_width="@dimen/result_data_number_column_width"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="right"
@@ -81,7 +81,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/ll_longest_jump_number"
             android:layout_marginTop="@dimen/small_padding"
-            android:text="@string/longest_jump"
+            android:text="@string/result_jump_distance_label"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
@@ -98,7 +98,7 @@
 
         <LinearLayout
             android:id="@+id/ll_longest_jump_number"
-            android:layout_width="@dimen/result_number_width"
+            android:layout_width="@dimen/result_data_number_column_width"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="right"
@@ -141,7 +141,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/ll_max_speed_number"
             android:layout_marginTop="@dimen/small_padding"
-            android:text="@string/max_speed"
+            android:text="@string/result_max_speed_label"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
@@ -158,7 +158,7 @@
 
         <LinearLayout
             android:id="@+id/ll_max_speed_number"
-            android:layout_width="@dimen/result_number_width"
+            android:layout_width="@dimen/result_data_number_column_width"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/bar_max_speed"
@@ -203,7 +203,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/ll_avg_speed_number"
             android:layout_marginTop="@dimen/small_padding"
-            android:text="@string/avg_speed"
+            android:text="@string/result_avg_speed_label"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
@@ -220,7 +220,7 @@
 
         <LinearLayout
             android:id="@+id/ll_avg_speed_number"
-            android:layout_width="@dimen/result_number_width"
+            android:layout_width="@dimen/result_data_number_column_width"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="right"

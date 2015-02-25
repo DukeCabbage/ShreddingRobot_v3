@@ -121,10 +121,12 @@ public class ResultFragment extends BaseFragment {
         tv_done = (TypefaceTextView) rootView.findViewById(R.id.tv_done);
         tv_continue = (TypefaceTextView) rootView.findViewById(R.id.tv_continue);
 
+
         bar_max_air =  rootView.findViewById(R.id.bar_max_air);
         bar_max_speed =  rootView.findViewById(R.id.bar_max_speed);
         bar_longest_jump = rootView.findViewById(R.id.bar_longest_jump);
         bar_avg_speed = rootView.findViewById(R.id.bar_avg_speed);
+
         tv_max_speed = (TextView) rootView.findViewById(R.id.tv_max_speed);
         tv_max_speed_unit = (TextView) rootView.findViewById(R.id.tv_max_speed_unit);
         tv_max_air = (TextView) rootView.findViewById(R.id.tv_max_air);
