@@ -14,7 +14,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -84,9 +83,9 @@ public class ResultFragment extends BaseFragment {
         tv_done = (TypefaceTextView) rootView.findViewById(R.id.tv_done);
         tv_continue = (TypefaceTextView) rootView.findViewById(R.id.tv_continue);
 
-        bar_max_air = (View) rootView.findViewById(R.id.bar_max_air);
-        max_speed_bar = (View) rootView.findViewById(R.id.max_speed_bar);
-        longest_jump_bar = rootView.findViewById(R.id.longest_jump_bar);
+        bar_max_air = rootView.findViewById(R.id.bar_max_air);
+        max_speed_bar = rootView.findViewById(R.id.bar_max_speed);
+        longest_jump_bar = rootView.findViewById(R.id.bar_jump_distance);
         tv_max_speed = (TextView) rootView.findViewById(R.id.tv_max_speed);
         tv_max_speed_unit = (TextView) rootView.findViewById(R.id.tv_max_speed_unit);
 

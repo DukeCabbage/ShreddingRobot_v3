@@ -50,9 +50,11 @@
     <string name="timeUnit1">Milli sec</string>
 
     <!--Result Fragment-->
-    <string name="max_speed">Max Speed</string>
-    <string name="avg_speed">Average Speed</string>
-    <string name="longest_jump">Longest Jump</string>
+    <string name="result_max_speed_label">Max Speed</string>
+    <string name="result_avg_speed_label">Average Speed</string>
+    <string name="result_air_time_label">Max Air Time</string>
+    <string name="result_jump_distance_label">Longest Jump</string>
+
     <string name="share">Share</string>
     <string name="love_it">Love It!</string>
     <string name="heart">heart</string>
