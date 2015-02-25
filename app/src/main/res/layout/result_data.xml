@@ -34,7 +34,7 @@
             android:layout_marginTop="15dp"
 
             android:layout_alignParentLeft="true"
-            android:background="@color/lime" />
+            android:background="@color/white" />
 
         <LinearLayout
             android:id="@+id/ll_max_air_number"
@@ -45,24 +45,24 @@
             android:orientation="horizontal">
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@+id/tv_max_air_time"
+                android:id="@+id/tv_max_air"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/tv_max_air_time_unit"
-                android:text="1.0"
-                android:textColor="@color/lime"
+                android:text="0.0"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_value_font_size"
                 geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
             <com.gloomy.shreddingrobot.Widget.TypefaceTextView
-                android:id="@id/tv_max_air_time_unit"
+                android:id="@+id/tv_max_air_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/tv_max_air_time"
                 android:layout_alignParentEnd="true"
                 android:text="Sec"
-                android:textColor="@color/lime"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_unit_font_size"
                 geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
         </LinearLayout>
@@ -87,14 +87,14 @@
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
         <View
-            android:id="@+id/longest_jump_bar"
-            android:layout_width="fill_parent"
+            android:id="@+id/bar_longest_jump"
+            android:layout_width="1dp"
             android:layout_height="5dp"
             android:layout_below="@id/tv_longest_jump_label"
             android:layout_marginEnd="@dimen/small_padding"
             android:layout_marginTop="15dp"
-            android:layout_toStartOf="@id/ll_longest_jump_number"
-            android:background="@color/red" />
+            android:layout_alignParentStart="true"
+            android:background="@color/white" />
 
         <LinearLayout
             android:id="@+id/ll_longest_jump_number"
@@ -110,8 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/tv_longest_jump_unit"
-                android:text="14"
-                android:textColor="@color/red"
+                android:text="0"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_value_font_size"
                 geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -122,7 +122,7 @@
                 android:layout_alignBaseline="@id/tv_longest_jump"
                 android:layout_alignParentEnd="true"
                 android:text="M"
-                android:textColor="@color/red"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_unit_font_size"
                 geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
         </LinearLayout>
@@ -147,21 +147,21 @@
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
         <View
-            android:id="@+id/max_speed_bar"
+            android:id="@+id/bar_max_speed"
             android:layout_width="1dp"
             android:layout_height="5dp"
             android:layout_below="@id/tv_max_speed_label"
             android:layout_marginEnd="@dimen/small_padding"
             android:layout_marginTop="15dp"
             android:layout_alignParentStart="true"
-            android:background="@color/green" />
+            android:background="@color/white" />
 
         <LinearLayout
             android:id="@+id/ll_max_speed_number"
             android:layout_width="@dimen/result_number_width"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/max_speed_bar"
+            android:layout_toRightOf="@+id/bar_max_speed"
             android:gravity="right"
             android:orientation="horizontal">
 
@@ -171,8 +171,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/tv_max_speed_unit"
-                android:text="198"
-                android:textColor="@color/green"
+                android:text="0"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_value_font_size"
                 geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -183,7 +183,7 @@
                 android:layout_alignBaseline="@+id/tv_max_speed"
                 android:layout_alignParentEnd="true"
                 android:text="Km/h"
-                android:textColor="@color/green"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_unit_font_size"
                 geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
         </LinearLayout>
@@ -209,13 +209,14 @@
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
         <View
-            android:layout_width="fill_parent"
+            android:id="@+id/bar_avg_speed"
+            android:layout_width="1dp"
             android:layout_height="5dp"
             android:layout_below="@+id/tv_avg_speed_label"
             android:layout_marginEnd="@dimen/small_padding"
             android:layout_marginTop="15dp"
-            android:layout_toStartOf="@id/ll_avg_speed_number"
-            android:background="@color/green" />
+            android:layout_alignParentStart="true"
+            android:background="@color/white" />
 
         <LinearLayout
             android:id="@+id/ll_avg_speed_number"
@@ -232,8 +233,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/tv_avg_speed_unit"
-                android:text="56"
-                android:textColor="@color/green"
+                android:text="0"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_value_font_size"
                 geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -244,7 +245,7 @@
                 android:layout_alignBaseline="@+id/tv_avg_speed"
                 android:layout_alignParentEnd="true"
                 android:text="Km/h"
-                android:textColor="@color/green"
+                android:textColor="@color/white"
                 android:textSize="@dimen/result_unit_font_size"
                 geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
         </LinearLayout>
