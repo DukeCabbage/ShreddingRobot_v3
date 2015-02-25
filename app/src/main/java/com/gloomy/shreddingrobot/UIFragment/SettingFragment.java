@@ -4,13 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +19,12 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.gloomy.shreddingrobot.CropPhotoActivity;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.BitmapWorkerTask;
 import com.gloomy.shreddingrobot.Utility.Constants;
-import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
-
-import java.io.File;
 
 public class SettingFragment extends BaseFragment {
 
@@ -62,7 +56,6 @@ public class SettingFragment extends BaseFragment {
     private Switch liftSwitch;
     private boolean liftOff;
 
-    private static final int SELECT_PICTURE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -338,86 +331,16 @@ public class SettingFragment extends BaseFragment {
     private View.OnClickListener profilePhotoOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // create Intent to take a picture and return control to the calling application
-            Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Intent pickPicIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-            String pickTitle = "Select or take a new Picture";
-            Intent chooserIntent = Intent.createChooser(pickPicIntent, pickTitle);
-            chooserIntent.putExtra
-                    (
-                            Intent.EXTRA_INITIAL_INTENTS,
-                            new Intent[]{takePhotoIntent}
-                    );
-
-            // Create a file, to which the photo saves
-            photoUri = createImageFileUri();
 
 
-            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            startActivityForResult(chooserIntent, REQUEST_TAKE_PHOTO);
+            Intent intent = new Intent(getActivity(), CropPhotoActivity.class);
+            startActivity(intent);
 
 
         }
     };
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
-        if (requestCode == REQUEST_TAKE_PHOTO) {
-            if (resultCode == Activity.RESULT_OK) {
-
-                final boolean isCamera;
-                if (data == null) {
-                    isCamera = true;
-                } else {
-                    final String action = data.getAction();
-                    if (action == null) {
-                        isCamera = false;
-                    } else {
-                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    }
-                }
-
-                // Image captured and saved to fileUri specified in the Intent
-                profilePhoto.setImageResource(R.drawable.profile_loading);
-                if (isCamera) {
-
-
-                    photoPath = photoUri.getPath();
-                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
-                    task.execute();
-
-                    sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
-                } else {
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = parentActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    photoPath = picturePath;
-                    cursor.close();
-                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
-                    task.execute();
-
-                    sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
-                }
-
-
-            }
-        }
-    }
-
-    private Uri createImageFileUri() {
-        // Create an image file name[
-        String imageFileName = "profile";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        return Uri.fromFile(new File(storageDir, imageFileName));
-    }
 
     private void loadProfileImage() {
         photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, null);

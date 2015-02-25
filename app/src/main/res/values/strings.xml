@@ -56,5 +56,8 @@
     <string name="heart">heart</string>
 
     <string name="none"></string>
+    <string name="title_activity_crop_photo">CropPhotoActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>
