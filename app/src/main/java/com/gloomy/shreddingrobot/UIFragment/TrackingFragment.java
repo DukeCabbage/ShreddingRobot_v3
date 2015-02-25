@@ -129,11 +129,11 @@ public class TrackingFragment extends BaseFragment
                 tvCurSpeedUnit.setText("m/s");
                 break;
             case 2:
-                displaySpeed *= 2.2366;
+                displaySpeed *= Constants.UC_MS_TO_MIH;
                 tvCurSpeedUnit.setText("mi/h");
                 break;
             default:
-                displaySpeed *= 3.6;
+                displaySpeed *= Constants.UC_MS_TO_KMH;
                 tvCurSpeedUnit.setText("km/h");
                 break;
         }
@@ -158,7 +158,7 @@ public class TrackingFragment extends BaseFragment
             tvAirTimeUnit.setText("s");
             tvMaxAirTimeUnit.setText("s");
         }else{
-            int disPlayAirTime = Math.round((float)(airTime*1000.0));
+            int disPlayAirTime = Math.round((float)(airTime * Constants.UC_MILLISECONDS_IN_SECOND));
             tvAirTime.setText(disPlayAirTime+"");
 
             if (airTime == 0.0 || airTime > maxAirTime) {
@@ -173,13 +173,16 @@ public class TrackingFragment extends BaseFragment
     @Override
     public void updateDuration(int duration) {
         if (duration<0) return;
-        int hours = duration/60;
-        int minutes = duration%60;
-        String hoursStr, minutesStr;
-        minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
-        hoursStr = hours<10 ? "0"+hours : ""+hours;
+        int hours = duration / Constants.UC_SECONDS_IN_HOUR;
+        int minutes = duration % Constants.UC_SECONDS_IN_HOUR / Constants.UC_SECONDS_IN_MINUTE;
+        int seconds = duration % Constants.UC_SECONDS_IN_HOUR % Constants.UC_SECONDS_IN_MINUTE;
+        String hoursStr, minutesStr, secondsStr;
 
-        tvDuration.setText(hoursStr+":"+minutesStr);
+        hoursStr = hours<10 ? "0"+hours : ""+hours;
+        minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
+        secondsStr = seconds<10 ? "0"+seconds : ""+seconds;
+
+        tvDuration.setText(hoursStr+":"+minutesStr+":"+secondsStr);
     }
 
     public void autoOff() {

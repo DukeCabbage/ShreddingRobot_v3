@@ -42,6 +42,7 @@ public class MainActivity extends ActionBarActivity
 
     private static final String TAG = "MainActivity";
 
+    private static final int AVERAGE_SPEED_UPDATE_INTERVAL_IN_SECONDS = 10;
     private static final int ALTITUDE_AVERAGING_QUEUE_SIZE = 20;
     private static final int AUTO_OFF_ALTITUDE_THRESHOLD = 150;
 
@@ -138,11 +139,12 @@ public class MainActivity extends ActionBarActivity
             mHistoryFragment = new HistoryFragment();
         if(null==mSettingFragment)
             mSettingFragment = new SettingFragment();
-        if(null==mResultFragment)
+        if(null==mResultFragment) {
             mResultFragment = new ResultFragment();
-        // In case this activity was started with special instructions from an
-        // Intent, pass the Intent's extras to the fragment as arguments
-        mResultFragment.setArguments(getIntent().getExtras());
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            mResultFragment.setArguments(getIntent().getExtras());
+        }
     }
 
     private void initSensor() {
@@ -253,8 +255,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void updateDuration(int duration) {
         trackDuration = duration;
-        if (duration!=0){
-            avgSpeed = (avgSpeed*(duration-1) + curSpeed)/(double)duration;
+
+
+        if (duration%AVERAGE_SPEED_UPDATE_INTERVAL_IN_SECONDS == 0){
+            if (duration!=0){
+                avgSpeed = (avgSpeed*(duration-AVERAGE_SPEED_UPDATE_INTERVAL_IN_SECONDS) + curSpeed)/(double)duration;
+                Logger.d(TAG, "average speed updated: " + avgSpeed);
+            }
         }
 
         if (sleepTime!=0&&duration>=sleepTime){
@@ -264,7 +271,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void settingUpdated(){
-        sleepTime = sp.getInt(Constants.SP_SLEEP_TIME, 0);
+        sleepTime = sp.getInt(Constants.SP_SLEEP_TIME, 0) * Constants.UC_SECONDS_IN_MINUTE;
         liftOff = sp.getBoolean(Constants.SP_LIFT_OFF, false);
     }
 

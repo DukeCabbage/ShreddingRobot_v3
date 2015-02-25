@@ -200,28 +200,30 @@ public class HistoryArrayAdapter extends BaseAdapter {
         if (distance<1000){
             viewHolder.trackDistance.setText(distance + " m");
         } else {
-            viewHolder.trackDistance.setText(sig3.format(distance/1000.0) + " km");
+            viewHolder.trackDistance.setText(sig3.format(distance/Constants.UC_KM_TO_M) + " km");
         }
 
-        int hours = duration/60;
-        int minutes = duration%60;
-        String hoursStr, minutesStr;
+        int hours = duration / Constants.UC_SECONDS_IN_HOUR;
+        int minutes = duration % Constants.UC_SECONDS_IN_HOUR / Constants.UC_SECONDS_IN_MINUTE;
+        int seconds = duration % Constants.UC_SECONDS_IN_HOUR % Constants.UC_SECONDS_IN_MINUTE;
+        String hoursStr, minutesStr, secondsStr;
 
-        minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
         hoursStr = hours<10 ? "0"+hours : ""+hours;
+        minutesStr = minutes<10 ? "0"+minutes : ""+minutes;
+        secondsStr = seconds<10 ? "0"+seconds : ""+seconds;
 
-        viewHolder.trackDuration.setText(hoursStr+":"+minutesStr);
+        viewHolder.trackDuration.setText(hoursStr+":"+minutesStr+":"+secondsStr);
 
         int speedUnit = _pref.getInt(Constants.SP_SPEED_UNIT, 0);
         // Displaying max speed
         double displayMaxSpeed = maxSpeed;
         switch (speedUnit) {
             case 0:
-                displayMaxSpeed *= 3.6;
+                displayMaxSpeed *= Constants.UC_MS_TO_KMH;
                 viewHolder.maxSpeedUnit.setText("km/h");
                 break;
             case 2:
-                displayMaxSpeed *= 2.2366;
+                displayMaxSpeed *= Constants.UC_MS_TO_MIH;
                 viewHolder.maxSpeedUnit.setText("mi/h");
                 break;
             default:
@@ -239,11 +241,11 @@ public class HistoryArrayAdapter extends BaseAdapter {
         double displayAvgSpeed = avgSpeed;
         switch (speedUnit) {
             case 0:
-                displayAvgSpeed *= 3.6;
+                displayAvgSpeed *= Constants.UC_MS_TO_KMH;
                 viewHolder.avgSpeedUnit.setText("km/h");
                 break;
             case 2:
-                displayAvgSpeed *= 2.2366;
+                displayAvgSpeed *= Constants.UC_MS_TO_MIH;
                 viewHolder.avgSpeedUnit.setText("mi/h");
                 break;
             default:
@@ -265,7 +267,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
                 viewHolder.airTimeUnit.setText("s");
                 break;
             case 1:
-                int time = Math.round((float)(maxAirTime*1000.0));
+                int time = Math.round((float)(maxAirTime*Constants.UC_MILLISECONDS_IN_SECOND));
                 viewHolder.airTime.setText(time+"");
                 viewHolder.airTimeUnit.setText("ms");
         }
@@ -274,7 +276,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
         double displayJumpDist = jumpDist;
         switch (speedUnit) {
             case 2:
-                displayJumpDist *= 3.28084;
+                displayJumpDist *= Constants.UC_M_TO_FT;
                 viewHolder.jumpDistUnit.setText("ft");
                 break;
             default:

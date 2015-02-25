@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.gloomy.shreddingrobot.Utility.Constants;
 import com.gloomy.shreddingrobot.Widget.Logger;
 
 import java.util.Timer;
@@ -19,9 +20,8 @@ public class MotionFragment extends Fragment {
     private static final double AIR_TIME_NOISE_THRESHOLD = 0.2;
     private static final double FREE_FALL_THRESHOLD = 2.0;
     private static final int SENSOR_UPDATE_TIME_IN_MILLISECONDS = 50;
-    private static final int DURATION_UPDATE_INTERVAL_IN_MINUTES = 1;
-    private static final int ONE_MINUTE_IN_MILLISECONDS = 60*1000;
-    private static final int DURATION_UPDATE_IN_MILLISECONDS = DURATION_UPDATE_INTERVAL_IN_MINUTES*ONE_MINUTE_IN_MILLISECONDS;
+    private static final int DURATION_UPDATE_INTERVAL_IN_SECONDS = 1;
+    private static final int DURATION_UPDATE_IN_MILLISECONDS = DURATION_UPDATE_INTERVAL_IN_SECONDS * Constants.UC_MILLISECONDS_IN_SECOND;
 
     private Context _context;
     private MotionCallbacks mUICallback;
@@ -171,7 +171,7 @@ public class MotionFragment extends Fragment {
                 @Override
                 public void run() {
                     if (freeFalling) {
-                        airTime += ((double) SENSOR_UPDATE_TIME_IN_MILLISECONDS) / 1000.0;
+                        airTime += ((double) SENSOR_UPDATE_TIME_IN_MILLISECONDS) / Constants.UC_MILLISECONDS_IN_SECOND;
 //                        Logger.d(TAG, "free falling "+airTime);
 //                        Logger.d(TAG, "proj: "+projection);
 //                        Logger.d(TAG, graMag+"");
@@ -196,7 +196,7 @@ public class MotionFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    duration += DURATION_UPDATE_INTERVAL_IN_MINUTES;
+                    duration += DURATION_UPDATE_INTERVAL_IN_SECONDS;
                     if (mDataCallback != null)
                         mDataCallback.updateDuration(duration);
 

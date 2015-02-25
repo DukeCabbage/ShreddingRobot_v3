@@ -25,4 +25,15 @@ public class Constants {
     public static final String SP_SLEEP_TIME = "SLEEP_TIME";
     public static final String SP_LIFT_OFF = "LIFT_OFF";
 
+    // Unit conversion
+    public static final double UC_MS_TO_KMH = 3.6;
+    public static final double UC_MS_TO_MIH = 2.2366;
+    public static final double UC_M_TO_FT = 3.28084;
+    public static final double UC_KM_TO_M = 1000.0;
+
+    public static final int UC_MINUTES_IN_HOUR = 60;
+    public static final int UC_SECONDS_IN_MINUTE = 60;
+    public static final int UC_SECONDS_IN_HOUR = UC_SECONDS_IN_MINUTE * UC_MINUTES_IN_HOUR;
+    public static final int UC_MILLISECONDS_IN_SECOND = 1000;
+
 }
