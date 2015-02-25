@@ -32,6 +32,9 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import com.facebook.Session;
+import com.nineoldandroids.animation.Animator;
+
 public class MainActivity extends ActionBarActivity
         implements DrawerFragment.NavigationDrawerCallbacks,
                 LocationFragment.LocationCallbacks,
@@ -327,14 +330,27 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void backFromResultPage(){
-        materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
-        //onNavigationDrawerItemSelected(mDrawerFragment.getSelected());
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-        mFragTransaction.setCustomAnimations(0, R.anim.leave_from_top);
+        mFragTransaction.setCustomAnimations(0, R.anim.leave_from_right);
         mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
-
+        materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
+        materialMenu.setAnimationListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLocationFragment.setUpUICallback(mTrackingFragment);
+                mMotionFragment.setUpUICallback(mTrackingFragment);
+                initUI();
+            }
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+        mTitle = getString(R.string.title_section1);
+        restoreActionBar();
         hideOption(R.id.action_share);
-        mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout), toolbar);
         mDrawerFragment.enableDrawer();
     }
 
