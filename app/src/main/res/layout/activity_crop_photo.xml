@@ -16,8 +16,11 @@
 
     <View
         android:id="@+id/scaleWindow"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/scalewindow"/>
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/scalewindow"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
 
 </RelativeLayout>

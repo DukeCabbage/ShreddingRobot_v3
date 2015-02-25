@@ -110,7 +110,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
 
                     sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
                     loadProfileImage();
-
+                    scaleWindow.setVisibility(View.VISIBLE);
 
 
                 } else {
@@ -127,7 +127,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
 
                     sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
                     loadProfileImage();
-
+                    scaleWindow.setVisibility(View.VISIBLE);
                 }
 
 
