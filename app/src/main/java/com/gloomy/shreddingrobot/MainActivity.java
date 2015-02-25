@@ -307,7 +307,7 @@ public class MainActivity extends ActionBarActivity
         trackDao.insert(curTrack);
 
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
+        mFragTransaction.setCustomAnimations(R.anim.enter_from_top, 0);
         mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
         setUpResultActionBar();
     }
@@ -328,7 +328,10 @@ public class MainActivity extends ActionBarActivity
 
     public void backFromResultPage(){
         materialMenu.animateIconState(MaterialMenuDrawable.IconState.BURGER, false);
-        onNavigationDrawerItemSelected(mDrawerFragment.getSelected());
+        //onNavigationDrawerItemSelected(mDrawerFragment.getSelected());
+        FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
+        mFragTransaction.setCustomAnimations(0, R.anim.leave_from_top);
+        mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();
 
         hideOption(R.id.action_share);
         mDrawerFragment.setUp((DrawerLayout) findViewById(R.id.main_drawer_layout), toolbar);
