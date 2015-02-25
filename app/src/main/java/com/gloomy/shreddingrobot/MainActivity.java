@@ -310,7 +310,7 @@ public class MainActivity extends ActionBarActivity
         trackDao.insert(curTrack);
 
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
-        mFragTransaction.setCustomAnimations(R.anim.enter_from_right, 0);
+        mFragTransaction.setCustomAnimations(R.anim.enter_from_top, 0);
         mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
         setUpResultActionBar();
     }
@@ -339,9 +339,9 @@ public class MainActivity extends ActionBarActivity
             public void onAnimationStart(Animator animation) {}
             @Override
             public void onAnimationEnd(Animator animation) {
-                initUI();
                 mLocationFragment.setUpUICallback(mTrackingFragment);
                 mMotionFragment.setUpUICallback(mTrackingFragment);
+                initUI();
             }
             @Override
             public void onAnimationCancel(Animator animation) {}
