@@ -12,7 +12,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andexert.library.RippleView;
@@ -124,17 +123,17 @@ public class ResultFragment extends BaseFragment {
 
         bar_max_air =  rootView.findViewById(R.id.bar_max_air);
         bar_max_speed =  rootView.findViewById(R.id.bar_max_speed);
-        bar_longest_jump = rootView.findViewById(R.id.bar_longest_jump);
+        bar_longest_jump = rootView.findViewById(R.id.bar_jump_distance);
         bar_avg_speed = rootView.findViewById(R.id.bar_avg_speed);
 
         tv_max_speed = (TextView) rootView.findViewById(R.id.tv_max_speed);
         tv_max_speed_unit = (TextView) rootView.findViewById(R.id.tv_max_speed_unit);
-        tv_max_air = (TextView) rootView.findViewById(R.id.tv_max_air);
-        tv_max_air_unit = (TextView) rootView.findViewById(R.id.tv_max_air_unit);
+        tv_max_air = (TextView) rootView.findViewById(R.id.tv_max_air_time);
+        tv_max_air_unit = (TextView) rootView.findViewById(R.id.tv_max_air_time_unit);
         tv_avg_speed = (TextView) rootView.findViewById(R.id.tv_avg_speed);
         tv_avg_speed_unit = (TextView) rootView.findViewById(R.id.tv_avg_speed_unit);
-        tv_longest_jump = (TextView) rootView.findViewById(R.id.tv_longest_jump);
-        tv_longest_jump_unit = (TextView) rootView.findViewById(R.id.tv_longest_jump_unit);
+        tv_longest_jump = (TextView) rootView.findViewById(R.id.tv_jump_distance);
+        tv_longest_jump_unit = (TextView) rootView.findViewById(R.id.tv_jump_distance_unit);
 
         done_btn.setOnTouchListener(buttonTouchListener);
         continue_btn.setOnTouchListener(buttonTouchListener);

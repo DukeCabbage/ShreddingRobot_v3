@@ -11,6 +11,7 @@
     <dimen name="navigation_drawer_textSize">26sp</dimen>
     <dimen name="navigation_drawer_textMargin">10dp</dimen>
 
+    <dimen name="bigger_padding">20dp</dimen>
     <dimen name="big_padding">15dp</dimen>
     <dimen name="normal_padding">10dp</dimen>
     <dimen name="small_padding">5dp</dimen>
@@ -81,7 +82,7 @@
     <dimen name="result_bar_thickness">5dp</dimen>
 
     <dimen name="result_value_font_size">40sp</dimen>
-    <dimen name="result_unit_font_size">20sp</dimen>
+    <dimen name="result_unit_font_size">16sp</dimen>
 
     <dimen name="result_btn_size">60dp</dimen>
 
