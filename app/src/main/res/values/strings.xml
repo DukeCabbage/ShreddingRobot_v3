@@ -43,11 +43,13 @@
     <string name="auto_off_lift_label">Turn off tracking on lift</string>
     <string name="rate_us_label">Rate Shredaholic</string>
 
-    <string name="veloUnit0">km/h</string>
-    <string name="veloUnit1">m/sec</string>
-    <string name="veloUnit2">mile/h</string>
-    <string name="timeUnit0">sec</string>
-    <string name="timeUnit1">milli sec</string>
+    <string name="veloUnit0">Kilometres \n per hour</string>
+    <string name="veloUnit1">Metres \n per sec</string>
+    <string name="veloUnit2">Miles \n per hour</string>
+    <string name="timeUnit0">Seconds</string>
+    <string name="timeUnit1">Milli sec</string>
+
+    <!--Result Fragment-->
     <string name="max_speed">Max Speed</string>
     <string name="avg_speed">Average Speed</string>
     <string name="longest_jump">Longest Jump</string>

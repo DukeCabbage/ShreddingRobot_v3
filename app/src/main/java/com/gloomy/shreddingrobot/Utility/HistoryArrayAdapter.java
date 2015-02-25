@@ -19,6 +19,7 @@ import com.gloomy.shreddingrobot.Dao.DBTrackDao;
 import com.gloomy.shreddingrobot.Dao.DaoManager;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Widget.ExpandingListView;
+import com.gloomy.shreddingrobot.Widget.Logger;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
     SparseBooleanArray mIniMap = new SparseBooleanArray();
     SparseBooleanArray mFirstTrackMap = new SparseBooleanArray();
 
+    private boolean firstWave = true;
     private int entryAnimQueue = 0;
 
     SimpleDateFormat dateF = new SimpleDateFormat("MMM d", Locale.US);
@@ -104,14 +106,15 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
         DBTrack mTrack = objects.get(position);
         long trackId = mTrack.getId();
+        Date mDate = mTrack.getDate();
+        String mLocation = mTrack.getLocationName();
+
         int duration = mTrack.getDuration();
         int distance = mTrack.getDistance();
         double maxSpeed = mTrack.getMaxSpeed();
         double avgSpeed = mTrack.getAvgSpeed();
         double maxAirTime = mTrack.getMaxAirTime();
         double jumpDist = mTrack.getMaxJumpDistance();
-        String mLocation = mTrack.getLocationName();
-        Date mDate = mTrack.getDate();
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item_history, parent, false);
@@ -119,32 +122,6 @@ public class HistoryArrayAdapter extends BaseAdapter {
             viewHolder.findView(convertView);
             convertView.setTag(viewHolder);
 
-//            // Entry Animations with delay between each view
-            if (!mIniMap.get(position)) {
-                Animation entryAnim = AnimationUtils.loadAnimation(_context, R.anim.histo_item_enter_left);
-                if (entryAnimQueue == 1) {
-                    entryAnim.setStartOffset(ENTRY_ANIM_DELAY);
-                } else {
-                    entryAnim.setStartOffset(ENTRY_ANIM_DELAY * position);
-                }
-
-                entryAnim.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        entryAnimQueue++;
-                    }
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        if (entryAnimQueue > 1) {
-                            entryAnimQueue--;
-                        }
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
-                });
-                mIniMap.put(position, true);
-                convertView.startAnimation(entryAnim);
-            }
         } else {
             viewHolder = (HistoryViewHolder) convertView.getTag();
             if (!mStaMap.get(trackId)) {
@@ -157,29 +134,45 @@ public class HistoryArrayAdapter extends BaseAdapter {
                 viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_UP);
             }
 
-            //Entry animation when new views appear from bottom
-            if (!mIniMap.get(position)) {
-                Animation entryAnim = AnimationUtils.loadAnimation(_context, R.anim.histo_item_enter_left);
-                entryAnim.setStartOffset(ENTRY_ANIM_DELAY*(entryAnimQueue+1));
-                entryAnim.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        entryAnimQueue++;
-                    }
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        if (entryAnimQueue > 0){
-                            entryAnimQueue--;
-                        }
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {}
-                });
-
-                convertView.startAnimation(entryAnim);
-                mIniMap.put(position, true);
-            }
         }
+
+
+        // Entry animation
+        // flag firstWave determines whether this view is recycled or not
+        // not recycled views are rendered simultaneously, so delay time is set according to position
+        // recycled views are rendered sequentially, so delay time is based on how many animations are underway
+        if (!mIniMap.get(position)){
+            Animation entryAnim = AnimationUtils.loadAnimation(_context, R.anim.histo_item_enter_left);
+
+            if (firstWave){
+                entryAnim.setStartOffset(ENTRY_ANIM_DELAY * position);
+            }else{
+                entryAnim.setStartOffset(ENTRY_ANIM_DELAY*(entryAnimQueue+1));
+            }
+//            Logger.e(TAG, entryAnim.getStartOffset() + " " + position);
+
+            entryAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    mIniMap.put(position, true);
+                        entryAnimQueue++;
+                }
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (entryAnimQueue>0) {
+                        entryAnimQueue--;
+                    }
+                    if(entryAnimQueue<=1){
+                        firstWave = false;
+                    }
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+
+            convertView.startAnimation(entryAnim);
+        }
+
 
         if (position==0){
             mFirstTrackMap.put(position, true);
