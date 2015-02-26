@@ -289,7 +289,7 @@ public class HistoryArrayAdapter extends BaseAdapter {
         viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(_context, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
                 builder.setTitle(_context.getString(R.string.delete_track_title));
                 builder.setMessage(_context.getString(R.string.delete_track_message))
                         .setCancelable(false)
