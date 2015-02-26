@@ -2,24 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navigation_drawer_height"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_height="@dimen/navigation_drawer_iconSize"
         android:layout_width="@dimen/navigation_drawer_iconSize"
-        android:layout_margin="@dimen/navigation_drawer_iconMargin"
-        android:layout_gravity="center_vertical"
-        android:alpha="0.5" />
+        android:layout_marginLeft="@dimen/bigger_padding"
+        android:layout_gravity="center_vertical" />
 
-    <TextView
+    <com.gloomy.shreddingrobot.Widget.TypefaceTextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/navigation_drawer_textMargin"
+        android:layout_marginStart="@dimen/bigger_padding"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:textColor="@color/white"
-        android:textSize="@dimen/navigation_drawer_textSize"/>
+        android:textSize="@dimen/navigation_drawer_textSize"
+        geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
 </LinearLayout>

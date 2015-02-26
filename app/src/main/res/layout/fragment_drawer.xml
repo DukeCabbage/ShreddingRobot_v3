@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:choiceMode="singleChoice"
     android:divider="@color/divider"
-    android:dividerHeight="1dp"
-    android:background="@color/primary_dark"
-    android:listSelector="@color/history_list_BG"
+    android:dividerHeight="0dp"
+    android:background="@color/primary"
+    android:listSelector="@color/drawer_background_selected"
     tools:context=".NavigationDrawerFragment" />
