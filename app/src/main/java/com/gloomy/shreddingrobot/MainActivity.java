@@ -1,10 +1,16 @@
 package com.gloomy.shreddingrobot;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -61,6 +67,7 @@ public class MainActivity extends ActionBarActivity
     private LocationFragment mLocationFragment;
     private MotionFragment mMotionFragment;
 
+    private boolean gpsEnabled;
     private double curAltitude, altitude_min;
     private ArrayBlockingQueue<Double> rawAltData;
 
@@ -106,6 +113,33 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onResume(){
         super.onResume();
+        // Get Location Manager and check for GPS & Network location services
+        LocationManager lm = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
+        if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            // Build the alert dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(_context, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+            builder.setTitle("Location Services Not Active");
+            builder.setMessage("Please enable Location Services and GPS for speed measuring");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Show location settings when the user acknowledges the alert dialog
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    gpsEnabled = false;
+                    dialogInterface.cancel();
+                }
+            });
+            Dialog alertDialog = builder.create();
+            alertDialog.setCanceledOnTouchOutside(false);
+            alertDialog.show();
+        }else{
+            gpsEnabled = true;
+        }
     }
 
     @Override
@@ -278,7 +312,9 @@ public class MainActivity extends ActionBarActivity
     public void startTracking() {
         Logger.d(TAG, "startTracking");
         tracking = true;
-        mLocationFragment.startTracking();
+        if (gpsEnabled) {
+            mLocationFragment.startTracking();
+        }
         mMotionFragment.startTracking();
 
         rawAltData = new ArrayBlockingQueue<>(ALTITUDE_AVERAGING_QUEUE_SIZE);
@@ -303,7 +339,9 @@ public class MainActivity extends ActionBarActivity
     public void stopTracking() {
         Logger.d(TAG, "stopTracking");
         tracking = false;
-        mLocationFragment.stopTracking();
+        if (gpsEnabled) {
+            mLocationFragment.stopTracking();
+        }
         mMotionFragment.stopTracking();
 
         curTrack.setDate(trackDate);
@@ -362,6 +400,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public boolean isTracking() { return tracking; }
+    public boolean isGpsEnabled() { return gpsEnabled; }
 
     public double getCurSpeed() { return curSpeed; }
     public double getAirTime() { return airTime; }
