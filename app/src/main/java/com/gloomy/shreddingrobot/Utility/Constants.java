@@ -16,6 +16,8 @@ public class Constants {
     public static final String ICON_TWITTER = "\uf099";
     public static final String ICON_EMAIL = "\uf003";
     public static final String ICON_Weibo = "\uf18a";
+    public static final String ICON_Check = "\uf00c";
+    public static final String ICON_Close = "\uf00d";
 
     // For shared preference
     public static final String SP_PROFILE_PHOTO_PATH = "PROFILE_PHOTO_PATH";

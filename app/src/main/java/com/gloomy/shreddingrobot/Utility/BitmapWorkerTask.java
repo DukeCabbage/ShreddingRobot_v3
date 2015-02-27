@@ -1,5 +1,6 @@
 package com.gloomy.shreddingrobot.Utility;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -15,13 +16,14 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewReference;
     private String imagePath;
     private int reqHeight, reqWidth;
-
-    public BitmapWorkerTask(ImageView imageView, String imagePath, int reqHeight, int reqWidth) {
+    SharedPreferences sp;
+    public BitmapWorkerTask(ImageView imageView, String imagePath, int reqHeight, int reqWidth, int cropX, int cropY) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         imageViewReference = new WeakReference<ImageView>(imageView);
         this.imagePath = imagePath;
         this.reqHeight = reqHeight;
         this.reqWidth = reqWidth;
+
     }
 
     // Decode image in background.
@@ -33,10 +35,11 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
         BitmapFactory.decodeFile(imagePath, options);
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options);
+       options.inSampleSize = calculateInSampleSize(options);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
+
         return BitmapFactory.decodeFile(imagePath, options);
     }
 

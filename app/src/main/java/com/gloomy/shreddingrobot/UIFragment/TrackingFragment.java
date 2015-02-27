@@ -17,6 +17,7 @@ import com.gloomy.shreddingrobot.SensorFragment.LocationFragment;
 import com.gloomy.shreddingrobot.SensorFragment.MotionFragment;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.Constants;
+import com.gloomy.shreddingrobot.Utility.GetPlaceTask;
 import com.gloomy.shreddingrobot.Widget.Logger;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 

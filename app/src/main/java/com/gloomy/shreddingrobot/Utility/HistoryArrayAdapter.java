@@ -126,12 +126,13 @@ public class HistoryArrayAdapter extends BaseAdapter {
             viewHolder = (HistoryViewHolder) convertView.getTag();
             if (!mStaMap.get(trackId)) {
                 viewHolder.expandingLayout.setVisibility(View.GONE);
-                convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_BG));
+                convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_background));
                 viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_DOWN);
             } else {
                 viewHolder.expandingLayout.setVisibility(View.VISIBLE);
                 convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_open_BG));
                 viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_UP);
+
             }
 
         }

@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,6 +58,8 @@ public class SettingFragment extends BaseFragment {
 
     private Switch liftSwitch;
     private boolean liftOff;
+
+
 
 
     @Override
@@ -332,9 +337,28 @@ public class SettingFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+            builder.setTitle("Change Profile Picture");
+            builder.setMessage("Choose existing OR Take a new picture");
+            builder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    sp.edit().putBoolean("CROP_OPTION", true).apply();
+                    Intent intent = new Intent(getActivity(), CropPhotoActivity.class);
+                    startActivity(intent);
 
-            Intent intent = new Intent(getActivity(), CropPhotoActivity.class);
-            startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    sp.edit().putBoolean("CROP_OPTION", false).apply();
+                    Intent intent = new Intent(getActivity(), CropPhotoActivity.class);
+                    startActivity(intent);
+                }
+            });
+            Dialog alertDialog = builder.create();
+            alertDialog.setCanceledOnTouchOutside(false);
+            alertDialog.show();
+
 
 
         }
@@ -346,9 +370,10 @@ public class SettingFragment extends BaseFragment {
         photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, null);
         profileHeight = (int) getResources().getDimension(R.dimen.profile_photo_size);
         profileWidth = (int) getResources().getDimension(R.dimen.profile_photo_size);
-
+        int c_x = sp.getInt("CROP_X", 0);
+        int c_y = sp.getInt("CROP_Y", 0);
         if (photoPath != null) {
-            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
+            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth, c_x, c_y);
             task.execute();
         }// else: Default placeholder will be shown
     }

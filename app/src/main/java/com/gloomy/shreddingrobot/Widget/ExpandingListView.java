@@ -526,7 +526,7 @@ public class ExpandingListView extends ListView {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         expandingLayout.setVisibility(View.GONE);
-                        view.setBackgroundColor(getResources().getColor(R.color.history_BG));
+                        view.setBackgroundColor(getResources().getColor(R.color.history_background));
                         ((TextView) view.findViewById(R.id.arrow_up_down)).setText(Constants.ICON_ARROW_DOWN);
                         view.setLayoutParams(new AbsListView.LayoutParams(AbsListView
                                 .LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));

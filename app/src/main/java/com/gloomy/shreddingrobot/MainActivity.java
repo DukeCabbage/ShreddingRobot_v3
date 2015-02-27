@@ -78,6 +78,9 @@ public class MainActivity extends ActionBarActivity
 
     private boolean tracking;
     private Date trackDate;
+
+
+
     private String trackLocation;
     private int trackDuration;
     private double curSpeed, maxSpeed, avgSpeed;
@@ -160,6 +163,10 @@ public class MainActivity extends ActionBarActivity
     {
         MenuItem item = menu.findItem(id);
         item.setVisible(true);
+    }
+
+    public void setTrackLocation(String trackLocation) {
+        this.trackLocation = trackLocation;
     }
 
     private void initUI() {
@@ -325,7 +332,7 @@ public class MainActivity extends ActionBarActivity
         curTrack = new DBTrack(id);
 
         trackDate = new Date();
-        trackLocation = "Cypress";
+        //trackLocation = "Cypress";
         trackDuration = 0;
         curSpeed = 0.0;
         maxSpeed = 0.0;
@@ -361,7 +368,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void setUpResultActionBar(){
-        getSupportActionBar().setTitle("Cypress Mountain Run 12");
+        getSupportActionBar().setTitle(trackLocation);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 backFromResultPage();

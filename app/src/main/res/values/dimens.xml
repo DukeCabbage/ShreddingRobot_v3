@@ -6,9 +6,9 @@
     <!-- Navigation Drawer -->
     <dimen name="navigation_drawer_width">220dp</dimen>
     <dimen name="navigation_drawer_height">60dp</dimen>
-    <dimen name="navigation_drawer_iconSize">22dp</dimen>
+    <dimen name="navigation_drawer_iconSize">20dp</dimen>
     <dimen name="navigation_drawer_iconMargin">20dp</dimen>
-    <dimen name="navigation_drawer_textSize">26sp</dimen>
+    <dimen name="navigation_drawer_textSize">18sp</dimen>
     <dimen name="navigation_drawer_textMargin">10dp</dimen>
 
     <dimen name="bigger_padding">20dp</dimen>
@@ -25,13 +25,13 @@
 
     <!-- History Fragment -->
     <dimen name="histo_category_height">60dp</dimen>
-    <dimen name="histo_category_font_size">24sp</dimen>
+    <dimen name="histo_category_font_size">18sp</dimen>
     <dimen name="histo_location_maxWidth">120dp</dimen>
 
     <dimen name="histo_index_height">60dp</dimen>
-    <dimen name="histo_index_icon_size">45dp</dimen>
+    <dimen name="histo_index_icon_size">35dp</dimen>
     <dimen name="histo_index_font_size">20sp</dimen>
-    <dimen name="histo_index_text_margin">6dp</dimen>
+    <dimen name="histo_index_text_margin">10dp</dimen>
     <dimen name="arrow_tv_width">50dp</dimen>
     <dimen name="arrow_font_size">25sp</dimen>
     <dimen name="histo_icon_padding">5dp</dimen>
