@@ -40,7 +40,7 @@
             android:text="LV. 13" />
     </RelativeLayout>
 
-    <include layout="@layout/result_data"
+    <include layout="@layout/result_data_cols"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_profile"

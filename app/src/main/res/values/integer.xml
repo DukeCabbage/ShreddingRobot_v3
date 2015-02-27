@@ -7,4 +7,6 @@
 
     <integer name="card_flip_time_full">300</integer>
     <integer name="card_flip_time_half">150</integer>
+
+    <integer name="fragment_replace_anim_duration">1000</integer>
 </resources>

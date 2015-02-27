@@ -10,8 +10,6 @@
                 android:endColor="@color/seek_bar_background"
                 android:startColor="@color/seek_bar_background" />
 
-            <size android:height="6dp"/>
-
         </shape>
     </item>
 
@@ -24,8 +22,6 @@
                     android:angle="225"
                     android:startColor="@color/seek_bar_progress1"
                     android:endColor="@color/seek_bar_progress2" />
-
-                <size android:height="6dp"/>
 
             </shape>
         </clip>

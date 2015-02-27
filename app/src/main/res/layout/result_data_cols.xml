@@ -37,14 +37,21 @@
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
-        <View
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:id="@+id/bar_max_speed"
-            android:layout_width="1dp"
-            android:layout_height="@dimen/result_bar_thickness"
-            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/result_bar_thickness"
+            android:maxHeight="@dimen/result_bar_thickness"
             android:layout_below="@id/tv_max_speed_label"
             android:layout_marginTop="@dimen/big_padding"
-            android:background="@color/green" />
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/big_padding"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/result_progress_bar"/>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -62,7 +69,6 @@
             android:id="@+id/tv_max_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="198"
             android:textColor="@color/green"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
@@ -72,7 +78,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:text="km/h"
             android:textColor="@color/green"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
@@ -97,14 +102,20 @@
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
-        <View
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:id="@+id/bar_avg_speed"
-            android:layout_width="1dp"
-            android:layout_height="@dimen/result_bar_thickness"
-            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/result_bar_thickness"
+            android:maxHeight="@dimen/result_bar_thickness"
             android:layout_below="@id/tv_avg_speed_label"
             android:layout_marginTop="@dimen/big_padding"
-            android:background="@color/green" />
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/big_padding"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/result_progress_bar"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -122,7 +133,6 @@
             android:id="@+id/tv_avg_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="56"
             android:textColor="@color/green"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
@@ -132,7 +142,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:text="km/h"
             android:textColor="@color/green"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
@@ -157,14 +166,20 @@
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
-        <View
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:id="@+id/bar_max_air"
-            android:layout_width="1dp"
-            android:layout_height="@dimen/result_bar_thickness"
-            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/result_bar_thickness"
+            android:maxHeight="@dimen/result_bar_thickness"
             android:layout_below="@id/tv_max_air_label"
             android:layout_marginTop="@dimen/big_padding"
-            android:background="@color/lime" />
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/big_padding"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/result_progress_bar"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -182,7 +197,6 @@
             android:id="@+id/tv_max_air_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1.20"
             android:textColor="@color/lime"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
@@ -192,7 +206,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:text="Sec"
             android:textColor="@color/lime"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
@@ -217,14 +230,20 @@
             android:textSize="@dimen/result_label_font_size"
             geekui:customTypeface="fonts/OpenSans-Semibold.ttf" />
 
-        <View
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
             android:id="@+id/bar_jump_distance"
-            android:layout_width="1dp"
-            android:layout_height="@dimen/result_bar_thickness"
-            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/result_bar_thickness"
+            android:maxHeight="@dimen/result_bar_thickness"
             android:layout_below="@id/tv_jump_distance_label"
             android:layout_marginTop="@dimen/big_padding"
-            android:background="@color/red" />
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/big_padding"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/result_progress_bar"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -242,7 +261,6 @@
             android:id="@+id/tv_jump_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14"
             android:textColor="@color/red"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
@@ -252,7 +270,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:text="M"
             android:textColor="@color/red"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />

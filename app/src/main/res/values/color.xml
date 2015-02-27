@@ -46,12 +46,17 @@
 
     <!-- Setting Fragment -->
     <color name="setting_units_toggle_background">@color/white_smoke_transparent</color>
-
-    <color name="pink">#e91e63</color>
-
-
     <color name="seek_bar_background">#656565</color>
     <color name="seek_bar_progress1">@color/cyan</color>
     <color name="seek_bar_progress2">@color/light_blue</color>
     <color name="seek_bar_thumb_press_ring">#22222222</color>
+    <color name="pink">#e91e63</color>
+
+    <!-- Result Fragment -->
+    <color name="progress_bar_background">#656565</color>
+    <color name="progress_bar_level1">@color/indigo</color>
+    <color name="progress_bar_level2">@color/light_green</color>
+    <color name="progress_bar_level3">@color/lime</color>
+    <color name="progress_bar_level4">@color/red</color>
+
 </resources>

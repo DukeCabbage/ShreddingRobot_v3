@@ -75,11 +75,11 @@
     <dimen name="result_profile_size">90dp</dimen>
     <dimen name="result_profile_font_size">24sp</dimen>
 
-    <dimen name="result_data_height">75dp</dimen>
+    <dimen name="result_data_height">70dp</dimen>
     <dimen name="result_data_number_column_width">130dp</dimen>
 
     <dimen name="result_label_font_size">16sp</dimen>
-    <dimen name="result_bar_thickness">5dp</dimen>
+    <dimen name="result_bar_thickness">7dp</dimen>
 
     <dimen name="result_value_font_size">40sp</dimen>
     <dimen name="result_unit_font_size">16sp</dimen>

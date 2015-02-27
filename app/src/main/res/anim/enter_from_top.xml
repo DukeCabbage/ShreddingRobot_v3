@@ -5,5 +5,5 @@
         android:valueFrom="-2000" android:valueTo="0"
         android:valueType="floatType"
         android:propertyName="y"
-        android:duration="1000"/>
+        android:duration="@integer/fragment_replace_anim_duration"/>
 </set>

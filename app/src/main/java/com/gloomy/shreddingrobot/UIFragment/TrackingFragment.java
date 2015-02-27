@@ -68,7 +68,6 @@ public class TrackingFragment extends BaseFragment
     }
 
     public void resetBtn() {
-
         switchButton.setBackground(resources.getDrawable(R.drawable.switch_btn_bg_transition));
         switchButtonIcon.setBackground(resources.getDrawable(R.drawable.switch_btn_play));
     }
