@@ -70,10 +70,10 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
 //        profilePhoto.setOnTouchListener(this);
         scaleWindow = findViewById(R.id.scaleWindow);
         _root = (ViewGroup) findViewById(R.id.root);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(300, 300);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(800,800);
 
-        scaleWindow.setLayoutParams(layoutParams);
-        scaleWindow.setOnTouchListener(this);
+        profilePhoto.setLayoutParams(layoutParams);
+        profilePhoto.setOnTouchListener(this);
         sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
 
 
@@ -127,7 +127,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
 
 
                     photoPath = photoUri.getPath();
-                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth,0,0);
+                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
                     task.execute();
 
 
@@ -145,7 +145,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
                     String picturePath = cursor.getString(columnIndex);
                     photoPath = picturePath;
                     cursor.close();
-                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth,0,0);
+                    BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
                     task.execute();
 
                     sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
@@ -262,7 +262,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
         int c_x = sp.getInt("CROP_X", 0);
         int c_y = sp.getInt("CROP_Y", 0);
         if (photoPath != null) {
-            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth, c_x, c_y);
+            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
             task.execute();
 
         }// else: Default placeholder will be shown

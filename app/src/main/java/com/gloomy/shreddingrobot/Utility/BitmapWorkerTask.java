@@ -17,13 +17,14 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
     private String imagePath;
     private int reqHeight, reqWidth;
     SharedPreferences sp;
-    public BitmapWorkerTask(ImageView imageView, String imagePath, int reqHeight, int reqWidth, int cropX, int cropY) {
+
+
+    public BitmapWorkerTask(ImageView imageView, String imagePath, int reqHeight, int reqWidth) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
         imageViewReference = new WeakReference<ImageView>(imageView);
         this.imagePath = imagePath;
         this.reqHeight = reqHeight;
         this.reqWidth = reqWidth;
-
     }
 
     // Decode image in background.
@@ -61,6 +62,8 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
     }
 
     private int calculateInSampleSize(BitmapFactory.Options options) {
+
+
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;

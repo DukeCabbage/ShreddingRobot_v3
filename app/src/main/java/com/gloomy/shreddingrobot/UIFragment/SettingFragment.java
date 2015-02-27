@@ -340,6 +340,7 @@ public class SettingFragment extends BaseFragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
             builder.setTitle("Change Profile Picture");
             builder.setMessage("Choose existing OR Take a new picture");
+            builder.setCancelable(true);
             builder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     sp.edit().putBoolean("CROP_OPTION", true).apply();
@@ -373,7 +374,7 @@ public class SettingFragment extends BaseFragment {
         int c_x = sp.getInt("CROP_X", 0);
         int c_y = sp.getInt("CROP_Y", 0);
         if (photoPath != null) {
-            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth, c_x, c_y);
+            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
             task.execute();
         }// else: Default placeholder will be shown
     }
