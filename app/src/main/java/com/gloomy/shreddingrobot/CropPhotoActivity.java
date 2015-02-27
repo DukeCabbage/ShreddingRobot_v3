@@ -78,32 +78,23 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
 
 
 
-
-        // create Intent to take a picture and return control to the calling application
-        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Intent pickPicIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        String pickTitle = "Select or take a new Picture";
-        Intent chooserIntent = Intent.createChooser(pickPicIntent, pickTitle);
-        chooserIntent.putExtra
-                (
-                        Intent.EXTRA_INITIAL_INTENTS,
-                        new Intent[]{takePhotoIntent}
-                );
-
-        // Create a file, to which the photo saves
-        photoUri = createImageFileUri();
-
-
-        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
-
-        startActivityForResult(chooserIntent, REQUEST_TAKE_PHOTO);
-
-
-        bindEvent();
-
+                if(sp.getBoolean("CROP_OPTION", true)) {
+                    // create Intent to take a picture and return control to the calling application
+                    Intent pickPicIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    // Create a file, to which the photo saves
+                    photoUri = createImageFileUri();
+                    pickPicIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    startActivityForResult(pickPicIntent, REQUEST_TAKE_PHOTO);
+                    bindEvent();
+                }
+        else{
+                    Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    // Create a file, to which the photo saves
+                    photoUri = createImageFileUri();
+                    takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
+                    bindEvent();
+                }
 
     }
 
