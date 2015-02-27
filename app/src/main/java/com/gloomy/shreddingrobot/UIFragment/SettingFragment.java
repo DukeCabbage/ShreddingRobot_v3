@@ -346,9 +346,10 @@ public class SettingFragment extends BaseFragment {
         photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, null);
         profileHeight = (int) getResources().getDimension(R.dimen.profile_photo_size);
         profileWidth = (int) getResources().getDimension(R.dimen.profile_photo_size);
-
+        int c_x = sp.getInt("CROP_X", 0);
+        int c_y = sp.getInt("CROP_Y", 0);
         if (photoPath != null) {
-            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
+            BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth, c_x, c_y);
             task.execute();
         }// else: Default placeholder will be shown
     }
