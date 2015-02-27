@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.gloomy.shreddingrobot.Utility.GetPlaceTask;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -75,6 +76,16 @@ public class LocationFragment extends Fragment implements
         // Send request for location update
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
+
+        //cypress' lat long
+//        String lat = "49.393155";
+//        String lon = "-123.212721";
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        String lat = String.valueOf(location.getLatitude());
+        String lon = String.valueOf(location.getLongitude());
+
+        new GetPlaceTask(getActivity()).execute(lat, lon);
     }
 
     @Override
