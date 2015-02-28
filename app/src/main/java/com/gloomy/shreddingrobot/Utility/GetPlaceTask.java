@@ -2,7 +2,6 @@ package com.gloomy.shreddingrobot.Utility;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
 
 import com.gloomy.shreddingrobot.MainActivity;
 import com.gloomy.shreddingrobot.Widget.Logger;
@@ -20,13 +19,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by rzhu on 2/26/2015.
- */
 public class GetPlaceTask extends AsyncTask<String,Void,String> {
-
-    final String GOOGLE_KEY = "AIzaSyCwEG2NbmRZ89bkxPAhWjGyk1nfGf9Ld2k";
     private final String TAG = "GetPlaceTask";
+    final String GOOGLE_KEY = "AIzaSyCwEG2NbmRZ89bkxPAhWjGyk1nfGf9Ld2k";
+
     String temp;
     Context context;
 
@@ -61,7 +57,7 @@ public class GetPlaceTask extends AsyncTask<String,Void,String> {
             // parse Google places search result
             String name =  getName(temp);
             ((MainActivity) context).setTrackLocation(name);
-            Logger.e("name: " + name);
+            Logger.e(TAG, "name: " + name);
         }
     }
 

@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.gloomy.shreddingrobot.Dao.DBTrack;
@@ -63,6 +64,7 @@ public class MainActivity extends ActionBarActivity
     private HistoryFragment mHistoryFragment;
     private SettingFragment mSettingFragment;
     private ResultFragment mResultFragment;
+    private boolean showingResult = false;
 
     private LocationFragment mLocationFragment;
     private MotionFragment mMotionFragment;
@@ -76,12 +78,10 @@ public class MainActivity extends ActionBarActivity
     private DBTrackDao trackDao;
     private DBTrack curTrack;
 
-    private boolean tracking;
+    private boolean tracking = false;
     private Date trackDate;
 
-
-
-    private String trackLocation;
+    private String trackLocation, lastLocation;
     private int trackDuration;
     private double curSpeed, maxSpeed, avgSpeed;
     private double airTime,  maxAirTime;
@@ -108,6 +108,7 @@ public class MainActivity extends ActionBarActivity
         trackDao = daoManager.getDBTrackDao(DaoManager.TYPE_WRITE);
 
         sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
+        lastLocation = sp.getString(Constants.SP_LAST_LOCATION, "unknown");
         settingUpdated();
         initUI();
         initSensor();
@@ -167,6 +168,10 @@ public class MainActivity extends ActionBarActivity
 
     public void setTrackLocation(String trackLocation) {
         this.trackLocation = trackLocation;
+        if (showingResult){
+            getSupportActionBar().setTitle(trackLocation);
+        }
+        Toast.makeText(_context, "geo-fencing: " + trackLocation, Toast.LENGTH_SHORT).show();
     }
 
     private void initUI() {
@@ -332,7 +337,7 @@ public class MainActivity extends ActionBarActivity
         curTrack = new DBTrack(id);
 
         trackDate = new Date();
-        //trackLocation = "Cypress";
+        trackLocation = null;
         trackDuration = 0;
         curSpeed = 0.0;
         maxSpeed = 0.0;
@@ -352,7 +357,12 @@ public class MainActivity extends ActionBarActivity
         mMotionFragment.stopTracking();
 
         curTrack.setDate(trackDate);
-        curTrack.setLocationName(trackLocation);
+        if (trackLocation==null) {
+            curTrack.setLocationName(lastLocation);
+        }else{
+            curTrack.setLocationName(trackLocation);
+            sp.edit().putString(Constants.SP_LAST_LOCATION, trackLocation);
+        }
         curTrack.setDuration(trackDuration);
         curTrack.setMaxSpeed(maxSpeed);
         curTrack.setAvgSpeed(avgSpeed);
@@ -368,6 +378,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void setUpResultActionBar(){
+        showingResult = true;
         getSupportActionBar().setTitle(trackLocation);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -382,6 +393,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void backFromResultPage(){
+        showingResult = false;
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
         mFragTransaction.setCustomAnimations(0, R.anim.leave_from_right);
         mFragTransaction.replace(R.id.container, mTrackingFragment, "trackingFrag").commit();

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.gloomy.shreddingrobot.Utility.GetPlaceTask;
+import com.gloomy.shreddingrobot.Widget.Logger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -61,13 +61,13 @@ public class LocationFragment extends Fragment implements
 
     public void startTracking() {
         mGoogleApiClient.connect();
-        Log.e(TAG, "mGoogleApiClient connect");
+        Logger.i(TAG, "mGoogleApiClient connect");
     }
 
     public void stopTracking() {
         mGoogleApiClient.disconnect();
 //        mUICallback.updateSpeed(0.0, 0.0);
-        Log.e(TAG, "mLocationClient disconnect");
+        Logger.i(TAG, "mLocationClient disconnect");
     }
 
     @Override
@@ -90,12 +90,12 @@ public class LocationFragment extends Fragment implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "GoogleApiClient connection has been suspend");
+        Logger.i(TAG, "GoogleApiClient connection has been suspend");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "GoogleApiClient connection has failed");
+        Logger.i(TAG, "GoogleApiClient connection has failed");
     }
 
     @Override
@@ -110,10 +110,10 @@ public class LocationFragment extends Fragment implements
         double accuracy = location.getAccuracy();
         double altitude = location.getAltitude();
 
-//        Log.e(TAG, "Location received: " + location.toString());
-//        Log.e(TAG, "Speed: " + speed);
-//        Log.e(TAG, "Accuracy: " + accuracy);
-//        Log.e(TAG, "Altitude: " + altitude);
+//        Logger.d(TAG, "Location received: " + location.toString());
+//        Logger.d(TAG, "Speed: " + speed);
+//        Logger.d(TAG, "Accuracy: " + accuracy);
+//        Logger.d(TAG, "Altitude: " + altitude);
 
         if (mDataCallback != null) {
             mDataCallback.updateSpeed(speed, accuracy);

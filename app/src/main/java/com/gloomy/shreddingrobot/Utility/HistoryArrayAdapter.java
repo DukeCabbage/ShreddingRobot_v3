@@ -132,11 +132,8 @@ public class HistoryArrayAdapter extends BaseAdapter {
                 viewHolder.expandingLayout.setVisibility(View.VISIBLE);
                 convertView.setBackgroundColor(_context.getResources().getColor(R.color.history_open_BG));
                 viewHolder.arrowUpDown.setText(Constants.ICON_ARROW_UP);
-
             }
-
         }
-
 
         // Entry animation
         // flag firstWave determines whether this view is recycled or not
@@ -179,8 +176,10 @@ public class HistoryArrayAdapter extends BaseAdapter {
             mFirstTrackMap.put(position, true);
         }else{
             Date previousDate = getItem(position-1).getDate();
+            String previousLocation = getItem(position-1).getLocationName();
             if (previousDate.getMonth()!=mDate.getMonth() ||
-                    previousDate.getDate()!=mDate.getDate()){
+                    previousDate.getDate()!=mDate.getDate() ||
+                    !previousLocation.contentEquals(mLocation)){
                 mFirstTrackMap.put(position, true);
             }else{
                 mFirstTrackMap.put(position, false);

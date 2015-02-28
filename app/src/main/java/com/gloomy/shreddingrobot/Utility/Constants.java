@@ -20,6 +20,7 @@ public class Constants {
     public static final String ICON_Close = "\uf00d";
 
     // For shared preference
+    public static final String SP_LAST_LOCATION = "LAST_LOCATION";
     public static final String SP_PROFILE_PHOTO_PATH = "PROFILE_PHOTO_PATH";
     public static final String SP_USER_NAME = "USER_NAME";
     public static final String SP_SPEED_UNIT = "SPEED_UNIT";
