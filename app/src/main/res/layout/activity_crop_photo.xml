@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -10,21 +9,23 @@
     android:background="@color/black">
 
    <ImageView
-        android:id="@+id/iv_photo"
-       android:layout_alignParentTop="true"
-       android:layout_marginBottom="50dp"
+        android:id="@+id/iv_raw_photo"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:scaleType="matrix"
+        />
 
     <View
         android:id="@+id/scaleWindow"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:background="@drawable/scalewindow"
         android:layout_centerInParent="true"
-        android:visibility="invisible"
-        />
+        android:visibility="invisible" />
+
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
