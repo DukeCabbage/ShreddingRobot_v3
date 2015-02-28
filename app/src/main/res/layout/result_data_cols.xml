@@ -69,7 +69,7 @@
             android:id="@+id/tv_max_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:textColor="@color/green"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
     </LinearLayout>
@@ -133,7 +133,7 @@
             android:id="@+id/tv_avg_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -142,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:textColor="@color/green"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
     </LinearLayout>
@@ -197,7 +197,7 @@
             android:id="@+id/tv_max_air_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/lime"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -206,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:textColor="@color/lime"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
     </LinearLayout>
@@ -261,7 +261,7 @@
             android:id="@+id/tv_jump_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/red"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_value_font_size"
             geekui:customTypeface="fonts/OpenSans-Light.ttf" />
 
@@ -270,7 +270,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
-            android:textColor="@color/red"
+            android:textColor="@color/white_smoke"
             android:textSize="@dimen/result_unit_font_size"
             geekui:customTypeface="fonts/OpenSans-Regular.ttf" />
     </LinearLayout>

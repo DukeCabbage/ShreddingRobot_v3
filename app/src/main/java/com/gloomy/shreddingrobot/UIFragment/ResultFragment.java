@@ -2,6 +2,7 @@ package com.gloomy.shreddingrobot.UIFragment;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
@@ -24,6 +25,8 @@ import java.text.DecimalFormat;
 public class ResultFragment extends BaseFragment {
     private static final String TAG = ResultFragment.class.getSimpleName();
     private static final Integer ANIMATION_STEPS = 100;
+    private static final Integer ANIMATION_STEP_TIME = 33;
+    private static final Integer NUMBER_OF_BARS = 4;
     private static final DecimalFormat sig3 = new DecimalFormat("@@@");
     private static final DecimalFormat sig2 = new DecimalFormat("@@");
 
@@ -36,9 +39,9 @@ public class ResultFragment extends BaseFragment {
     private double resultMaxSpeed, resultAvgSpeed, resultMaxAir, resultJumpDist;
     private double UCMaxSpeed, UCAvgSpeed, UCMaxAir, UCJumpDist;
 
-    private TypefaceTextView tvMaxSpeed, tvMaxSpeedUnit, tvMaxAir, tvMaxAirUnit,
-            tvAvgSpeed, tvAvgSpeedUnit, tvJumpDist, tvJumpDistUnit;
-    private ProgressBar pBarMaxSpeed, pBarAvgSpeed, pBarAirTime, pBarJumpDist;
+    private ProgressBar[] pbars;
+    private TypefaceTextView[] tvTrackValues;
+    private TypefaceTextView[] tvTrackValueUnits;
 
     private RippleView doneBtn;
     private TypefaceTextView tvDone;
@@ -60,6 +63,10 @@ public class ResultFragment extends BaseFragment {
         resultAvgSpeed = 12.4;
         resultMaxAir = 2.35;
         resultJumpDist = 8.9;
+
+        pbars = new ProgressBar[NUMBER_OF_BARS];
+        tvTrackValues = new TypefaceTextView[NUMBER_OF_BARS];
+        tvTrackValueUnits = new TypefaceTextView[NUMBER_OF_BARS];
     }
 
     private void findView(View rootView) {
@@ -68,24 +75,43 @@ public class ResultFragment extends BaseFragment {
         tvDone = (TypefaceTextView) rootView.findViewById(R.id.tv_done);
         tvContinue = (TypefaceTextView) rootView.findViewById(R.id.tv_continue);
 
-        pBarMaxSpeed = (ProgressBar) rootView.findViewById(R.id.bar_max_speed);
-        pBarAvgSpeed = (ProgressBar) rootView.findViewById(R.id.bar_avg_speed);
-        pBarAirTime = (ProgressBar) rootView.findViewById(R.id.bar_max_air);
-        pBarJumpDist = (ProgressBar) rootView.findViewById(R.id.bar_jump_distance);
+        pbars[0] = (ProgressBar) rootView.findViewById(R.id.bar_max_speed);
+        pbars[1] = (ProgressBar) rootView.findViewById(R.id.bar_avg_speed);
+        pbars[2] = (ProgressBar) rootView.findViewById(R.id.bar_max_air);
+        pbars[3] = (ProgressBar) rootView.findViewById(R.id.bar_jump_distance);
 
-        tvMaxSpeed = (TypefaceTextView) rootView.findViewById(R.id.tv_max_speed);
-        tvMaxSpeedUnit = (TypefaceTextView) rootView.findViewById(R.id.tv_max_speed_unit);
-        tvMaxAir = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time);
-        tvMaxAirUnit = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time_unit);
-        tvAvgSpeed = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed);
-        tvAvgSpeedUnit = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed_unit);
-        tvJumpDist = (TypefaceTextView) rootView.findViewById(R.id.tv_jump_distance);
-        tvJumpDistUnit = (TypefaceTextView) rootView.findViewById(R.id.tv_jump_distance_unit);
+        tvTrackValues[0] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_speed);
+        tvTrackValueUnits[0] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_speed_unit);
+        tvTrackValues[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time);
+        tvTrackValueUnits[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time_unit);
+        tvTrackValues[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed);
+        tvTrackValueUnits[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed_unit);
+        tvTrackValues[3] = (TypefaceTextView) rootView.findViewById(R.id.tv_jump_distance);
+        tvTrackValueUnits[3] = (TypefaceTextView) rootView.findViewById(R.id.tv_jump_distance_unit);
+
+        for (int index= 0; index<NUMBER_OF_BARS; index++){
+            pbars[index].setTag(tvTrackValues[index]);
+            tvTrackValues[index].setTag(tvTrackValueUnits[index]);
+        }
     }
 
     private void bindEvent() {
         doneBtn.setOnTouchListener(buttonTouchListener);
         continueBtn.setOnTouchListener(buttonTouchListener);
+
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentActivity.backFromResultPage();
+            }
+        });
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startGroupAnimation();
+            }
+        });
 
         //this is to prevent hints shown again after onResume
         if (tvDone.getAlpha() != 0) {
@@ -107,60 +133,52 @@ public class ResultFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        for (ProgressBar pbar : pbars){
+            initProgressBar(pbar);
+        }
+
         speedUnitToggle = sp.getInt(Constants.SP_SPEED_UNIT, 0);
         timeUnitToggle = sp.getInt(Constants.SP_TIME_UNIT, 0);
 
         switch (speedUnitToggle){
             case 1:
-                tvMaxSpeedUnit.setText("m/s");
+                tvTrackValueUnits[0].setText("m/s");
                 UCMaxSpeed = 1.0;
-                tvAvgSpeedUnit.setText("m/s");
+                tvTrackValueUnits[1].setText("m/s");
                 UCAvgSpeed = 1.0;
-                tvJumpDistUnit.setText("m");
+                tvTrackValueUnits[3].setText("m");
                 UCJumpDist = 1.0;
                 break;
             case 2:
-                tvMaxSpeedUnit.setText("mi/h");
+                tvTrackValueUnits[0].setText("mi/h");
                 UCMaxSpeed = Constants.UC_MS_TO_MIH;
-                tvAvgSpeedUnit.setText("mi/h");
+                tvTrackValueUnits[1].setText("mi/h");
                 UCAvgSpeed = Constants.UC_MS_TO_MIH;
-                tvJumpDistUnit.setText("ft");
+                tvTrackValueUnits[3].setText("ft");
                 UCJumpDist = Constants.UC_M_TO_FT;
                 break;
             default:
-                tvMaxSpeedUnit.setText("km/h");
+                tvTrackValueUnits[0].setText("km/h");
                 UCMaxSpeed = Constants.UC_MS_TO_KMH;
-                tvAvgSpeedUnit.setText("km/h");
+                tvTrackValueUnits[1].setText("km/h");
                 UCAvgSpeed = Constants.UC_MS_TO_KMH;
-                tvJumpDistUnit.setText("m");
+                tvTrackValueUnits[3].setText("m");
                 UCJumpDist = 1.0;
                 break;
         }
 
         switch (timeUnitToggle){
             case 1:
-                tvMaxAirUnit.setText("ms");
+                tvTrackValueUnits[2].setText("ms");
                 UCMaxAir = Constants.UC_MILLISECONDS_IN_SECOND;
                 break;
             default:
-                tvMaxAirUnit.setText("sec");
+                tvTrackValueUnits[2].setText("sec");
                 UCMaxAir = 1.0;
                 break;
         }
 
-        continueBtn.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startBarAnimations(ANIMATION_STEPS * CAP_MAX_SPEED * UCMaxSpeed,
-                        ANIMATION_STEPS * resultMaxSpeed * UCMaxSpeed, pBarMaxSpeed, tvMaxSpeed, tvMaxSpeedUnit);
-                startBarAnimations(ANIMATION_STEPS * CAP_AVG_SPEED * UCAvgSpeed,
-                        ANIMATION_STEPS * resultAvgSpeed * UCAvgSpeed, pBarAvgSpeed, tvAvgSpeed, tvAvgSpeedUnit);
-                startBarAnimations(ANIMATION_STEPS * CAP_AIR_TIME * UCMaxAir,
-                        ANIMATION_STEPS * resultMaxAir * UCMaxAir, pBarAirTime, tvMaxAir, tvMaxAirUnit);
-                startBarAnimations(ANIMATION_STEPS * CAP_JUMP_DIST * UCJumpDist,
-                        ANIMATION_STEPS * resultJumpDist * UCJumpDist, pBarJumpDist, tvJumpDist, tvJumpDistUnit);
-            }
-        }, getResources().getInteger(R.integer.fragment_replace_anim_duration));
+        startGroupAnimation();
     }
 
     @Override
@@ -170,14 +188,35 @@ public class ResultFragment extends BaseFragment {
         tvContinue.setAlpha(0);
     }
 
-    private void startBarAnimations(final double capValue, final double endValue,
-                                    final ProgressBar pbar, final TypefaceTextView tv, final TypefaceTextView tvu){
+    private void initProgressBar(final ProgressBar pbar){
+        pbar.setProgress(0);
+        pbar.setMax(100);
+    }
+
+    private void startGroupAnimation(){
+        continueBtn.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startBarAnimations(ANIMATION_STEPS * CAP_MAX_SPEED * UCMaxSpeed,
+                        ANIMATION_STEPS * resultMaxSpeed * UCMaxSpeed, pbars[0]);
+                startBarAnimations(ANIMATION_STEPS * CAP_AVG_SPEED * UCAvgSpeed,
+                        ANIMATION_STEPS * resultAvgSpeed * UCAvgSpeed, pbars[1]);
+                startBarAnimations(ANIMATION_STEPS * CAP_AIR_TIME * UCMaxAir,
+                        ANIMATION_STEPS * resultMaxAir * UCMaxAir, pbars[2]);
+                startBarAnimations(ANIMATION_STEPS * CAP_JUMP_DIST * UCJumpDist,
+                        ANIMATION_STEPS * resultJumpDist * UCJumpDist, pbars[3]);
+            }
+        }, getResources().getInteger(R.integer.fragment_replace_anim_duration));
+    }
+
+    private void startBarAnimations(final double capValue, final double endValue, final ProgressBar pbar){
+
+        final TypefaceTextView tv = (TypefaceTextView) pbar.getTag();
+        final TypefaceTextView tvu = (TypefaceTextView) tv.getTag();
 
         pbar.setMax((int) Math.ceil(capValue));
-        pbar.setProgress(0);
 
         final double step = capValue/ANIMATION_STEPS;
-        final int stepTime = 33;
 
         new Thread(){
             public void run() {
@@ -186,16 +225,18 @@ public class ResultFragment extends BaseFragment {
                     try {
                         final double progress = loopValue;
                         final float[] hsv = new float[3];
-                        hsv[0] = (float) ((1-loopValue/capValue)*200);
-                        hsv[1] = 1.0f;
-                        hsv[2] = 1.0f;
+                        hsv[0] = (float) ((1-loopValue/capValue)*220 - 20);
+                        if (hsv[0]<0) hsv[0] = 0.0f;
+                        hsv[1] = 0.9f;
+                        hsv[2] = 0.9f;
                         final int color = Color.HSVToColor(hsv);
                         parentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if ((int) progress <= pbar.getMax()) {
                                     pbar.setProgress((int) progress);
-//                                    pbar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                                    LayerDrawable dra = (LayerDrawable) pbar.getProgressDrawable();
+                                    dra.findDrawableByLayerId(R.id.progress).setColorFilter(color, PorterDuff.Mode.SRC_IN);
                                     tv.setTextColor(color);
                                     tvu.setTextColor(color);
                                 }
@@ -207,7 +248,7 @@ public class ResultFragment extends BaseFragment {
                                 }
                             }
                         });
-                        Thread.sleep(stepTime);
+                        Thread.sleep(ANIMATION_STEP_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -243,5 +284,4 @@ public class ResultFragment extends BaseFragment {
             }
         }
     };
-
 }
