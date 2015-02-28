@@ -1,10 +1,12 @@
 package com.gloomy.shreddingrobot;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gloomy.shreddingrobot.Utility.BitmapWorkerTask;
 import com.gloomy.shreddingrobot.Utility.Constants;
@@ -38,6 +41,8 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
     private ViewGroup _root;
     private View scaleWindow;
     SharedPreferences sp;
+
+    final int PIC_CROP = 1;
 
     // These matrices will be used to move and zoom image
     Matrix matrix = new Matrix();
@@ -95,6 +100,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
         }
     }
 
+    @Override
     public void onResume(){
         super.onResume();
         if (noPhotoChosen) {
@@ -104,7 +110,6 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
                     photoWidth = (int) (profilePhoto.getWidth());
                     photoHeight = (int) (profilePhoto.getHeight());
                   //  profilePhoto.setPadding((int )(photoWidth*0.125), (int) (photoHeight*0.125), (int) (photoWidth*0.125), (int) (photoHeight*0.125));
-                    Logger.e(TAG, photoHeight + " " + photoWidth);
 
                     sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
                     getPhotoMethods(sp.getBoolean("CROP_OPTION", true));
@@ -122,6 +127,33 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
                 finish();
             }
         });
+    }
+    private void performCrop(Uri picUri) {
+        try {
+
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            // indicate image type and Uri
+            cropIntent.setDataAndType(picUri, "image/*");
+            // set crop properties
+            cropIntent.putExtra("crop", "true");
+            // indicate aspect of desired crop
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            // indicate output X and Y
+            cropIntent.putExtra("outputX", 128);
+            cropIntent.putExtra("outputY", 128);
+            // retrieve data on return
+            cropIntent.putExtra("return-data", true);
+            // start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, PIC_CROP);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = "Whoops - your device doesn't support the crop action!";
+            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,7 +191,19 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
                 scaleWindow.setVisibility(View.VISIBLE);
             }
         }
+        else if (requestCode == PIC_CROP) {
+            if (data != null) {
+                // get the returned data
+                Bundle extras = data.getExtras();
+                // get the cropped bitmap
+                Bitmap selectedBitmap = extras.getParcelable("data");
+
+                profilePhoto.setImageBitmap(selectedBitmap);
+            }
+        }
     }
+
+
 
     private Uri createImageFileUri() {
         // Create an image file name
@@ -172,8 +216,8 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
     private void loadProfileImage() {
         photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, null);
 
-//        int c_x = sp.getInt("CROP_X", 0);
-//        int c_y = sp.getInt("CROP_Y", 0);
+//        photoHeight = sp.getInt("CROP_X", 0);
+//        photoWidth = sp.getInt("CROP_Y", 0);
         if (photoPath != null) {
             BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, photoHeight, photoWidth);
             task.execute();
@@ -232,6 +276,7 @@ public class CropPhotoActivity extends Activity implements View.OnTouchListener 
             int y = locations[1];
             sp.edit().putInt("CROP_X", x).apply();
             sp.edit().putInt("CROP_Y", y).apply();
+            performCrop(photoUri);
             finish();
 
 
