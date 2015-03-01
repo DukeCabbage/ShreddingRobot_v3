@@ -54,7 +54,7 @@ public class SettingFragment extends BaseFragment {
     private Uri photoUri;
     private String photoPath;
     private int profileHeight, profileWidth;
-    final int PIC_CROP = 1;
+    final int PIC_CROP = 2;
 
     private TypefaceTextView tvUserName;
     private EditText etUserName;
@@ -374,7 +374,7 @@ public class SettingFragment extends BaseFragment {
 
     private void getPhotoMethods(boolean gallery) {
         if (gallery) {
-            // create Intent to take a picture and return control to the calling application
+            // Create Intent to take a picture and return control to the calling application
             Intent pickPicIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             // Create a file, to which the photo saves
             photoUri = createImageFileUri();
@@ -451,24 +451,52 @@ public class SettingFragment extends BaseFragment {
                     cursor.close();
                 }
 
-
+                noPhotoChosen = false;
                 File cropFile = new File(photoPath);
                 Uri cropUri = Uri.fromFile(cropFile);
 
                 performCrop(cropUri);
 
-                noPhotoChosen = false;
-                sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
-                loadProfileImage();
-               
-
-
 
             }
+        } else if (requestCode == PIC_CROP) {
+            final boolean isCamera;
+            if (data == null) {
+                isCamera = true;
+            } else {
+                final String action = data.getAction();
+                if (action == null) {
+                    isCamera = false;
+                } else {
+                    isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                }
+            }
+
+            // Image captured and saved to fileUri specified in the Intent
+            profilePhoto.setImageResource(R.drawable.profile_loading);
+            if (isCamera) {
+                photoPath = photoUri.getPath();
+
+
+            } else {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = parentActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                photoPath = cursor.getString(columnIndex);
+
+                cursor.close();
+            }
+
+
+            sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
+            loadProfileImage();
+
+
         }
 
-       }
-
+    }
 
 
     private Uri createImageFileUri() {
