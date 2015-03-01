@@ -40,6 +40,7 @@ import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import com.facebook.Session;
+import com.facebook.AppEventsLogger;
 import com.nineoldandroids.animation.Animator;
 
 public class MainActivity extends ActionBarActivity
@@ -116,7 +117,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
         // Get Location Manager and check for GPS & Network location services
         LocationManager lm = (LocationManager) _context.getSystemService(Context.LOCATION_SERVICE);
@@ -145,6 +146,19 @@ public class MainActivity extends ActionBarActivity
         }else{
             gpsEnabled = true;
         }
+
+
+        // For facebook
+        // Logs 'install' and 'app activate' App Events.
+//        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+//        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

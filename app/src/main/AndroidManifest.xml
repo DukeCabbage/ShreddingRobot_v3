@@ -33,15 +33,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".CropPhotoActivity"
-            android:label="@string/title_activity_crop_photo"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gloomy.shreddingrobot.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
