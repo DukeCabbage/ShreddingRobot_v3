@@ -38,9 +38,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/bigger_padding"
             android:textColor="@color/primary_text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            geekui:customTypeface="fonts/Exo2-Light.ttf"
-            android:text="LV. 13" />
+            android:textSize="@dimen/result_profile_level_font_size"
+            geekui:customTypeface="fonts/Exo2-Light.ttf" />
     </RelativeLayout>
 
     <include layout="@layout/result_data_cols"
