@@ -15,28 +15,31 @@
             android:layout_width="@dimen/result_profile_size"
             android:layout_height="@dimen/result_profile_size"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/small_padding"
-            android:src="@drawable/mark" />
+            android:layout_margin="@dimen/small_padding"
+            android:src="@drawable/profile_placeholder" />
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/iv_profile"
-            android:layout_margin="@dimen/big_padding"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/bigger_padding"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/result_profile_font_size"
-            android:text="Mark Mcmorris" />
+            android:text="@string/username_placeholder"
+            android:textSize="@dimen/profile_font_size"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
-        <TextView
+        <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_level_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/tv_name"
             android:layout_alignBottom="@id/iv_profile"
-            android:layout_marginBottom="@dimen/small_padding"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/bigger_padding"
             android:textColor="@color/primary_text"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"
             android:text="LV. 13" />
     </RelativeLayout>
 
@@ -50,14 +53,14 @@
         android:id="@+id/tv_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Done"
+        android:text="@string/result_done_btn"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/result_label_font_size"
-        geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="@dimen/normal_padding"
-        android:layout_above="@+id/result_done_btn"/>
+        android:layout_above="@+id/result_done_btn"
+        geekui:customTypeface="fonts/OpenSans-Semibold.ttf"/>
 
     <com.andexert.library.RippleView
         android:id="@+id/result_done_btn"
@@ -80,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:contentDescription="@string/none"
             android:src="@drawable/ic_action_accept" />
     </com.andexert.library.RippleView>
 
@@ -87,14 +91,14 @@
         android:id="@+id/tv_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue"
+        android:text="@string/result_continue_btn"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/result_label_font_size"
-        geekui:customTypeface="fonts/OpenSans-Semibold.ttf"
         android:layout_alignParentStart="true"
         android:layout_marginStart="13dp"
         android:layout_marginBottom="@dimen/normal_padding"
-        android:layout_above="@+id/result_continue_btn"/>
+        android:layout_above="@+id/result_continue_btn"
+        geekui:customTypeface="fonts/OpenSans-Semibold.ttf"/>
 
     <com.andexert.library.RippleView
         android:id="@+id/result_continue_btn"
@@ -117,6 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:contentDescription="@string/none"
             android:src="@drawable/ic_action_next_item" />
     </com.andexert.library.RippleView>
 

@@ -54,7 +54,7 @@
     <!-- Setting Fragment layout-->
     <dimen name="profile_panel_height">100dp</dimen>
     <dimen name="profile_photo_size">90dp</dimen>
-    <dimen name="profile_font_size">30sp</dimen>
+    <dimen name="profile_font_size">26sp</dimen>
 
     <dimen name="setting_units_panel_height">140dp</dimen>
     <dimen name="setting_units_card_height">100dp</dimen>

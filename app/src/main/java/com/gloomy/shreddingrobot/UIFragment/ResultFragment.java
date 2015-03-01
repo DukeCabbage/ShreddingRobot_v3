@@ -18,6 +18,7 @@ import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.Constants;
 import com.gloomy.shreddingrobot.Widget.Logger;
+import com.gloomy.shreddingrobot.Widget.RoundedImageView;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
 
 import java.text.DecimalFormat;
@@ -39,6 +40,9 @@ public class ResultFragment extends BaseFragment {
     private double resultMaxSpeed, resultAvgSpeed, resultMaxAir, resultJumpDist;
     private double UCMaxSpeed, UCAvgSpeed, UCMaxAir, UCJumpDist;
 
+    private RoundedImageView ivProfile;
+    private TypefaceTextView tvUserName;
+
     private ProgressBar[] pbars;
     private TypefaceTextView[] tvTrackValues;
     private TypefaceTextView[] tvTrackValueUnits;
@@ -59,10 +63,10 @@ public class ResultFragment extends BaseFragment {
     }
 
     private void initValues() {
-        resultMaxSpeed = 31.6;
-        resultAvgSpeed = 12.4;
-        resultMaxAir = 2.35;
-        resultJumpDist = 8.9;
+        resultMaxSpeed = parentActivity.getMaxSpeed();
+        resultAvgSpeed = parentActivity.getAvgSpeed();
+        resultMaxAir = parentActivity.getMaxAirTime();
+        resultJumpDist = parentActivity.getLongestJump();
 
         pbars = new ProgressBar[NUMBER_OF_BARS];
         tvTrackValues = new TypefaceTextView[NUMBER_OF_BARS];
@@ -70,6 +74,9 @@ public class ResultFragment extends BaseFragment {
     }
 
     private void findView(View rootView) {
+        ivProfile = (RoundedImageView) rootView.findViewById(R.id.iv_profile);
+        tvUserName = (TypefaceTextView) rootView.findViewById(R.id.tv_name);
+
         continueBtn = (RippleView) rootView.findViewById(R.id.result_continue_btn);
         doneBtn = (RippleView) rootView.findViewById(R.id.result_done_btn);
         tvDone = (TypefaceTextView) rootView.findViewById(R.id.tv_done);
@@ -82,10 +89,10 @@ public class ResultFragment extends BaseFragment {
 
         tvTrackValues[0] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_speed);
         tvTrackValueUnits[0] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_speed_unit);
-        tvTrackValues[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time);
-        tvTrackValueUnits[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time_unit);
-        tvTrackValues[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed);
-        tvTrackValueUnits[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed_unit);
+        tvTrackValues[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed);
+        tvTrackValueUnits[1] = (TypefaceTextView) rootView.findViewById(R.id.tv_avg_speed_unit);
+        tvTrackValues[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time);
+        tvTrackValueUnits[2] = (TypefaceTextView) rootView.findViewById(R.id.tv_max_air_time_unit);
         tvTrackValues[3] = (TypefaceTextView) rootView.findViewById(R.id.tv_jump_distance);
         tvTrackValueUnits[3] = (TypefaceTextView) rootView.findViewById(R.id.tv_jump_distance_unit);
 
@@ -102,6 +109,7 @@ public class ResultFragment extends BaseFragment {
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                parentActivity.stopTracking();
                 parentActivity.backFromResultPage();
             }
         });
@@ -109,7 +117,7 @@ public class ResultFragment extends BaseFragment {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGroupAnimation();
+                parentActivity.backFromResultPage();
             }
         });
 
@@ -133,6 +141,17 @@ public class ResultFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        String userName = sp.getString(Constants.SP_USER_NAME, "");
+        if (!userName.trim().isEmpty()){
+            tvUserName.setText(userName);
+        }
+        // TODO: Load profile image
+//        String photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, "");
+//        if (!photoPath.trim().isEmpty()){
+//
+//
+//        }
+
         for (ProgressBar pbar : pbars){
             initProgressBar(pbar);
         }
@@ -210,7 +229,6 @@ public class ResultFragment extends BaseFragment {
     }
 
     private void startBarAnimations(final double capValue, final double endValue, final ProgressBar pbar){
-
         final TypefaceTextView tv = (TypefaceTextView) pbar.getTag();
         final TypefaceTextView tvu = (TypefaceTextView) tv.getTag();
 
@@ -221,7 +239,7 @@ public class ResultFragment extends BaseFragment {
         new Thread(){
             public void run() {
                 double loopValue = 0.0;
-                while (loopValue < endValue) {
+                while (loopValue <= endValue) {
                     try {
                         final double progress = loopValue;
                         final float[] hsv = new float[3];
@@ -253,6 +271,9 @@ public class ResultFragment extends BaseFragment {
                         e.printStackTrace();
                     }
                     loopValue += step;
+                    if (loopValue>endValue && loopValue<(endValue+step*0.9)){
+                        loopValue = endValue;
+                    }
                 }
             }
         }.start();
