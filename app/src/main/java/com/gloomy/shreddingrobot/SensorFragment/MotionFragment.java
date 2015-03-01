@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gloomy.shreddingrobot.Utility.Constants;
 import com.gloomy.shreddingrobot.Widget.Logger;
@@ -18,7 +19,7 @@ import java.util.TimerTask;
 public class MotionFragment extends Fragment {
     private static final String TAG = "MotionFrag";
     private static final double AIR_TIME_NOISE_THRESHOLD = 0.2;
-    private static final double FREE_FALL_THRESHOLD = 1.0;
+    private static final double FREE_FALL_THRESHOLD = 1.5;
     private static final int SENSOR_UPDATE_TIME_IN_MILLISECONDS = 50;
     private static final int DURATION_UPDATE_INTERVAL_IN_SECONDS = 1;
     private static final int DURATION_UPDATE_IN_MILLISECONDS = DURATION_UPDATE_INTERVAL_IN_SECONDS * Constants.UC_MILLISECONDS_IN_SECOND;
@@ -36,6 +37,7 @@ public class MotionFragment extends Fragment {
     private TrackTimerTask trackTimerTask;
 
     private boolean freeFalling;
+    private boolean flipping;
     private boolean noGraSensor;
 
     private double[] graReading;
@@ -44,6 +46,7 @@ public class MotionFragment extends Fragment {
     private double projection;
 
     private double airTime;
+    private double flipTime;
     private int duration;
 
     @Override
@@ -69,6 +72,9 @@ public class MotionFragment extends Fragment {
         mGraSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         noGraSensor = mGraSensor == null;
         Logger.d(TAG, "noGraSensor: "+noGraSensor);
+        if(noGraSensor) {
+            Toast.makeText(_context, "This device has not separate gravity sensor", Toast.LENGTH_SHORT).show();
+        }
         mAccSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         graReading = new double[3];
@@ -110,7 +116,10 @@ public class MotionFragment extends Fragment {
             for (int axis = 0; axis < 3; axis++) {
                 projection += accReading[axis] * graReading[axis];
             }
-            freeFalling = (projection/graMag < FREE_FALL_THRESHOLD);
+
+            freeFalling = projection/graMag < FREE_FALL_THRESHOLD;
+            flipping = projection/graMag < -FREE_FALL_THRESHOLD;
+
         }
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {}
@@ -170,7 +179,7 @@ public class MotionFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (freeFalling) {
+                    if (!flipping && freeFalling) {
                         airTime += ((double) SENSOR_UPDATE_TIME_IN_MILLISECONDS) / Constants.UC_MILLISECONDS_IN_SECOND;
                         if (airTime > AIR_TIME_NOISE_THRESHOLD) {
                             if (mDataCallback != null)
