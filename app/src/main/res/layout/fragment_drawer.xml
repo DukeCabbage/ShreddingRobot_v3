@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/normal_padding"
     android:choiceMode="singleChoice"
     android:divider="@color/divider"
     android:dividerHeight="0dp"

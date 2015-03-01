@@ -108,6 +108,9 @@ public class HistoryArrayAdapter extends BaseAdapter {
         long trackId = mTrack.getId();
         Date mDate = mTrack.getDate();
         String mLocation = mTrack.getLocationName();
+        if (mLocation.trim().isEmpty()){
+            mLocation = "Unknown";
+        }
 
         int duration = mTrack.getDuration();
         int distance = mTrack.getDistance();
@@ -170,7 +173,6 @@ public class HistoryArrayAdapter extends BaseAdapter {
 
             convertView.startAnimation(entryAnim);
         }
-
 
         if (position==0){
             mFirstTrackMap.put(position, true);

@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.ProgressBar;
 
 import com.andexert.library.RippleView;
@@ -26,22 +28,24 @@ import java.text.DecimalFormat;
 public class ResultFragment extends BaseFragment {
     private static final String TAG = ResultFragment.class.getSimpleName();
     private static final Integer ANIMATION_STEPS = 100;
-    private static final Integer ANIMATION_STEP_TIME = 33;
+    private static final Integer ANIMATION_STEP_TIME = 50;
     private static final Integer NUMBER_OF_BARS = 4;
     private static final DecimalFormat sig3 = new DecimalFormat("@@@");
     private static final DecimalFormat sig2 = new DecimalFormat("@@");
 
-    private static final Double CAP_MAX_SPEED = 35.0;
+    private static final Double CAP_MAX_SPEED = 40.0;
     private static final Double CAP_AVG_SPEED = 20.0;
-    private static final Double CAP_AIR_TIME = 5.0;
-    private static final Double CAP_JUMP_DIST = 10.0;
+    private static final Double CAP_AIR_TIME = 4.0;
+    private static final Double CAP_JUMP_DIST = 8.0;
+    private static final Double LEVEL_CAP = 20.0;
+    private int displayLevel;
 
     private int speedUnitToggle, timeUnitToggle;
     private double resultMaxSpeed, resultAvgSpeed, resultMaxAir, resultJumpDist;
     private double UCMaxSpeed, UCAvgSpeed, UCMaxAir, UCJumpDist;
 
     private RoundedImageView ivProfile;
-    private TypefaceTextView tvUserName;
+    private TypefaceTextView tvUserName, tvTotalLevel;
 
     private ProgressBar[] pbars;
     private TypefaceTextView[] tvTrackValues;
@@ -68,6 +72,11 @@ public class ResultFragment extends BaseFragment {
         resultMaxAir = parentActivity.getMaxAirTime();
         resultJumpDist = parentActivity.getLongestJump();
 
+//        resultMaxSpeed = 31.4;
+//        resultAvgSpeed = 12.3;
+//        resultMaxAir = 1.2;
+//        resultJumpDist = 3.12;
+
         pbars = new ProgressBar[NUMBER_OF_BARS];
         tvTrackValues = new TypefaceTextView[NUMBER_OF_BARS];
         tvTrackValueUnits = new TypefaceTextView[NUMBER_OF_BARS];
@@ -76,6 +85,7 @@ public class ResultFragment extends BaseFragment {
     private void findView(View rootView) {
         ivProfile = (RoundedImageView) rootView.findViewById(R.id.iv_profile);
         tvUserName = (TypefaceTextView) rootView.findViewById(R.id.tv_name);
+        tvTotalLevel = (TypefaceTextView) rootView.findViewById(R.id.tv_level_total);
 
         continueBtn = (RippleView) rootView.findViewById(R.id.result_continue_btn);
         doneBtn = (RippleView) rootView.findViewById(R.id.result_done_btn);
@@ -148,8 +158,6 @@ public class ResultFragment extends BaseFragment {
         // TODO: Load profile image
 //        String photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, "");
 //        if (!photoPath.trim().isEmpty()){
-//
-//
 //        }
 
         for (ProgressBar pbar : pbars){
@@ -197,6 +205,7 @@ public class ResultFragment extends BaseFragment {
                 break;
         }
 
+        startLevelAnimation();
         startGroupAnimation();
     }
 
@@ -205,6 +214,67 @@ public class ResultFragment extends BaseFragment {
         super.onPause();
         tvDone.setAlpha(0);
         tvContinue.setAlpha(0);
+    }
+
+    private int getDisplayedLevel(){ return displayLevel; }
+    private void increaseDisplayedLevel(){ this.displayLevel++; }
+
+    private void startLevelAnimation() {
+        this.displayLevel = 0;
+        final int trackLevel = parentActivity.getTrackLevel();
+//        final int trackLevel = 20;
+
+        final ScaleAnimation grow = new ScaleAnimation(1.0f, 1.3f, 1.0f, 1.4f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1.0f);
+        grow.setFillAfter(true);
+        grow.setInterpolator(parentActivity, android.R.anim.accelerate_interpolator);
+        grow.setDuration(100l);
+        final ScaleAnimation shrink = new ScaleAnimation(1.3f, 1.0f, 1.4f, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1.0f);
+        shrink.setFillAfter(true);
+        grow.setInterpolator(parentActivity, android.R.anim.decelerate_interpolator);
+        shrink.setDuration(150l);
+
+        grow.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                tvTotalLevel.setText("LV . " + getDisplayedLevel());
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                tvTotalLevel.startAnimation(shrink);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        shrink.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                if (getDisplayedLevel() < trackLevel){
+                    increaseDisplayedLevel();
+                    tvTotalLevel.setText("LV . " + getDisplayedLevel());
+                }
+                final float[] hsv = new float[3];
+                hsv[0] = (float) ((1-getDisplayedLevel()/LEVEL_CAP)*220 - 20);
+                if (hsv[0]<0) hsv[0] = 0.0f;
+                hsv[1] = 0.9f;
+                hsv[2] = 0.9f;
+                final int color = Color.HSVToColor(hsv);
+                tvTotalLevel.setTextColor(color);
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (!( (double)getDisplayedLevel() > LEVEL_CAP ) && getDisplayedLevel() < trackLevel){
+                    tvTotalLevel.startAnimation(grow);
+                }
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        tvTotalLevel.startAnimation(grow);
+
     }
 
     private void initProgressBar(final ProgressBar pbar){

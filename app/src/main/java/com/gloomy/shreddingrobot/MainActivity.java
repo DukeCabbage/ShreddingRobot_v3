@@ -86,6 +86,7 @@ public class MainActivity extends ActionBarActivity
     private double curSpeed, maxSpeed, avgSpeed;
     private double airTime,  maxAirTime;
     private double jumpDistance, maxJumpDistance;
+    private int trackLevel;
 
     private boolean liftOff;
     private int sleepTime;
@@ -108,7 +109,7 @@ public class MainActivity extends ActionBarActivity
         trackDao = daoManager.getDBTrackDao(DaoManager.TYPE_WRITE);
 
         sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
-        lastLocation = sp.getString(Constants.SP_LAST_LOCATION, "unknown");
+        lastLocation = sp.getString(Constants.SP_LAST_LOCATION, "Unknown");
         settingUpdated();
         initUI();
         initSensor();
@@ -255,7 +256,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void updateAltitude(double newAltitude) {
         if (newAltitude == 0.0) {
-            Logger.d(TAG, "no altitude reading");
+//            Logger.d(TAG, "no altitude reading");
         } else {
             curAltitude *= ALTITUDE_AVERAGING_QUEUE_SIZE;
             boolean stabilizedAlt = rawAltData.size() == ALTITUDE_AVERAGING_QUEUE_SIZE;
@@ -346,6 +347,7 @@ public class MainActivity extends ActionBarActivity
         maxAirTime = 0.0;
         jumpDistance = 0.0;
         maxJumpDistance = 0.0;
+        trackLevel = 0;
     }
 
     public void stopTracking() {
@@ -373,6 +375,18 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void summarizeTrack() {
+        double part1 = maxSpeed/30.0;
+        double part2 = avgSpeed/10.0;
+        double part3 = maxAirTime/5.0;
+        double part4 = maxJumpDistance/10.0;
+
+        int level1 = part1>=1 ? 8 : (int)(8*part1);
+        int level2 = part2>=1 ? 4 : (int)(4*part2);
+        int level3 = part3>=1 ? 8 : (int)(8*part3);
+        int level4 = part4>=1 ? 4 : (int)(4*part4);
+
+        trackLevel = level1 + level2 + level3 + level4;
+
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
         mFragTransaction.setCustomAnimations(R.anim.enter_from_top, 0);
         mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
@@ -430,4 +444,5 @@ public class MainActivity extends ActionBarActivity
     public double getLongestJump() {return maxJumpDistance; }
     public double getMaxAirTime() { return maxAirTime; }
     public int getDuration() { return trackDuration; }
+    public int getTrackLevel() {return trackLevel; }
 }
