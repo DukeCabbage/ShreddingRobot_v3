@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class MotionFragment extends Fragment {
     private static final String TAG = "MotionFrag";
     private static final double AIR_TIME_NOISE_THRESHOLD = 0.2;
-    private static final double FREE_FALL_THRESHOLD = 2.0;
+    private static final double FREE_FALL_THRESHOLD = 1.0;
     private static final int SENSOR_UPDATE_TIME_IN_MILLISECONDS = 50;
     private static final int DURATION_UPDATE_INTERVAL_IN_SECONDS = 1;
     private static final int DURATION_UPDATE_IN_MILLISECONDS = DURATION_UPDATE_INTERVAL_IN_SECONDS * Constants.UC_MILLISECONDS_IN_SECOND;
@@ -172,16 +172,12 @@ public class MotionFragment extends Fragment {
                 public void run() {
                     if (freeFalling) {
                         airTime += ((double) SENSOR_UPDATE_TIME_IN_MILLISECONDS) / Constants.UC_MILLISECONDS_IN_SECOND;
-//                        Logger.d(TAG, "free falling "+airTime);
-//                        Logger.d(TAG, "proj: "+projection);
-//                        Logger.d(TAG, graMag+"");
-                    } else if (airTime > AIR_TIME_NOISE_THRESHOLD) {
-//                        Logger.d(TAG, "stop free fall");
-                        if (mDataCallback != null)
-                            mDataCallback.updateAirTime(airTime);
-                        if (mUICallback != null)
-                            mUICallback.updateAirTime(airTime);
-                        airTime = 0.0;
+                        if (airTime > AIR_TIME_NOISE_THRESHOLD) {
+                            if (mDataCallback != null)
+                                mDataCallback.updateAirTime(airTime);
+                            if (mUICallback != null)
+                                mUICallback.updateAirTime(airTime);
+                        }
                     }else{
                         airTime = 0.0;
                     }
