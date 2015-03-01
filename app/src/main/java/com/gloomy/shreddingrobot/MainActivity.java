@@ -256,7 +256,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void updateAltitude(double newAltitude) {
         if (newAltitude == 0.0) {
-            Logger.d(TAG, "no altitude reading");
+//            Logger.d(TAG, "no altitude reading");
         } else {
             curAltitude *= ALTITUDE_AVERAGING_QUEUE_SIZE;
             boolean stabilizedAlt = rawAltData.size() == ALTITUDE_AVERAGING_QUEUE_SIZE;
