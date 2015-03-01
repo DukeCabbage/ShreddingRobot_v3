@@ -87,9 +87,8 @@ public class TrackingFragment extends BaseFragment
                     v.setEnabled(false);
                     parentActivity.startTracking();
                 } else {
-                    Log.e(TAG, "stopTracking");
-                    resetBtn();
-                    parentActivity.stopTracking();
+                    Logger.e(TAG, "going to result");
+                    parentActivity.summarizeTrack();
                 }
             }
         });

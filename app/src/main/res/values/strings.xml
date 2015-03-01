@@ -55,6 +55,9 @@
     <string name="result_air_time_label">Max Air Time</string>
     <string name="result_jump_distance_label">Longest Jump</string>
 
+    <string name="result_done_btn">Done</string>
+    <string name="result_continue_btn">Continue</string>
+
     <string name="share">Share</string>
     <string name="love_it">Love It!</string>
     <string name="heart">heart</string>

@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary">
@@ -27,6 +28,7 @@
             android:textSize="@dimen/profile_font_size"
             android:textColor="@color/white_smoke"
             android:text="@string/username_placeholder"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"
             android:visibility="visible"/>
 
         <EditText
@@ -36,8 +38,8 @@
             android:layout_marginStart="@dimen/big_padding"
             android:layout_marginTop="3dp"
             android:layout_gravity="center_vertical"
-            android:maxEms="6"
-            android:maxLength="12"
+            android:maxEms="8"
+            android:maxLength="16"
             android:maxLines="1"
             android:singleLine="true"
             android:textSize="@dimen/profile_font_size"
@@ -72,7 +74,8 @@
             android:layout_marginStart="10dp"
             android:text="@string/speed_unit_label"
             android:textColor="@color/white_smoke"
-            android:textSize="@dimen/setting_textSize_small" />
+            android:textSize="@dimen/setting_textSize_small"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_set_to_km_per_hour"
@@ -85,7 +88,8 @@
             android:text="@string/veloUnit0"
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
-            android:visibility="visible" />
+            android:visibility="visible"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_set_to_m_per_sec"
@@ -98,7 +102,8 @@
             android:text="@string/veloUnit1"
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
-            android:visibility="gone" />
+            android:visibility="gone"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_set_to_mi_per_hour"
@@ -111,7 +116,8 @@
             android:text="@string/veloUnit2"
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
-            android:visibility="gone" />
+            android:visibility="gone"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
     </RelativeLayout>
 
@@ -131,7 +137,8 @@
             android:layout_marginStart="10dp"
             android:text="@string/time_unit_label"
             android:textColor="@color/white_smoke"
-            android:textSize="@dimen/setting_textSize_small" />
+            android:textSize="@dimen/setting_textSize_small"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_set_to_sec"
@@ -144,7 +151,8 @@
             android:text="@string/timeUnit0"
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
-            android:visibility="visible" />
+            android:visibility="visible"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <com.gloomy.shreddingrobot.Widget.TypefaceTextView
             android:id="@+id/tv_set_to_mill_sec"
@@ -157,7 +165,8 @@
             android:text="@string/timeUnit1"
             android:textColor="@color/white_smoke"
             android:textSize="@dimen/setting_textSize_large"
-            android:visibility="gone" />
+            android:visibility="gone"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
     </RelativeLayout>
 
@@ -175,7 +184,8 @@
             android:layout_marginStart="@dimen/big_padding"
             android:text="@string/auto_off_timer_label"
             android:textColor="@color/white"
-            android:textSize="@dimen/setting_textSize_small" />
+            android:textSize="@dimen/setting_textSize_small"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <SeekBar
             android:id="@+id/sleep_timer_bar"
@@ -199,7 +209,8 @@
             android:layout_alignStart="@id/tv_auto_off_timer_label"
             android:text="@string/auto_off_lift_label"
             android:textColor="@color/white"
-            android:textSize="@dimen/setting_textSize_small" />
+            android:textSize="@dimen/setting_textSize_small"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <Switch
             android:id="@+id/lift_auto_off_switch"
@@ -220,7 +231,8 @@
             android:layout_alignStart="@id/tv_auto_off_timer_label"
             android:text="@string/rate_us_label"
             android:textColor="@color/white_smoke"
-            android:textSize="@dimen/setting_textSize_small" />
+            android:textSize="@dimen/setting_textSize_small"
+            geekui:customTypeface="fonts/Exo2-Light.ttf"/>
 
         <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/rate_heart"

@@ -361,7 +361,7 @@ public class MainActivity extends ActionBarActivity
             curTrack.setLocationName(lastLocation);
         }else{
             curTrack.setLocationName(trackLocation);
-            sp.edit().putString(Constants.SP_LAST_LOCATION, trackLocation);
+            sp.edit().putString(Constants.SP_LAST_LOCATION, trackLocation).apply();
         }
         curTrack.setDuration(trackDuration);
         curTrack.setMaxSpeed(maxSpeed);
@@ -370,7 +370,9 @@ public class MainActivity extends ActionBarActivity
         curTrack.setMaxJumpDistance(maxJumpDistance);
 
         trackDao.insert(curTrack);
+    }
 
+    public void summarizeTrack() {
         FragmentTransaction mFragTransaction = mFragManager.beginTransaction();
         mFragTransaction.setCustomAnimations(R.anim.enter_from_top, 0);
         mFragTransaction.replace(R.id.container, mResultFragment, "resultFrag").commit();
@@ -422,7 +424,10 @@ public class MainActivity extends ActionBarActivity
     public boolean isGpsEnabled() { return gpsEnabled; }
 
     public double getCurSpeed() { return curSpeed; }
+    public double getMaxSpeed() {return maxSpeed; }
+    public double getAvgSpeed() {return avgSpeed; }
     public double getAirTime() { return airTime; }
+    public double getLongestJump() {return maxJumpDistance; }
     public double getMaxAirTime() { return maxAirTime; }
     public int getDuration() { return trackDuration; }
 }
