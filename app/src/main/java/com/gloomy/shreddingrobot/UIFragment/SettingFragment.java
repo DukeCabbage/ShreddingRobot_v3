@@ -4,12 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +27,15 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.gloomy.shreddingrobot.CropPhotoActivity;
 import com.gloomy.shreddingrobot.R;
 import com.gloomy.shreddingrobot.Utility.BaseFragment;
 import com.gloomy.shreddingrobot.Utility.BitmapWorkerTask;
 import com.gloomy.shreddingrobot.Utility.Constants;
 import com.gloomy.shreddingrobot.Widget.TypefaceTextView;
+
+import java.io.File;
 
 public class SettingFragment extends BaseFragment {
 
@@ -46,6 +54,7 @@ public class SettingFragment extends BaseFragment {
     private Uri photoUri;
     private String photoPath;
     private int profileHeight, profileWidth;
+    final int PIC_CROP = 1;
 
     private TypefaceTextView tvUserName;
     private EditText etUserName;
@@ -59,7 +68,7 @@ public class SettingFragment extends BaseFragment {
     private Switch liftSwitch;
     private boolean liftOff;
 
-
+    private boolean noPhotoChosen;
 
 
     @Override
@@ -68,9 +77,10 @@ public class SettingFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
         findView(rootView);
         bindEvent();
-
+        sp = parentActivity.getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
         sleepLabel = getResources().getString(R.string.auto_off_timer_label) + " ";
         sleepLabel_alt = getResources().getString(R.string.auto_off_timer_label_zero);
+        noPhotoChosen = true;
         return rootView;
     }
 
@@ -160,7 +170,7 @@ public class SettingFragment extends BaseFragment {
         if (parentActivity.isTracking()) {
             sleepTimerBar.setEnabled(false);
 //            liftSwitch.setEnabled(false);
-        }else{
+        } else {
             sleepTimerBar.setEnabled(true);
 //            liftSwitch.setEnabled(true);
         }
@@ -344,16 +354,14 @@ public class SettingFragment extends BaseFragment {
             builder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     sp.edit().putBoolean("CROP_OPTION", true).apply();
-                    Intent intent = new Intent(getActivity(), CropPhotoActivity.class);
-                    startActivity(intent);
+                    getPhotoMethods(sp.getBoolean("CROP_OPTION", true));
 
                 }
             });
             builder.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     sp.edit().putBoolean("CROP_OPTION", false).apply();
-                    Intent intent = new Intent(getActivity(), CropPhotoActivity.class);
-                    startActivity(intent);
+                    getPhotoMethods(sp.getBoolean("CROP_OPTION", true));
                 }
             });
             Dialog alertDialog = builder.create();
@@ -361,21 +369,125 @@ public class SettingFragment extends BaseFragment {
             alertDialog.show();
 
 
-
         }
     };
 
+    private void getPhotoMethods(boolean gallery) {
+        if (gallery) {
+            // create Intent to take a picture and return control to the calling application
+            Intent pickPicIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            // Create a file, to which the photo saves
+            photoUri = createImageFileUri();
+            pickPicIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(pickPicIntent, REQUEST_TAKE_PHOTO);
+        } else {
+            Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Create a file, to which the photo saves
+            photoUri = createImageFileUri();
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
+        }
+    }
 
+    private void performCrop(Uri uri) {
+        try {
+
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            // indicate image type and Uri
+            cropIntent.setDataAndType(uri, "image/*");
+            // set crop properties
+            cropIntent.putExtra("crop", "true");
+            // indicate aspect of desired crop
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            // indicate output X and Y
+            cropIntent.putExtra("outputX", 128);
+            cropIntent.putExtra("outputY", 128);
+            // retrieve data on return
+            cropIntent.putExtra("return-data", true);
+            // start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, PIC_CROP);
+
+
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = "Whoops - your device doesn't support the crop action!";
+            Toast toast = Toast.makeText(parentActivity, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            if (resultCode == Activity.RESULT_OK) {
+                final boolean isCamera;
+                if (data == null) {
+                    isCamera = true;
+                } else {
+                    final String action = data.getAction();
+                    if (action == null) {
+                        isCamera = false;
+                    } else {
+                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
+
+                // Image captured and saved to fileUri specified in the Intent
+                profilePhoto.setImageResource(R.drawable.profile_loading);
+                if (isCamera) {
+                    photoPath = photoUri.getPath();
+
+
+                } else {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = parentActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    photoPath = cursor.getString(columnIndex);
+
+                    cursor.close();
+                }
+
+
+                File cropFile = new File(photoPath);
+                Uri cropUri = Uri.fromFile(cropFile);
+
+                performCrop(cropUri);
+
+                noPhotoChosen = false;
+                sp.edit().putString(Constants.SP_PROFILE_PHOTO_PATH, photoPath).apply();
+                loadProfileImage();
+               
+
+
+
+            }
+        }
+
+       }
+
+
+
+    private Uri createImageFileUri() {
+        // Create an image file name
+        String imageFileName = "profile";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        return Uri.fromFile(new File(storageDir, imageFileName));
+    }
 
     private void loadProfileImage() {
         photoPath = sp.getString(Constants.SP_PROFILE_PHOTO_PATH, null);
         profileHeight = (int) getResources().getDimension(R.dimen.profile_photo_size);
         profileWidth = (int) getResources().getDimension(R.dimen.profile_photo_size);
-        int c_x = sp.getInt("CROP_X", 0);
-        int c_y = sp.getInt("CROP_Y", 0);
+
         if (photoPath != null) {
             BitmapWorkerTask task = new BitmapWorkerTask(profilePhoto, photoPath, profileHeight, profileWidth);
             task.execute();
         }// else: Default placeholder will be shown
     }
+
 }
