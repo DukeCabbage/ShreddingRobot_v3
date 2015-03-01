@@ -9,8 +9,9 @@
         android:id="@+id/iv_icon"
         android:layout_height="@dimen/navigation_drawer_iconSize"
         android:layout_width="@dimen/navigation_drawer_iconSize"
-        android:layout_marginLeft="@dimen/bigger_padding"
-        android:layout_gravity="center_vertical" />
+        android:layout_marginStart="@dimen/bigger_padding"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/none"/>
 
     <com.gloomy.shreddingrobot.Widget.TypefaceTextView
         android:id="@+id/tv_title"

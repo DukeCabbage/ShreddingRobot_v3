@@ -16,6 +16,7 @@
             android:layout_width="@dimen/profile_photo_size"
             android:layout_height="@dimen/profile_photo_size"
             android:layout_margin="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/big_padding"
             android:contentDescription="@string/none"
             android:src="@drawable/profile_placeholder" />
 
@@ -28,7 +29,7 @@
             android:textSize="@dimen/profile_font_size"
             android:textColor="@color/white_smoke"
             android:text="@string/username_placeholder"
-            geekui:customTypeface="fonts/Exo2-Light.ttf"
+            geekui:customTypeface="fonts/OpenSans-Light.ttf"
             android:visibility="visible"/>
 
         <EditText

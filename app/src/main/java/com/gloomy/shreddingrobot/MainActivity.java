@@ -109,7 +109,7 @@ public class MainActivity extends ActionBarActivity
         trackDao = daoManager.getDBTrackDao(DaoManager.TYPE_WRITE);
 
         sp = getSharedPreferences("ShreddingPref", Context.MODE_PRIVATE);
-        lastLocation = sp.getString(Constants.SP_LAST_LOCATION, "unknown");
+        lastLocation = sp.getString(Constants.SP_LAST_LOCATION, "Unknown");
         settingUpdated();
         initUI();
         initSensor();
